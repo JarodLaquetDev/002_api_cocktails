@@ -32,7 +32,6 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/api/ingredients', name: 'ingredients.getAll', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
     #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     public function getAllIngredient(
         IngredientRepository $repository,
@@ -51,12 +50,12 @@ class IngredientController extends AbstractController
         //dd($status);
         //dd(["page" => $page, "limite" => $limit]);
 
-        //$ingredient = $repository->findAll();
+        $ingredient = $repository->findAll();
         //$ingredient = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
         //$ingredient = $repository->findStatusOn($status); //meme chose que $repository->findAll()
-        $ingredient = $repository->findRecetteByIngredient($ingredient_name);
+        //$ingredient = $repository->findRecetteByIngredient($ingredient_name);
 
-        $jsonIngredients = $serializer->serialize($ingredient, 'json', ['groups' => "test"]);
+        $jsonIngredients = $serializer->serialize($ingredient, 'json', ['groups' => "getAllIngredients"]);
         return new JsonResponse($jsonIngredients, 200, [], true);
     }
     /*
