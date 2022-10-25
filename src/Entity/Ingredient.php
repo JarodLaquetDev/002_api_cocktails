@@ -10,41 +10,36 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
-/**
- * Class Ingredient
- */
 class Ingredient
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getAllIngredients","getIngredient","createRecette","getRecette"])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
     #[Assert\NotBlank(message: "Un ingredient doit avoir un nom")]
+    #[Assert\Length(min: 3, minMessage: "Le nom de l'ingredient doit etre superieur a {{ limit }} caractere")]
     #[Assert\NotNull()]
-    #[Assert\Length(min: 3, minMessage: "Un nom d'ingrédient doit contenir au moins {{ Limit }} caractères")]
-    #[Groups(["getIngredient","getAllIngredients","getAllRecettes","getRecette"])]
+    #[ORM\Column(length: 20)]
+    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient","createRecette"])]
     private ?string $ingredientName = null;
+
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "Un ingredient doit avoir une quantite")]
+    #[Assert\Length(min: 1, minMessage: "Le nom de l'ingredient doit etre superieur a {{ limit }} caractere")]
+    #[Assert\NotNull()]
+    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient"])]
+    private ?float $ingredientQuantity = null;
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank(message: "Un ingredient doit avoir un statut")]
     #[Assert\NotNull()]
-    #[Assert\Choice(
-        choices: ['on', 'off'],
-        message: "ON ou OFF")]
-    #[Groups(["getIngredient","getAllIngredients","getAllRecettes","getRecette"])]
+    #[Assert\Choice(choices: ['on','off'], message: "Veuillez entrer un statut")]
     private ?string $status = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message: "Un ingredient doit avoir une quantité")]
-    #[Assert\NotNull()]
-    #[Assert\Length(min: 1, minMessage: "Une quanité d'ingrédient doit contenir au moins {{ Limit }} caractères")]
-    #[Groups(["getIngredient","getAllIngredients"])]
-    private ?float $ingredientQuantite = null;
-
-    #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'recetteIngredient')]
-    #[Groups(["getIngredient","getAllIngredients"])]
+    #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'recetteIngredients')]
+    #[Groups(["getIngredient","test"])]
     private Collection $ingredientRecette;
 
     public function __construct()
@@ -69,6 +64,18 @@ class Ingredient
         return $this;
     }
 
+    public function getIngredientQuantity(): ?float
+    {
+        return $this->ingredientQuantity;
+    }
+
+    public function setIngredientQuantity(float $ingredientQuantity): self
+    {
+        $this->ingredientQuantity = $ingredientQuantity;
+
+        return $this;
+    }
+
     public function getStatus(): ?string
     {
         return $this->status;
@@ -77,18 +84,6 @@ class Ingredient
     public function setStatus(string $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getIngredientQuantite(): ?float
-    {
-        return $this->ingredientQuantite;
-    }
-
-    public function setIngredientQuantite(float $ingredientQuantite): self
-    {
-        $this->ingredientQuantite = $ingredientQuantite;
 
         return $this;
     }

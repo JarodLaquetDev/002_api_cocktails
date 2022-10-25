@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +28,8 @@ class PictureController extends AbstractController
     }
 
     #[Route('api/picture/{idPicture}', name:'picture.get', methods:['GET'])]
+    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     #[ParamConverter("Picture", options : ["id" => "idPicture"])]
     public function getPicture(int $idPicture, SerializerInterface $serializer, PictureRepository $pictureRepository, UrlGeneratorInterface $urlGenerator, Request $request) : JsonResponse
     {
@@ -45,6 +48,7 @@ class PictureController extends AbstractController
 
 
     #[Route('api/picture', name: 'picture.create', methods:['POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
     public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer): JsonResponse
     {
         $picture = new Picture();
