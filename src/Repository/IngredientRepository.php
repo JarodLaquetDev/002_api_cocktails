@@ -109,4 +109,13 @@ class IngredientRepository extends ServiceEntityRepository
         // test 2
     }
 
+    /**
+     * methode retournant les recettes en fonction d'un nom d'ingredient 
+     */
+    public function findRecetteByIngredient($ingredientName){
+        $qb = $this->createQueryBuilder('i');
+        $qb = $qb->where('i.ingredientName = :ingredientName')->setParameter('ingredientName', $ingredientName);
+        return $qb->getQuery()->getResult();
+    }
+
 }
