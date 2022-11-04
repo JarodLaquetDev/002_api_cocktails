@@ -33,6 +33,13 @@ class RecetteController extends AbstractController
     #[Route('/api/recettes', name: 'recette.getAll')]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
     #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    /**
+     * Obtenir la liste de toutes les recettes de la BDD
+     *
+     * @param RecetteRepository $repository
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
     public function getAllRecettes(
         RecetteRepository $repository,
         SerializerInterface $serializer 
@@ -47,6 +54,13 @@ class RecetteController extends AbstractController
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
     #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     #[ParamConverter("recette", options: ["id" => "idRecette"])]
+    /**
+     * Obtenir les informations d'une recette spécifique de la BDD
+     *
+     * @param Recette $recette
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
     public function getRecette(
         Recette $recette,
         SerializerInterface $serializer 
@@ -59,6 +73,13 @@ class RecetteController extends AbstractController
     #[Route('/api/recette/{idRecette}', name: 'recette.delete', methods: ['DELETE'])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
     #[ParamConverter("recette", options: ["id" => "idRecette"])]
+    /**
+     * Supprimer une recette spécifique de la BDD
+     *
+     * @param Recette $recette
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     */
     public function deleteRecette(
         Recette $recette,
         EntityManagerInterface $entityManager 
@@ -71,6 +92,17 @@ class RecetteController extends AbstractController
 
     #[Route('/api/recette', name: 'recette.create', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    /**
+     * Ajouter une recette dans la BDD
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     */
     public function createRecette(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -104,6 +136,17 @@ class RecetteController extends AbstractController
 
     #[Route('/api/recette/{id}', name: 'recette.update', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    /**
+     * Mettre à jour une recette de la BDD
+     *
+     * @param Recette $recette
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
     public function updateRecette(
         Recette $recette,
         Request $request,
