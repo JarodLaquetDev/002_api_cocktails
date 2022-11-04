@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
         $adminUser = new User();
         $password = "password";
         $adminUser->setUsername('admin')
-        ->setRoles(["ROLE_ADMIN"])
+        ->setRoles(['ROLE_ADMIN'])
         ->setPassword($this->userPasswordHasher->hashPassword($adminUser, $password));
         $manager->persist($adminUser);
         //Authentication Users
@@ -46,7 +46,7 @@ class AppFixtures extends Fixture
             $userUser = new User();
             $password = $this->faker->password(2,6);
             $userUser->setUsername($this->faker->userName().'@'.$password)
-            ->setRoles(["ROLE_USER"])
+            ->setRoles(['ROLE_USER'])
             ->setPassword($this->userPasswordHasher->hashPassword($userUser, $password));
             $manager->persist($userUser);
         }

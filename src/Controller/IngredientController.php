@@ -3,22 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Ingredient;
-use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
+use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class IngredientController extends AbstractController
 {
@@ -32,7 +32,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/api/ingredients', name: 'ingredients.getAll', methods: ['GET'])]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted("ROLE_USER", message: 'Absence de droits')]
     /**
      * Obtenir la liste des tous les ingredients de la BDD
      *
@@ -50,26 +50,15 @@ class IngredientController extends AbstractController
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 50);
         $limit = $limit > 20 ? 20: $limit;
-        $status = $request->get('status' , 'on');
 
-
-        $ingredient_name = $request->get('ingredient_name');
-
-        //dd($status);
-        //dd(["page" => $page, "limite" => $limit]);
-
-        $ingredient = $repository->findAll();
-        //$ingredient = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
-        //$ingredient = $repository->findStatusOn($status); //meme chose que $repository->findAll()
-        //$ingredient = $repository->findRecetteByIngredient($ingredient_name);
+        $ingredient = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
 
         $jsonIngredients = $serializer->serialize($ingredient, 'json', ['groups' => "getAllIngredients"]);
         return new JsonResponse($jsonIngredients, 200, [], true);
     }
 
     #[Route('/api/ingredients/{idIngredient}', name: 'ingredient.get', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     #[ParamConverter("ingredient", options: ["id" => "idIngredient"])]
     /**
      * Obtenir les informations d'un ingrédient spécifique de la BDD
@@ -90,7 +79,7 @@ class IngredientController extends AbstractController
 
     #[Route('/api/ingredients/{idIngredient}', name: 'ingredient.delete', methods: ['DELETE'])]
     #[ParamConverter("ingredient", options: ["id" => "idIngredient"])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Supprimer un ingrédient spécifique de la BDD
      *
@@ -109,7 +98,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/api/ingredients', name: 'ingredient.create', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Ajouter un ingrédient dans la BDD
      *
@@ -153,7 +142,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/api/ingredients/{id}', name: 'ingredient.update', methods: ['PUT'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Mettre à jour un ingrédient de la BDD
      *
@@ -180,7 +169,6 @@ class IngredientController extends AbstractController
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
         );
-        //$ingredient->setStatus('on');
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
