@@ -57,7 +57,7 @@ class IngredientController extends AbstractController
         return new JsonResponse($jsonIngredients, 200, [], true);
     }
 
-    #[Route('/api/ingredients/{idIngredient}', name: 'ingredient.get', methods: ['GET'])]
+    #[Route('/api/ingredient/{idIngredient}', name: 'ingredient.get', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     #[ParamConverter("ingredient", options: ["id" => "idIngredient"])]
     /**
@@ -76,7 +76,7 @@ class IngredientController extends AbstractController
         return new JsonResponse($jsonIngredients, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
-    #[Route('/api/ingredients/{idIngredient}', name: 'ingredient.delete', methods: ['DELETE'])]
+    #[Route('/api/ingredient/{idIngredient}', name: 'ingredient.delete', methods: ['DELETE'])]
     #[ParamConverter("ingredient", options: ["id" => "idIngredient"])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
@@ -96,7 +96,7 @@ class IngredientController extends AbstractController
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 
-    #[Route('/api/ingredients', name: 'ingredient.create', methods: ['POST'])]
+    #[Route('/api/ingredient', name: 'ingredient.create', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Ajouter un ingrédient dans la BDD
@@ -140,7 +140,7 @@ class IngredientController extends AbstractController
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
-    #[Route('/api/ingredients/{id}', name: 'ingredient.update', methods: ['PUT'])]
+    #[Route('/api/ingredient/{id}', name: 'ingredient.update', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Mettre à jour un ingrédient de la BDD

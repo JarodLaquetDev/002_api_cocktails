@@ -84,7 +84,7 @@ class PictureController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return JsonResponse
      */
-    public function deleteRecette(
+    public function deletePicture(
         Picture $picture,
         EntityManagerInterface $entityManager 
     ) : JsonResponse
