@@ -25,7 +25,6 @@ class PictureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Picture::class);
     }
-
     /**
      * Méthode pour sauvegarder une image en bdd
      *
@@ -41,7 +40,6 @@ class PictureRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
-
     /**
      * Méthode pour supprimer une image en bdd
      *
@@ -56,6 +54,20 @@ class PictureRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
+    }
+    /**
+     * Méthode pour sortir toutes les recettes "on" avec une pagination
+     *
+     * @param [type] $page
+     * @param [type] $limit
+     * @return void
+     */
+    public function findWithPagination($page, $limit){
+        $qb = $this->createQueryBuilder('i');
+        $qb->setFirstResult(($page - 1) * $limit);
+        $qb->setMaxResults($limit);
+        $qb->where('i.status = \'on\'');
+        return $qb->getQuery()->getResult();
     }
 
 //    /**
