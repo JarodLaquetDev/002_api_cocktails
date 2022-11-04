@@ -42,26 +42,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Choice(choices: ['on','off'], message: "Veuillez entrer un statut")]
     private ?string $status = null;
     
-    // Cas d'utilisation : obtenir l'id d'un utilisateur
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : int
+    /**
+     * Obtenir l'id d'un utilisateur
+     *
+     * @return integer|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-    // Cas d'utilisation : obtenir le nom d'un utilisateur
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le nom d'un utilisateur
+     *
+     * @return string|null
+     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
-    // Cas d'utilisation : donner un nom à un utilisateur
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un nom à un utilisateur
+     *
+     * @param string $username
+     * @return self
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -69,16 +73,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
     /**
-     * A visual identifier that represents this user.
+     * Obtenir l'identifiant utilisateur
      *
-     * @see UserInterface
+     * @return string
      */
     public function getUserIdentifier(): string
     {
         return (string) $this->username;
     }
     /**
-     * @see UserInterface
+     * Obtenir les rôles d'un utilisateur
+     *
+     * @return array
      */
     public function getRoles(): array
     {
@@ -88,49 +94,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-    // Cas d'utilisation : donner un rôle à un utilisateur
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un rôle à un utilisateur
+     *
+     * @param array $roles
+     * @return self
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir le mdp d'un utilisateur
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
     /**
-     * @see PasswordAuthenticatedUserInterface
+     * Obtenir le mot de passe d'un utilisateur
+     *
+     * @return string
      */
     public function getPassword(): string
     {
         return $this->password;
     }
-    // Cas d'utilisation : donner un mdp à un utilisateur
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un mot de passe à un utilisateur
+     *
+     * @param string $password
+     * @return self
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
-        // Cas d'utilisation : obtenir le status d'un ingrédient
-    // Paramètre(s) d'entrée : 
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le status d'un ingrédient
+     *
+     * @return string|null
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
-    // Cas d'utilisation : donner un status à un ingrédient
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un status à un utilisateur
+     *
+     * @param string $status
+     * @return self
+     */
     public function setStatus(string $status): self
     {
         $this->status = $status;
