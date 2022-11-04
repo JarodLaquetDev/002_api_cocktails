@@ -31,6 +31,16 @@ class PictureController extends AbstractController
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
     #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     #[ParamConverter("Picture", options : ["id" => "idPicture"])]
+    /**
+     * Obtenir les informations d'une image spécifique de la BDD
+     *
+     * @param integer $idPicture
+     * @param SerializerInterface $serializer
+     * @param PictureRepository $pictureRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getPicture(int $idPicture, SerializerInterface $serializer, PictureRepository $pictureRepository, UrlGeneratorInterface $urlGenerator, Request $request) : JsonResponse
     {
         $picture = $pictureRepository->find($idPicture);
@@ -49,6 +59,15 @@ class PictureController extends AbstractController
 
     #[Route('api/picture', name: 'picture.create', methods:['POST'])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    /**
+     * Ajouter une image dans la BDD
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
     public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer): JsonResponse
     {
         $picture = new Picture();
