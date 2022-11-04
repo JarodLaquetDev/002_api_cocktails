@@ -55,81 +55,94 @@ class Ingredient
         $this->ingredientRecette = new ArrayCollection();
     }
 
-    // Cas d'utilisation : obtenir l'id d'un ingrédient
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : int
+
+    /**
+     * Obtenir l'id d'un ingrédient
+     *
+     * @return integer|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-    // Cas d'utilisation : obtenir le nom d'un ingrédient
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le nom d'un ingrédient
+     *
+     * @return string|null
+     */
     public function getIngredientName(): ?string
     {
         return $this->ingredientName;
     }
-    // Cas d'utilisation : donner un nom à un ingrédient
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un nom à un ingrédient
+     *
+     * @param string $ingredientName
+     * @return self
+     */
     public function setIngredientName(string $ingredientName): self
     {
         $this->ingredientName = $ingredientName;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir la quantité d'un ingrédient
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : float
+    /**
+     * Obtenir la quantité d'un ingrédient
+     *
+     * @return float|null
+     */
     public function getIngredientQuantity(): ?float
     {
         return $this->ingredientQuantity;
     }
-    // Cas d'utilisation : donner une quantité à un ingrédient
-    // Paramètre(s) d'entrée : float
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner une quantité à un ingrédient
+     *
+     * @param float $ingredientQuantity
+     * @return self
+     */
     public function setIngredientQuantity(float $ingredientQuantity): self
     {
         $this->ingredientQuantity = $ingredientQuantity;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir le status d'un ingrédient
-    // Paramètre(s) d'entrée : 
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le status d'un ingrédient
+     *
+     * @return string|null
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
-    // Cas d'utilisation : donner un status à un ingrédient
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un status à un ingrédien
+     *
+     * @param string $status
+     * @return self
+     */
     public function setStatus(string $status): self
     {
         $this->status = $status;
 
         return $this;
     }
-
-    // Cas d'utilisation : obtenir la liste des recettes associées à un ingrédient
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : Collection
+    /**
+     * Obtenir la liste des recettes associées à un ingrédient
+     *
+     * @return Collection
+     */
     public function getIngredientRecette(): Collection
     {
         return $this->ingredientRecette;
     }
-    // Cas d'utilisation : ajouter une recette associée à un ingrédient
-    // Paramètre(s) d'entrée : Recette
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Ajouter une recette associée à un ingrédient
+     *
+     * @param Recette $ingredientRecette
+     * @return self
+     */
     public function addIngredientRecette(Recette $ingredientRecette): self
     {
         if (!$this->ingredientRecette->contains($ingredientRecette)) {
@@ -139,10 +152,12 @@ class Ingredient
 
         return $this;
     }
-    // Cas d'utilisation : supprimer une recette associée à un ingrédient
-    // Paramètre(s) d'entrée : Recette
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Supprimer une recette associée à un ingrédient
+     *
+     * @param Recette $ingredientRecette
+     * @return self
+     */
     public function removeIngredientRecette(Recette $ingredientRecette): self
     {
         if ($this->ingredientRecette->removeElement($ingredientRecette)) {
