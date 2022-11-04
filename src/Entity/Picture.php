@@ -52,116 +52,135 @@ class Picture
      */
     private ?File $file;
 
-    // Cas d'utilisation : obtenir l'id d'une image
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : int
+    /**
+     * Obtenir l'id d'une image
+     *
+     * @return integer|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-    // Cas d'utilisation : obtenir le nom d'une image
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le nom d'une image
+     *
+     * @return string|null
+     */
     public function getRealName(): ?string
     {
         return $this->realName;
     }
-    // Cas d'utilisation : donner un nom à une image
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un nom à une image
+     *
+     * @param string $realName
+     * @return self
+     */
     public function setRealName(string $realName): self
     {
         $this->realName = $realName;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir le chemin privé d'une image
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le chemin privé d'une image
+     *
+     * @return string|null
+     */
     public function getRealPath(): ?string
     {
         return $this->realPath;
     }
-    // Cas d'utilisation : donner un chemin privé à une image
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner le chemin privé d'une image
+     *
+     * @param string $realPath
+     * @return self
+     */
     public function setRealPath(string $realPath): self
     {
         $this->realPath = $realPath;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir une image
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : file
+    /**
+     * Obtenir une image
+     *
+     * @return File|null
+     */
     public function getFile(): ?File
     {
         return $this->file;
     }
-    // Cas d'utilisation : donner une image
-    // Paramètre(s) d'entrée : file
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Enregistrer une image
+     *
+     * @param File|null $file
+     * @return Picture|null
+     */
     public function setFile(?File $file): ?Picture
     {
         $this->file = $file;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir le chemin public d'une image
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le chemin publique d'une image
+     *
+     * @return string|null
+     */
     public function getPublicPath(): ?string
     {
         return $this->publicPath;
     }
-    // Cas d'utilisation : donner le chemin public d'une image
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un chemin publique à une image
+     *
+     * @param string $publicPath
+     * @return self
+     */
     public function setPublicPath(string $publicPath): self
     {
         $this->publicPath = $publicPath;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir le type d'une image
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le mime type d'une image
+     *
+     * @return string|null
+     */
     public function getMimeType(): ?string
     {
         return $this->mimeType;
     }
-    // Cas d'utilisation : donner un type à une image
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un mime type à une image
+     *
+     * @param string $mimeType
+     * @return self
+     */
     public function setMimeType(string $mimeType): self
     {
         $this->mimeType = $mimeType;
 
         return $this;
     }
-    // Cas d'utilisation : obtenir le status d'une image
-    // Paramètre(s) d'entrée :
-    // Paramètre(s) de sortie :
-    // Valeur de retour : string
+    /**
+     * Obtenir le status d'une image
+     *
+     * @return string|null
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
-    // Cas d'utilisation : donner un status à une image
-    // Paramètre(s) d'entrée : string
-    // Paramètre(s) de sortie :
-    // Valeur de retour : objet
+    /**
+     * Donner un status à une image
+     *
+     * @param string $status
+     * @return self
+     */
     public function setStatus(string $status): self
     {
         $this->status = $status;
