@@ -23,5 +23,10 @@ return [
     'recette.create' => [[], ['_controller' => 'App\\Controller\\RecetteController::createRecette'], [], [['text', '/api/recette']], [], [], []],
     'recette.update' => [['id'], ['_controller' => 'App\\Controller\\RecetteController::updateRecette'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/recette']], [], [], []],
     'recette.getByIngredient' => [['idRecette'], ['_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], [], [['variable', '/', '[^/]++', 'idRecette', true], ['text', '/api/recette']], [], [], []],
+    'app_user' => [[], ['_controller' => 'App\\Controller\\UserController::index'], [], [['text', '/user']], [], [], []],
+    'user.getAll' => [[], ['_controller' => 'App\\Controller\\UserController::getAllUsers'], [], [['text', '/api/users']], [], [], []],
+    'users.get' => [['idUser'], ['_controller' => 'App\\Controller\\UserController::getUserById'], [], [['variable', '/', '[^/]++', 'idUser', true], ['text', '/api/user']], [], [], []],
+    'user.delete' => [['idUser'], ['_controller' => 'App\\Controller\\UserController::deleteUser'], [], [['variable', '/', '[^/]++', 'idUser', true], ['text', '/api/user']], [], [], []],
+    'user.create' => [[], ['_controller' => 'App\\Controller\\UserController::createUser'], [], [['text', '/api/user']], [], [], []],
     'api_login_check' => [[], [], [], [['text', '/api/login_check']], [], [], []],
 ];

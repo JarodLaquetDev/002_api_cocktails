@@ -73,7 +73,6 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $jsonIngredients = $serializer->serialize($ingredient, 'json', ['groups' => "getIngredient"]);
-        //$jsonIngredients = $serializer->serialize($ingredient, 'json');
         return new JsonResponse($jsonIngredients, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
