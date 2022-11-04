@@ -31,8 +31,7 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recettes', name: 'recette.getAll')]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     /**
      * Obtenir la liste de toutes les recettes de la BDD
      *
@@ -51,8 +50,7 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette/{idRecette}', name: 'recette.get', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     #[ParamConverter("recette", options: ["id" => "idRecette"])]
     /**
      * Obtenir les informations d'une recette spécifique de la BDD
@@ -71,7 +69,7 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette/{idRecette}', name: 'recette.delete', methods: ['DELETE'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     #[ParamConverter("recette", options: ["id" => "idRecette"])]
     /**
      * Supprimer une recette spécifique de la BDD
@@ -91,7 +89,7 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette', name: 'recette.create', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Ajouter une recette dans la BDD
      *
@@ -135,7 +133,7 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette/{id}', name: 'recette.update', methods: ['PUT'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Mettre à jour une recette de la BDD
      *
@@ -162,7 +160,6 @@ class RecetteController extends AbstractController
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
         );
-        $recette->setStatus('on');
 
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
@@ -178,8 +175,7 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette/{idRecette}', name: 'recette.getByIngredient', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     #[ParamConverter("recette", options: ["id" => "idRecette"])]
     public function getRecetteByIngredient(
         int $idRecette,
