@@ -16,26 +16,45 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PictureRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructeur
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Picture::class);
     }
 
+    /**
+     * Méthode pour sauvegarder une image en bdd
+     *
+     * @param Picture $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function save(Picture $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->persist($entity); // ajouter
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
 
+    /**
+     * Méthode pour supprimer une image en bdd
+     *
+     * @param Picture $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function remove(Picture $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->remove($entity); // supprimer
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
 
