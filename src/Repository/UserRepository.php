@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
-{
+{ 
     /**
      * Constructeur
      *
@@ -28,7 +28,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         parent::__construct($registry, User::class);
     }
-
     /**
      * Méthode pour sauvegarder un utilisateur en bdd
      *
@@ -44,7 +43,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
-
     /**
      * Méthode pour supprimer un utilisateur en bdd
      *
@@ -60,7 +58,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
-
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
@@ -73,6 +70,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+    /**
+     * Méthode pour sortir tous les users avec une pagination
+     *
+     * @param [type] $page
+     * @param [type] $limit
+     * @return void
+     */
+    public function findWithPagination($page, $limit){
+        $qb = $this->createQueryBuilder('i');
+        $qb->setFirstResult(($page - 1) * $limit);
+        $qb->setMaxResults($limit);
+        return $qb->getQuery()->getResult();
     }
 
 //    /**
