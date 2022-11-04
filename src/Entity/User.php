@@ -1,5 +1,4 @@
 <?php
-// test commit
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -10,11 +9,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    // Identifiant unique
+    // Ex : 130
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    // Nom d'un utilisateur
+    // Ex : Jarod
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
 
@@ -26,24 +29,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
-
+    
+    // Cas d'utilisation : obtenir l'id d'un utilisateur
+    // Paramètre(s) d'entrée :
+    // Paramètre(s) de sortie :
+    // Valeur de retour : int
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    // Cas d'utilisation : obtenir le nom d'un utilisateur
+    // Paramètre(s) d'entrée :
+    // Paramètre(s) de sortie :
+    // Valeur de retour : string
     public function getUsername(): ?string
     {
         return $this->username;
     }
-
+    // Cas d'utilisation : donner un nom à un utilisateur
+    // Paramètre(s) d'entrée : string
+    // Paramètre(s) de sortie :
+    // Valeur de retour : objet
     public function setUsername(string $username): self
     {
         $this->username = $username;
 
         return $this;
     }
-
     /**
      * A visual identifier that represents this user.
      *
@@ -53,7 +65,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (string) $this->username;
     }
-
     /**
      * @see UserInterface
      */
@@ -65,14 +76,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-
+    // Cas d'utilisation : donner un rôle à un utilisateur
+    // Paramètre(s) d'entrée :
+    // Paramètre(s) de sortie :
+    // Valeur de retour : objet
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
         return $this;
     }
-
+    // Cas d'utilisation : obtenir le mdp d'un utilisateur
+    // Paramètre(s) d'entrée :
+    // Paramètre(s) de sortie :
+    // Valeur de retour : string
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -80,14 +97,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->password;
     }
-
+    // Cas d'utilisation : donner un mdp à un utilisateur
+    // Paramètre(s) d'entrée : string
+    // Paramètre(s) de sortie :
+    // Valeur de retour : objet
     public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
-
     /**
      * @see UserInterface
      */
