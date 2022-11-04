@@ -22,6 +22,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class IngredientController extends AbstractController
 {
+    /**
+     * index
+     *
+     * @return JsonResponse
+     */
     #[Route('/ingredient', name: 'app_ingredient')]
     public function index(): JsonResponse
     {
@@ -31,6 +36,14 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    /**
+     * Obtenir la liste des tous les ingredients de la BDD
+     *
+     * @param IngredientRepository $repository
+     * @param SerializerInterface $serializer
+     * @param Request $request
+     * @return JsonResponse
+     */
     #[Route('/api/ingredients', name: 'ingredients.getAll', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     public function getAllIngredient(
