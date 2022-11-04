@@ -34,7 +34,7 @@ class IngredientRepository extends ServiceEntityRepository
      */
     public function save(Ingredient $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity); // ajouter à la bdd
+        $this->getEntityManager()->persist($entity); // ajouter
 
         if ($flush) {
             $this->getEntityManager()->flush(); // mettre à jour la bdd
@@ -49,7 +49,7 @@ class IngredientRepository extends ServiceEntityRepository
      */
     public function remove(Ingredient $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity); // supprimer de la bdd
+        $this->getEntityManager()->remove($entity); // supprimer
 
         if ($flush) {
             $this->getEntityManager()->flush(); // mettre à jour la bdd

@@ -26,7 +26,7 @@ class RecetteRepository extends ServiceEntityRepository
         parent::__construct($registry, Recette::class);
     }
     /**
-     * Méthode pour save des Recettes
+     * Méthode pour sauvegarder une Recette en bdd
      *
      * @param Recette $entity
      * @param boolean $flush
@@ -34,14 +34,14 @@ class RecetteRepository extends ServiceEntityRepository
      */
     public function save(Recette $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->persist($entity); // ajouter
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
     /**
-     * Méthode pour supprimer des Recettes
+     * Méthode pour supprimer une recette en bdd
      *
      * @param Recette $entity
      * @param boolean $flush
@@ -49,10 +49,10 @@ class RecetteRepository extends ServiceEntityRepository
      */
     public function remove(Recette $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->remove($entity); // supprimer
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
     /**
