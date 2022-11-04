@@ -22,11 +22,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class IngredientController extends AbstractController
 {
-    /**
-     * index
-     *
-     * @return JsonResponse
-     */
     #[Route('/ingredient', name: 'app_ingredient')]
     public function index(): JsonResponse
     {
@@ -36,6 +31,8 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    #[Route('/api/ingredients', name: 'ingredients.getAll', methods: ['GET'])]
+    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     /**
      * Obtenir la liste des tous les ingredients de la BDD
      *
@@ -44,8 +41,6 @@ class IngredientController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    #[Route('/api/ingredients', name: 'ingredients.getAll', methods: ['GET'])]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     public function getAllIngredient(
         IngredientRepository $repository,
         SerializerInterface $serializer,
@@ -71,24 +66,18 @@ class IngredientController extends AbstractController
         $jsonIngredients = $serializer->serialize($ingredient, 'json', ['groups' => "getAllIngredients"]);
         return new JsonResponse($jsonIngredients, 200, [], true);
     }
-    /*
-    #[Route('/api/ingredients/{idIngredient}', name: 'ingredient.get', methods: ['GET'])]
-    public function getIngredient(
-        int $idIngredient,
-        IngredientRepository $repository,
-        SerializerInterface $serializer 
-    ) : JsonResponse
-    {
-        $ingredient = $repository->find($idIngredient);
-        $jsonIngredients = $serializer->serialize($ingredient, 'json');
-        return $ingredient ? new JsonResponse($jsonIngredients, Response::HTTP_OK, [], true):
-        new JsonResponse($jsonIngredients, Response::HTTP_NOT_FOUND, [], false);
-    }*/
 
     #[Route('/api/ingredients/{idIngredient}', name: 'ingredient.get', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
     #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
     #[ParamConverter("ingredient", options: ["id" => "idIngredient"])]
+    /**
+     * Obtenir les informations d'un ingrédient spécifique de la BDD
+     *
+     * @param Ingredient $ingredient
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
     public function getIngredient(
         Ingredient $ingredient,
         SerializerInterface $serializer 
@@ -102,6 +91,13 @@ class IngredientController extends AbstractController
     #[Route('/api/ingredients/{idIngredient}', name: 'ingredient.delete', methods: ['DELETE'])]
     #[ParamConverter("ingredient", options: ["id" => "idIngredient"])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    /**
+     * Supprimer un ingrédient spécifique de la BDD
+     *
+     * @param Ingredient $ingredient
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     */
     public function deleteIngredient(
         Ingredient $ingredient,
         EntityManagerInterface $entityManager 
@@ -114,6 +110,17 @@ class IngredientController extends AbstractController
 
     #[Route('/api/ingredients', name: 'ingredient.create', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    /**
+     * Ajouter un ingrédient dans la BDD
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param RecetteRepository $recetteRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     */
     public function createIngredient(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -147,6 +154,17 @@ class IngredientController extends AbstractController
 
     #[Route('/api/ingredients/{id}', name: 'ingredient.update', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    /**
+     * Mettre à jour un ingrédient de la BDD
+     *
+     * @param Ingredient $ingredient
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param RecetteRepository $recetteRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
     public function updateIngredient(
         Ingredient $ingredient,
         Request $request,
