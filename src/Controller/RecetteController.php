@@ -41,10 +41,15 @@ class RecetteController extends AbstractController
      */
     public function getAllRecettes(
         RecetteRepository $repository,
-        SerializerInterface $serializer 
+        SerializerInterface $serializer,
+        Request $request
     ) : JsonResponse
     {
-        $recettes = $repository->findAll();
+        $page = $request->get('page', 1);
+        $limit = $request->get('limit', 50);
+        $limit = $limit > 20 ? 20: $limit;
+
+        $recettes = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
         $jsonRecettes = $serializer->serialize($recettes, 'json', ['groups' => "getAllRecettes"]);
         return new JsonResponse($jsonRecettes, 200, [], true);
     }

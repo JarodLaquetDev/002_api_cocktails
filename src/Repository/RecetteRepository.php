@@ -56,6 +56,20 @@ class RecetteRepository extends ServiceEntityRepository
         }
     }
     /**
+     * Méthode pour sortir toutes les recettes "on" avec une pagination
+     *
+     * @param [type] $page
+     * @param [type] $limit
+     * @return void
+     */
+    public function findWithPagination($page, $limit){
+        $qb = $this->createQueryBuilder('i');
+        $qb->setFirstResult(($page - 1) * $limit);
+        $qb->setMaxResults($limit);
+        $qb->where('i.status = \'on\'');
+        return $qb->getQuery()->getResult();
+    }
+    /**
      * Méthode pour trouver une, ou plusieurs recettes, à partir d'un ingrédient
      *
      * @param [type] $nameIngredient
