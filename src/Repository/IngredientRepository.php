@@ -26,7 +26,7 @@ class IngredientRepository extends ServiceEntityRepository
         parent::__construct($registry, Ingredient::class);
     }
     /**
-     * Méthode pour sauvegarder un ingrédient
+     * Méthode pour sauvegarder un ingrédient en BDD
      *
      * @param Ingredient $entity
      * @param boolean $flush
@@ -34,14 +34,14 @@ class IngredientRepository extends ServiceEntityRepository
      */
     public function save(Ingredient $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->persist($entity); // ajouter à la bdd
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
     /**
-     * Méthode pour supprimer un ingrédient
+     * Méthode pour supprimer un ingrédient de la BDD
      *
      * @param Ingredient $entity
      * @param boolean $flush
@@ -49,37 +49,12 @@ class IngredientRepository extends ServiceEntityRepository
      */
     public function remove(Ingredient $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->remove($entity); // supprimer de la bdd
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
-
-//    /**
-//     * @return Ingredient[] Returns an array of Ingredient objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Ingredient
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 
     /**
      * Méthode pour sortir tous les ingrédients "on" avec une pagination
@@ -95,6 +70,7 @@ class IngredientRepository extends ServiceEntityRepository
         $qb->where('i.status = \'on\'');
         return $qb->getQuery()->getResult();
     }
+
     /**
      * Méthode pour sortir tous les ingrédients en fonction de leur statut
      *
