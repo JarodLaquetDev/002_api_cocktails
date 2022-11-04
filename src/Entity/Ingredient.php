@@ -74,7 +74,7 @@ class Ingredient
     // Cas d'utilisation : donner un nom à un ingrédient
     // Paramètre(s) d'entrée : string
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function setIngredientName(string $ingredientName): self
     {
         $this->ingredientName = $ingredientName;
@@ -92,7 +92,7 @@ class Ingredient
     // Cas d'utilisation : donner une quantité à un ingrédient
     // Paramètre(s) d'entrée : float
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function setIngredientQuantity(float $ingredientQuantity): self
     {
         $this->ingredientQuantity = $ingredientQuantity;
@@ -110,7 +110,7 @@ class Ingredient
     // Cas d'utilisation : donner un status à un ingrédient
     // Paramètre(s) d'entrée : string
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function setStatus(string $status): self
     {
         $this->status = $status;
@@ -129,7 +129,7 @@ class Ingredient
     // Cas d'utilisation : ajouter une recette associée à un ingrédient
     // Paramètre(s) d'entrée : Recette
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function addIngredientRecette(Recette $ingredientRecette): self
     {
         if (!$this->ingredientRecette->contains($ingredientRecette)) {
@@ -142,7 +142,7 @@ class Ingredient
     // Cas d'utilisation : supprimer une recette associée à un ingrédient
     // Paramètre(s) d'entrée : Recette
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function removeIngredientRecette(Recette $ingredientRecette): self
     {
         if ($this->ingredientRecette->removeElement($ingredientRecette)) {

@@ -60,7 +60,7 @@ class Recette
     // Cas d'utilisation : donner un nom à une recette
     // Paramètre(s) d'entrée : string
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function setRecetteName(string $recetteName): self
     {
         $this->recetteName = $recetteName;
@@ -70,7 +70,7 @@ class Recette
     // Cas d'utilisation : obtenir les ingrédients associés à une recette
     // Paramètre(s) d'entrée : Collection
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function getRecetteIngredients(): Collection
     {
         return $this->recetteIngredients;
@@ -78,7 +78,7 @@ class Recette
     // Cas d'utilisation : ajouter un ingrédient à une recette
     // Paramètre(s) d'entrée : Ingredient
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function addRecetteIngredient(Ingredient $recetteIngredient): self
     {
         if (!$this->recetteIngredients->contains($recetteIngredient)) {
@@ -90,7 +90,7 @@ class Recette
     // Cas d'utilisation : supprimer un ingrédient d'une recette
     // Paramètre(s) d'entrée : Ingredient
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function removeRecetteIngredient(Ingredient $recetteIngredient): self
     {
         $this->recetteIngredients->removeElement($recetteIngredient);
@@ -108,7 +108,7 @@ class Recette
     // Cas d'utilisation : donner un status à une recette
     // Paramètre(s) d'entrée : string
     // Paramètre(s) de sortie :
-    // Valeur de retour : void
+    // Valeur de retour : objet
     public function setStatus(string $status): self
     {
         $this->status = $status;
