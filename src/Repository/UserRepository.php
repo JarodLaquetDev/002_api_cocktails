@@ -72,7 +72,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
     /**
-     * Méthode pour sortir tous les users avec une pagination
+     * Méthode pour sortir tous les users "on " avec une pagination
      *
      * @param [type] $page
      * @param [type] $limit
@@ -82,6 +82,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $qb = $this->createQueryBuilder('i');
         $qb->setFirstResult(($page - 1) * $limit);
         $qb->setMaxResults($limit);
+        $qb->where('i.status = \'on\'');
         return $qb->getQuery()->getResult();
     }
 

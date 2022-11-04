@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -32,6 +33,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    // Statut de l'utilisateur
+    // Ex : on
+    #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: "Un utilisateur doit avoir un statut")]
+    #[Assert\NotNull()]
+    #[Assert\Choice(choices: ['on','off'], message: "Veuillez entrer un statut")]
+    private ?string $status = null;
     
     // Cas d'utilisation : obtenir l'id d'un utilisateur
     // Paramètre(s) d'entrée :
@@ -107,6 +116,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+        // Cas d'utilisation : obtenir le status d'un ingrédient
+    // Paramètre(s) d'entrée : 
+    // Paramètre(s) de sortie :
+    // Valeur de retour : string
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+    // Cas d'utilisation : donner un status à un ingrédient
+    // Paramètre(s) d'entrée : string
+    // Paramètre(s) de sortie :
+    // Valeur de retour : objet
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

@@ -56,7 +56,7 @@ class PictureRepository extends ServiceEntityRepository
         }
     }
     /**
-     * Méthode pour sortir toutes les recettes "on" avec une pagination
+     * Méthode pour sortir toutes les images"on" avec une pagination
      *
      * @param [type] $page
      * @param [type] $limit

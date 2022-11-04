@@ -21,7 +21,7 @@ class Ingredient
     private ?int $id = null;
 
     // Nom d'un ingrédient
-    // Ex : pomme
+    // Ex : pomme 
     #[Assert\NotBlank(message: "Un ingredient doit avoir un nom")]
     #[Assert\Length(min: 3, minMessage: "Le nom de l'ingredient doit etre superieur a {{ limit }} caractere")]
     #[Assert\NotNull()]
