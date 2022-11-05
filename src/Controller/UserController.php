@@ -118,7 +118,6 @@ class UserController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
-        UserRepository $userRepository,
         UrlGeneratorInterface $urlGenerator,
         ValidatorInterface $validator
     ) : JsonResponse
