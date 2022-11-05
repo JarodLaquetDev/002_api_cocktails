@@ -33,8 +33,10 @@ class AppFixtures extends Fixture
     {
 
         $userNumber = 10;
+        $ingredientNumber = 100;
+        $recetteNumber = 15;
 
-        //Authentication admin
+        // Création d'un itilisateur Administrateur
         $adminUser = new User();
         $password = "password";
         $adminUser->setUsername('admin')
@@ -42,7 +44,8 @@ class AppFixtures extends Fixture
         ->setPassword($this->userPasswordHasher->hashPassword($adminUser, $password))
         ->setStatus("on");
         $manager->persist($adminUser);
-        //Authentication Users
+
+        // Création d'utilisateurs
         for ($i=0; $i < $userNumber; $i++) { 
             $userUser = new User();
             $password = $this->faker->password(2,6);
@@ -53,11 +56,9 @@ class AppFixtures extends Fixture
             $manager->persist($userUser);
         }
 
-
-        // $product = new Product();
-        // $manager->persist($product);
+        // Création d'ingrédients
         $listeIngredient = [];
-        for($i=0;$i<20;$i++)
+        for($i=0;$i<$ingredientNumber;$i++)
         {
             $ingredient = new Ingredient();
             $ingredient->setIngredientName($this->faker->word());
@@ -66,7 +67,9 @@ class AppFixtures extends Fixture
             $listeIngredient[] = $ingredient;
             $manager->persist($ingredient);
         }
-        for($i=0;$i<5;$i++)
+
+        // Création de recettes
+        for($i=0;$i<$recetteNumber;$i++)
         {
             $recette = new Recette();
             $recette->setRecetteName($this->faker->word());
