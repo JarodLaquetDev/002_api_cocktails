@@ -28,5 +28,6 @@ return [
     'users.get' => [['idUser'], ['_controller' => 'App\\Controller\\UserController::getUserById'], [], [['variable', '/', '[^/]++', 'idUser', true], ['text', '/api/user']], [], [], []],
     'user.delete' => [['idUser'], ['_controller' => 'App\\Controller\\UserController::deleteUser'], [], [['variable', '/', '[^/]++', 'idUser', true], ['text', '/api/user']], [], [], []],
     'user.create' => [[], ['_controller' => 'App\\Controller\\UserController::createUser'], [], [['text', '/api/user']], [], [], []],
+    'user.update' => [['id'], ['_controller' => 'App\\Controller\\UserController::updateUser'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/user']], [], [], []],
     'api_login_check' => [[], [], [], [['text', '/api/login_check']], [], [], []],
 ];

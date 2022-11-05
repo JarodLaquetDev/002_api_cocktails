@@ -40,6 +40,7 @@ return [
                     .')'
                     .'|user/([^/]++)(?'
                         .'|(*:175)'
+                        .'|(*:183)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -65,6 +66,9 @@ return [
         175 => [
             [['_route' => 'users.get', '_controller' => 'App\\Controller\\UserController::getUserById'], ['idUser'], ['GET' => 0], null, false, true, null],
             [['_route' => 'user.delete', '_controller' => 'App\\Controller\\UserController::deleteUser'], ['idUser'], ['DELETE' => 0], null, false, true, null],
+        ],
+        183 => [
+            [['_route' => 'user.update', '_controller' => 'App\\Controller\\UserController::updateUser'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

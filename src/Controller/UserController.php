@@ -13,9 +13,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -130,6 +130,41 @@ class UserController extends AbstractController
         
         $location = $urlGenerator->generate("users.get", ['idUser' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $jsonUser = $serializer->serialize($user, "json", ["groups" => 'createUser']);
+        return new JsonResponse($jsonUser, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
+    #[Route('/api/user/{id}', name: 'user.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Mettre à jour un utilisateur de la BDD
+     *
+     * @param User $user
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function updateUser(
+        User $user,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $user = $serializer->deserialize(
+            $request->getContent(), 
+            User::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $user]
+        );
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("recette.get", ['idRecette' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonUser = $serializer->serialize($user, "json", ["groups" => 'getRecette']);
         return new JsonResponse($jsonUser, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 }

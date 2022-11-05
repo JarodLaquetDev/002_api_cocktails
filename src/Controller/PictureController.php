@@ -153,8 +153,8 @@ class PictureController extends AbstractController
         $picture = $pictureRepository->find($idPicture);  
         $files = $request->files->get('file');
         $picture->setFile($files);
-        //$picture->setMimeType($files->getClientMimeType());
-        //$picture->setRealName($files->getClientOriginalName());
+        $picture->setMimeType($files->getClientMimeType());
+        $picture->setRealName($files->getClientOriginalName());
         $picture->setStatus("on");
         $picture->setPublicPath("/images/pictures");
 

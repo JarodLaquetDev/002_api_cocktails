@@ -253,7 +253,6 @@
     <service id="App\Controller\UserController" class="App\Controller\UserController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
-      <argument type="service" id="security.user_password_hasher"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.jIxfAsi.App\Controller\UserController"/>
       </call>
@@ -4508,7 +4507,16 @@
         <argument key="validator" type="service_closure" id="validator"/>
       </argument>
     </service>
-    <service id=".service_locator.LTwxNd9" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.F.HYg3X" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="serializer" type="service_closure" id="serializer"/>
+        <argument key="urlGenerator" type="service_closure" id="router.default"/>
+        <argument key="user" type="service_closure" id=".errored..service_locator.F.HYg3X.App\Entity\User"/>
+      </argument>
+    </service>
+    <service id=".service_locator.diK8tHY" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\IngredientController::createIngredient" type="service_closure" id=".service_locator.RH.qiu."/>
@@ -4531,6 +4539,7 @@
         <argument key="App\Controller\UserController::deleteUser" type="service_closure" id=".service_locator.GPGtF8v"/>
         <argument key="App\Controller\UserController::getAllUsers" type="service_closure" id=".service_locator.Xoz2gd4"/>
         <argument key="App\Controller\UserController::getUserById" type="service_closure" id=".service_locator.799zRvI"/>
+        <argument key="App\Controller\UserController::updateUser" type="service_closure" id=".service_locator.F.HYg3X"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="App\Kernel::terminate" type="service_closure" id=".service_locator.bRdave9"/>
@@ -4557,6 +4566,7 @@
         <argument key="App\Controller\UserController:deleteUser" type="service_closure" id=".service_locator.GPGtF8v"/>
         <argument key="App\Controller\UserController:getAllUsers" type="service_closure" id=".service_locator.Xoz2gd4"/>
         <argument key="App\Controller\UserController:getUserById" type="service_closure" id=".service_locator.799zRvI"/>
+        <argument key="App\Controller\UserController:updateUser" type="service_closure" id=".service_locator.F.HYg3X"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel:terminate" type="service_closure" id=".service_locator.bRdave9"/>
@@ -4855,12 +4865,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.LTwxNd9"/>
+      <argument type="service" id=".service_locator.diK8tHY"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.LTwxNd9"/>
+      <argument type="service" id=".service_locator.diK8tHY"/>
     </service>
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
@@ -4884,6 +4894,7 @@
     <service id=".errored..service_locator.cW6rrmw.App\Entity\Recette" class="App\Entity\Recette"/>
     <service id=".errored..service_locator.799zRvI.App\Entity\User" class="App\Entity\User"/>
     <service id=".errored..service_locator.GPGtF8v.App\Entity\User" class="App\Entity\User"/>
+    <service id=".errored..service_locator.F.HYg3X.App\Entity\User" class="App\Entity\User"/>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
       <argument type="collection"/>
@@ -5594,7 +5605,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.LTwxNd9"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.diK8tHY"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.Rlg80n6" alias=".service_locator.WfO.0Vv"/>
@@ -5611,7 +5622,8 @@
     <service id=".service_locator.qHGnioq" alias=".service_locator.cW6rrmw"/>
     <service id=".service_locator.ecXZS.n" alias=".service_locator.799zRvI"/>
     <service id=".service_locator.b76MKMg" alias=".service_locator.GPGtF8v"/>
-    <service id=".service_locator.rF0kwbG" alias=".service_locator.LTwxNd9"/>
+    <service id=".service_locator.TuTSIgb" alias=".service_locator.F.HYg3X"/>
+    <service id=".service_locator.YC.Mlhd" alias=".service_locator.diK8tHY"/>
     <service id=".service_locator.wKF4yn1" alias=".service_locator.19_mNxd"/>
     <service id=".service_locator.loUfwGe" alias=".service_locator.biruDiu"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
@@ -5654,6 +5666,7 @@
     <service id=".service_locator.Gi5pDtq" alias=".service_locator.799zRvI"/>
     <service id=".service_locator.O99ujjA" alias=".service_locator.GPGtF8v"/>
     <service id=".service_locator.cvrlpYC" alias=".service_locator.D9IFYjj"/>
+    <service id=".service_locator.r2zTblL" alias=".service_locator.F.HYg3X"/>
     <service id=".service_locator.EPk3UeK" alias=".service_locator.jIxfAsi"/>
     <service id=".service_locator.oFh01MZ" alias=".service_locator.LAjDzTv"/>
     <service id=".service_locator.u6DWx23" alias=".service_locator.cXsfP3P"/>
