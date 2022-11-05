@@ -260,6 +260,9 @@
     </service>
     <service id="App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
+    </service>
+    <service id="App\EntityListener\UserListener" class="App\EntityListener\UserListener" autowire="true" autoconfigure="true">
+      <tag name="doctrine.orm.entity_listener"/>
       <argument type="service" id="security.user_password_hasher"/>
     </service>
     <service id="App\EventSubscriber\ExceptionSubscriber" class="App\EventSubscriber\ExceptionSubscriber" autowire="true" autoconfigure="true">
@@ -2563,8 +2566,12 @@
     <service id="cache.doctrine.orm.default.query" class="Symfony\Component\Cache\Adapter\ArrayAdapter">
       <tag name="cache.pool"/>
     </service>
-    <service id="doctrine.orm.default_entity_listener_resolver" class="Doctrine\Bundle\DoctrineBundle\Mapping\ContainerEntityListenerResolver">
-      <argument type="service" id="service_container"/>
+    <service id="doctrine.orm.default_entity_listener_resolver" class="Doctrine\Bundle\DoctrineBundle\Mapping\ContainerEntityListenerResolver" public="true">
+      <argument type="service" id=".service_locator.UC65mK2"/>
+      <call method="registerService">
+        <argument>App\EntityListener\UserListener</argument>
+        <argument>App\EntityListener\UserListener</argument>
+      </call>
     </service>
     <service id="doctrine.orm.default_listeners.attach_entity_listeners" class="Doctrine\ORM\Tools\AttachEntityListenersListener">
       <tag name="doctrine.event_listener" event="loadClassMetadata"/>
@@ -4492,17 +4499,16 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.GPGtF8v.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.uowzR35" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.D9IFYjj" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
         <argument key="serializer" type="service_closure" id="serializer"/>
         <argument key="urlGenerator" type="service_closure" id="router.default"/>
-        <argument key="userRepository" type="service_closure" id="App\Repository\UserRepository"/>
         <argument key="validator" type="service_closure" id="validator"/>
       </argument>
     </service>
-    <service id=".service_locator.xLQqIUR" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.LTwxNd9" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\IngredientController::createIngredient" type="service_closure" id=".service_locator.RH.qiu."/>
@@ -4521,7 +4527,7 @@
         <argument key="App\Controller\RecetteController::getRecette" type="service_closure" id=".service_locator.6O2RgTD"/>
         <argument key="App\Controller\RecetteController::getRecetteByIngredient" type="service_closure" id=".service_locator.z9XZMOj"/>
         <argument key="App\Controller\RecetteController::updateRecette" type="service_closure" id=".service_locator.cW6rrmw"/>
-        <argument key="App\Controller\UserController::createUser" type="service_closure" id=".service_locator.uowzR35"/>
+        <argument key="App\Controller\UserController::createUser" type="service_closure" id=".service_locator.D9IFYjj"/>
         <argument key="App\Controller\UserController::deleteUser" type="service_closure" id=".service_locator.GPGtF8v"/>
         <argument key="App\Controller\UserController::getAllUsers" type="service_closure" id=".service_locator.Xoz2gd4"/>
         <argument key="App\Controller\UserController::getUserById" type="service_closure" id=".service_locator.799zRvI"/>
@@ -4547,7 +4553,7 @@
         <argument key="App\Controller\RecetteController:getRecette" type="service_closure" id=".service_locator.6O2RgTD"/>
         <argument key="App\Controller\RecetteController:getRecetteByIngredient" type="service_closure" id=".service_locator.z9XZMOj"/>
         <argument key="App\Controller\RecetteController:updateRecette" type="service_closure" id=".service_locator.cW6rrmw"/>
-        <argument key="App\Controller\UserController:createUser" type="service_closure" id=".service_locator.uowzR35"/>
+        <argument key="App\Controller\UserController:createUser" type="service_closure" id=".service_locator.D9IFYjj"/>
         <argument key="App\Controller\UserController:deleteUser" type="service_closure" id=".service_locator.GPGtF8v"/>
         <argument key="App\Controller\UserController:getAllUsers" type="service_closure" id=".service_locator.Xoz2gd4"/>
         <argument key="App\Controller\UserController:getUserById" type="service_closure" id=".service_locator.799zRvI"/>
@@ -4634,6 +4640,12 @@
         <argument key="vich_uploader.listener.clean.pictures" type="service_closure" id="vich_uploader.listener.clean.pictures"/>
         <argument key="vich_uploader.listener.remove.pictures" type="service_closure" id="vich_uploader.listener.remove.pictures"/>
         <argument key="vich_uploader.listener.upload.pictures" type="service_closure" id="vich_uploader.listener.upload.pictures"/>
+      </argument>
+    </service>
+    <service id=".service_locator.UC65mK2" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="App\EntityListener\UserListener" type="service_closure" id="App\EntityListener\UserListener"/>
       </argument>
     </service>
     <service id=".service_locator.McyG_un" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -4843,12 +4855,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.xLQqIUR"/>
+      <argument type="service" id=".service_locator.LTwxNd9"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.xLQqIUR"/>
+      <argument type="service" id=".service_locator.LTwxNd9"/>
     </service>
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
@@ -5582,7 +5594,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.xLQqIUR"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.LTwxNd9"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.Rlg80n6" alias=".service_locator.WfO.0Vv"/>
@@ -5599,8 +5611,7 @@
     <service id=".service_locator.qHGnioq" alias=".service_locator.cW6rrmw"/>
     <service id=".service_locator.ecXZS.n" alias=".service_locator.799zRvI"/>
     <service id=".service_locator.b76MKMg" alias=".service_locator.GPGtF8v"/>
-    <service id=".service_locator.FUMN3Dn" alias=".service_locator.uowzR35"/>
-    <service id=".service_locator.XsCDlMi" alias=".service_locator.xLQqIUR"/>
+    <service id=".service_locator.rF0kwbG" alias=".service_locator.LTwxNd9"/>
     <service id=".service_locator.wKF4yn1" alias=".service_locator.19_mNxd"/>
     <service id=".service_locator.loUfwGe" alias=".service_locator.biruDiu"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
@@ -5642,7 +5653,7 @@
     <service id=".service_locator.yWdT_kw" alias=".service_locator.Xoz2gd4"/>
     <service id=".service_locator.Gi5pDtq" alias=".service_locator.799zRvI"/>
     <service id=".service_locator.O99ujjA" alias=".service_locator.GPGtF8v"/>
-    <service id=".service_locator.hPoxCws" alias=".service_locator.uowzR35"/>
+    <service id=".service_locator.cvrlpYC" alias=".service_locator.D9IFYjj"/>
     <service id=".service_locator.EPk3UeK" alias=".service_locator.jIxfAsi"/>
     <service id=".service_locator.oFh01MZ" alias=".service_locator.LAjDzTv"/>
     <service id=".service_locator.u6DWx23" alias=".service_locator.cXsfP3P"/>

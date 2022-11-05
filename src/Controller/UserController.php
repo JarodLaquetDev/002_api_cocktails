@@ -125,8 +125,9 @@ class UserController extends AbstractController
         $user = $serializer->deserialize($request->getContent(), User::class, 'json'); 
         $password = $user->getPassword();
         $username = $user->getUsername();
+        $user->setStatus("on");
         $user->setUsername($username.'@'.$password);
-        $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));  
+        $user->setPassword($password);  
         
         $errors = $validator->validate($user);
         if($errors->count() > 0){
