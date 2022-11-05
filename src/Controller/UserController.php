@@ -19,15 +19,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
-    /**
-     * @var UserPasswordHasherInterface
-     */
-    private $userPasswordHasher;
-
-    public function __construct(UserPasswordHasherInterface $userPasswordHasher)
-    {
-        $this->userPasswordHasher = $userPasswordHasher;
-    }
 
     #[Route('/user', name: 'app_user')]
     public function index(): JsonResponse
