@@ -162,7 +162,7 @@ class PictureController extends AbstractController
         $autre->setPublicPath("/images/pictures");
         $entityManager->persist($autre);
         $entityManager->flush();
-        
+       
         $location = $urlGenerator->generate("picture.get", ['idPicture' => $picture->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $jsonRecette = $serializer->serialize($picture, "json", ["groups" => 'getPicture']);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);

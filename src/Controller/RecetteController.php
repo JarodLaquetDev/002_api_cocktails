@@ -192,7 +192,17 @@ class RecetteController extends AbstractController
         $name = $request->get('name');
         $recette = New Recette();
         $recette = $repository->findRecetteByIngredient($name);
-        $jsonRecette = $serializer->serialize($recette, 'json', ["groups" => 'getRecette']);
-        return New JsonResponse($jsonRecette,Response::HTTP_OK, [],true);
+        // Si une recette est associée à cet ingrédient
+        if(!empty($recette))
+        {
+            $jsonRecette = $serializer->serialize($recette, 'json', ["groups" => 'getRecette']);
+            return New JsonResponse($jsonRecette,Response::HTTP_OK, [],true);
+
+        }
+        // Si aucune recette n'est associée à cet ingrédient
+        else
+        {
+            return New JsonResponse(['message' => 'Aucune recette avec cet ingredient'], Response::HTTP_NOT_FOUND);
+        }
     }
 }
