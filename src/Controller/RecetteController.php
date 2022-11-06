@@ -3,21 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Recette;
-use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
+use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class RecetteController extends AbstractController
 {
@@ -31,22 +30,39 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recettes', name: 'recette.getAll')]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_USER', message: 'Absence de droits')]
+    /**
+     * Obtenir la liste de toutes les recettes de la BDD
+     *
+     * @param RecetteRepository $repository
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
     public function getAllRecettes(
         RecetteRepository $repository,
-        SerializerInterface $serializer 
+        SerializerInterface $serializer,
+        Request $request
     ) : JsonResponse
     {
-        $recettes = $repository->findAll();
+        $page = $request->get('page', 1);
+        $limit = $request->get('limit', 50);
+        $limit = $limit > 20 ? 20: $limit;
+
+        $recettes = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
         $jsonRecettes = $serializer->serialize($recettes, 'json', ['groups' => "getAllRecettes"]);
         return new JsonResponse($jsonRecettes, 200, [], true);
     }
 
     #[Route('/api/recette/{idRecette}', name: 'recette.get', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     #[ParamConverter("recette", options: ["id" => "idRecette"])]
+    /**
+     * Obtenir les informations d'une recette spécifique de la BDD
+     *
+     * @param Recette $recette
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
     public function getRecette(
         Recette $recette,
         SerializerInterface $serializer 
@@ -57,8 +73,15 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette/{idRecette}', name: 'recette.delete', methods: ['DELETE'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     #[ParamConverter("recette", options: ["id" => "idRecette"])]
+    /**
+     * Supprimer une recette spécifique de la BDD
+     *
+     * @param Recette $recette
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     */
     public function deleteRecette(
         Recette $recette,
         EntityManagerInterface $entityManager 
@@ -70,7 +93,18 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette', name: 'recette.create', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Ajouter une recette dans la BDD
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     */
     public function createRecette(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -103,7 +137,18 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/api/recette/{id}', name: 'recette.update', methods: ['PUT'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Mettre à jour une recette de la BDD
+     *
+     * @param Recette $recette
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
     public function updateRecette(
         Recette $recette,
         Request $request,
@@ -119,7 +164,6 @@ class RecetteController extends AbstractController
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
         );
-        $recette->setStatus('on');
 
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
@@ -134,23 +178,31 @@ class RecetteController extends AbstractController
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
-    #[Route('/api/recette/{idRecette}', name: 'recette.getByIngredient', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN', message: 'T\'as pas les droits sale QUEUE')]
-    #[IsGranted('ROLE_USER', message: 'T\'as pas les droits sale QUEUE')]
-    #[ParamConverter("recette", options: ["id" => "idRecette"])]
-    public function getRecetteByIngredient(
-        int $idRecette,
-        RecetteRepository $repository,
-        SerializerInterface $serializer,
-        Request $request 
-    ) : JsonResponse
+    #[Route('/api/recette/ingredient/{name}', name: 'recette.getByIngredient', methods: ['GET'])]
+    /**
+     * Obtenir toutes les recettes associées à un ingrédient (par le nom)
+     *
+     * @param Request $request
+     * @param RecetteRepository $repository
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
+    public function getRecetteByIngredient(Request $request, RecetteRepository $repository, SerializerInterface $serializer): JsonResponse
     {
-        $ingrName = $request->get('ingrName');
-        $recette = $repository->fondRecetteByIngredient($ingrName);
+        $name = $request->get('name');
+        $recette = New Recette();
+        $recette = $repository->findRecetteByIngredient($name);
+        // Si une recette est associée à cet ingrédient
+        if(!empty($recette))
+        {
+            $jsonRecette = $serializer->serialize($recette, 'json', ["groups" => 'getRecette']);
+            return New JsonResponse($jsonRecette,Response::HTTP_OK, [],true);
 
-        
-        $jsonRecette = $serializer->serialize($recette, 'json');
-        return $recette ? new JsonResponse($jsonRecette, Response::HTTP_OK, [], true):
-        new JsonResponse($jsonRecette, Response::HTTP_NOT_FOUND, [], false);
+        }
+        // Si aucune recette n'est associée à cet ingrédient
+        else
+        {
+            return New JsonResponse(['message' => 'Aucune recette avec cet ingredient'], Response::HTTP_NOT_FOUND);
+        }
     }
 }

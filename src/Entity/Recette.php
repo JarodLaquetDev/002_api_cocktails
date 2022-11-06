@@ -12,12 +12,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 class Recette
 {
+    // Identifiant unique
+    // Ex : 130
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette","test"])]
     private ?int $id = null;
 
+    // Nom d'une recette
+    // Ex : mojito
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Une recette doit avoir un nom")]
     #[Assert\Length(min: 3, minMessage: "Le nom de la recette doit etre superieur a {{ limit }} caractere")]
@@ -28,6 +32,8 @@ class Recette
     #[Groups(["getRecette","createRecette"])]
     private Collection $recetteIngredients;
 
+    // Status d'une recette
+    // Ex : on
     #[ORM\Column(length: 20)]
     private ?string $status = null;
 
@@ -35,32 +41,51 @@ class Recette
     {
         $this->recetteIngredients = new ArrayCollection();
     }
-
+    /**
+     * Obtenir l'id d'une recette
+     *
+     * @return integer|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    /**
+     * Obtenir le nom d'une recette
+     *
+     * @return string|null
+     */
     public function getRecetteName(): ?string
     {
         return $this->recetteName;
     }
-
+    /**
+     * Donner un nom à une recette
+     *
+     * @param string $recetteName
+     * @return self
+     */
     public function setRecetteName(string $recetteName): self
     {
         $this->recetteName = $recetteName;
 
         return $this;
     }
-
     /**
-     * @return Collection<int, Ingredient>
+     * Obtenur les ingrédients associés à une recette
+     *
+     * @return Collection
      */
     public function getRecetteIngredients(): Collection
     {
         return $this->recetteIngredients;
     }
-
+    /**
+     * Ajouter un ingrédient à une recette
+     *
+     * @param Ingredient $recetteIngredient
+     * @return self
+     */
     public function addRecetteIngredient(Ingredient $recetteIngredient): self
     {
         if (!$this->recetteIngredients->contains($recetteIngredient)) {
@@ -69,19 +94,33 @@ class Recette
 
         return $this;
     }
-
+    /**
+     * Supprimer un ingrédient d'une recette
+     *
+     * @param Ingredient $recetteIngredient
+     * @return self
+     */
     public function removeRecetteIngredient(Ingredient $recetteIngredient): self
     {
         $this->recetteIngredients->removeElement($recetteIngredient);
 
         return $this;
     }
-
+    /**
+     * Obtenir le status d'une recette
+     *
+     * @return string|null
+     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
-
+    /**
+     * Donner un status à une recette
+     *
+     * @param string $status
+     * @return self
+     */
     public function setStatus(string $status): self
     {
         $this->status = $status;

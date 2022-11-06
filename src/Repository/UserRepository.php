@@ -18,30 +18,46 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
-{
+{ 
+    /**
+     * Constructeur
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
-
+    /**
+     * Méthode pour sauvegarder un utilisateur en bdd
+     *
+     * @param User $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function save(User $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->persist($entity); // ajouter
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
-
+    /**
+     * Méthode pour supprimer un utilisateur en bdd
+     *
+     * @param User $entity
+     * @param boolean $flush
+     * @return void
+     */
     public function remove(User $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->remove($entity); // supprimer
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
-
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
@@ -54,6 +70,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+    /**
+     * Méthode pour sortir tous les users "on " avec une pagination
+     *
+     * @param [type] $page
+     * @param [type] $limit
+     * @return void
+     */
+    public function findWithPagination($page, $limit){
+        $qb = $this->createQueryBuilder('i');
+        $qb->setFirstResult(($page - 1) * $limit);
+        $qb->setMaxResults($limit);
+        $qb->where('i.status = \'on\'');
+        return $qb->getQuery()->getResult();
     }
 
 //    /**
