@@ -55,7 +55,6 @@ class IngredientRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush(); // mettre à jour la bdd
         }
     }
-
     /**
      * Méthode pour sortir tous les ingrédients "on" avec une pagination
      *
@@ -70,7 +69,6 @@ class IngredientRepository extends ServiceEntityRepository
         $qb->where('i.status = \'on\'');
         return $qb->getQuery()->getResult();
     }
-
     /**
      * Méthode pour sortir tous les ingrédients en fonction de leur statut
      *
@@ -83,15 +81,6 @@ class IngredientRepository extends ServiceEntityRepository
         $qb->where('i.status = :status')->setParameter('status', $status);
         return $qb->getQuery()->getResult();
         // test 2
-    }
-
-    /**
-     * methode retournant les recettes en fonction d'un nom d'ingredient 
-     */
-    public function findRecetteByIngredient($ingredientName){
-        $qb = $this->createQueryBuilder('i');
-        $qb = $qb->where('i.ingredientName = :ingredientName')->setParameter('ingredientName', $ingredientName);
-        return $qb->getQuery()->getResult();
     }
 
 }

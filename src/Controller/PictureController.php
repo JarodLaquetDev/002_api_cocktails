@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -150,15 +149,18 @@ class PictureController extends AbstractController
         PictureRepository $pictureRepository
     ) : JsonResponse
     {
-        $picture = $pictureRepository->find($idPicture);  
+        $picture = new Picture();
+        $autre = $pictureRepository->find($idPicture);  
         $files = $request->files->get('file');
         $picture->setFile($files);
         $picture->setMimeType($files->getClientMimeType());
         $picture->setRealName($files->getClientOriginalName());
-        $picture->setStatus("on");
-        $picture->setPublicPath("/images/pictures");
-
-        $entityManager->persist($picture);
+        $autre->setFile($picture->getFile());
+        $autre->setMimeType($picture->getMimeType());
+        $autre->setRealName($picture->getRealName());
+        $autre->setStatus("on");
+        $autre->setPublicPath("/images/pictures");
+        $entityManager->persist($autre);
         $entityManager->flush();
         
         $location = $urlGenerator->generate("picture.get", ['idPicture' => $picture->getId()], UrlGeneratorInterface::ABSOLUTE_URL);

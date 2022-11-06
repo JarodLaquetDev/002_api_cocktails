@@ -3,21 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Recette;
-use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
+use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class RecetteController extends AbstractController
 {
@@ -179,22 +178,21 @@ class RecetteController extends AbstractController
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
-    #[Route('/api/recette/{idRecette}', name: 'recette.getByIngredient', methods: ['GET'])]
-    #[IsGranted('ROLE_USER', message: 'Absence de droits')]
-    #[ParamConverter("recette", options: ["id" => "idRecette"])]
-    public function getRecetteByIngredient(
-        int $idRecette,
-        RecetteRepository $repository,
-        SerializerInterface $serializer,
-        Request $request 
-    ) : JsonResponse
+    #[Route('/api/recette/ingredient/{name}', name: 'recette.getByIngredient', methods: ['GET'])]
+    /**
+     * Obtenir toutes les recettes associées à un ingrédient (par le nom)
+     *
+     * @param Request $request
+     * @param RecetteRepository $repository
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     */
+    public function getRecetteByIngredient(Request $request, RecetteRepository $repository, SerializerInterface $serializer): JsonResponse
     {
-        $ingrName = $request->get('ingrName');
-        $recette = $repository->fondRecetteByIngredient($ingrName);
-
-        
-        $jsonRecette = $serializer->serialize($recette, 'json');
-        return $recette ? new JsonResponse($jsonRecette, Response::HTTP_OK, [], true):
-        new JsonResponse($jsonRecette, Response::HTTP_NOT_FOUND, [], false);
+        $name = $request->get('name');
+        $recette = New Recette();
+        $recette = $repository->findRecetteByIngredient($name);
+        $jsonRecette = $serializer->serialize($recette, 'json', ["groups" => 'getRecette']);
+        return New JsonResponse($jsonRecette,Response::HTTP_OK, [],true);
     }
 }
