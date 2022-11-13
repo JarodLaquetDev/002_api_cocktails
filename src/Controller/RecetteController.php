@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recette;
+use App\Repository\PictureRepository;
 use App\Repository\RecetteRepository;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -270,7 +271,7 @@ class RecetteController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         InstructionRepository $instructionRepository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator 
     ) : JsonResponse
     {
         $recette = $serializer->deserialize(
@@ -324,6 +325,47 @@ class RecetteController extends AbstractController
         $content = $request->toArray();
         $idInstruction = $content['idInstruction'];
         $recette->removeInstructionRecette($instructionRepository->find($idInstruction));  
+
+        $entityManager->persist($recette);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
+    #[Route('/api/recette_image_add/{id}', name: 'recetteImageAdd.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Ajouter une image à une recette
+     *
+     * @param Recette $recette
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function addPictureInRecette(
+        Recette $recette,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        PictureRepository $pictureRepository,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $recette = $serializer->deserialize(
+            $request->getContent(), 
+            Recette::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
+        );
+
+        $content = $request->toArray();
+        $idPicture = $content['idPicture'];
+        $recette->setImageRecette($pictureRepository->find($idPicture));  
 
         $entityManager->persist($recette);
         $entityManager->flush();

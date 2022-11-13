@@ -62,20 +62,23 @@ return [
                             .')'
                             .'|ingredient/([^/]++)(*:338)'
                         .')'
-                        .'|_in(?'
-                            .'|gredient_(?'
-                                .'|add/([^/]++)(*:377)'
-                                .'|delete/([^/]++)(*:400)'
+                        .'|_i(?'
+                            .'|n(?'
+                                .'|gredient_(?'
+                                    .'|add/([^/]++)(*:380)'
+                                    .'|delete/([^/]++)(*:403)'
+                                .')'
+                                .'|struction_(?'
+                                    .'|add/([^/]++)(*:437)'
+                                    .'|delete/([^/]++)(*:460)'
+                                .')'
                             .')'
-                            .'|struction_(?'
-                                .'|add/([^/]++)(*:434)'
-                                .'|delete/([^/]++)(*:457)'
-                            .')'
+                            .'|mage_add/([^/]++)(*:487)'
                         .')'
                     .')'
                     .'|user/([^/]++)(?'
-                        .'|(*:484)'
-                        .'|(*:492)'
+                        .'|(*:513)'
+                        .'|(*:521)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -107,15 +110,16 @@ return [
         ],
         310 => [[['_route' => 'recette.update', '_controller' => 'App\\Controller\\RecetteController::updateRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
         338 => [[['_route' => 'recette.getByIngredient', '_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], ['name'], ['GET' => 0], null, false, true, null]],
-        377 => [[['_route' => 'recetteIngredientAdd.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        400 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        434 => [[['_route' => 'recetteInstructionAdd.update', '_controller' => 'App\\Controller\\RecetteController::addInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        457 => [[['_route' => 'recetteInstructionDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        484 => [
+        380 => [[['_route' => 'recetteIngredientAdd.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        403 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        437 => [[['_route' => 'recetteInstructionAdd.update', '_controller' => 'App\\Controller\\RecetteController::addInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        460 => [[['_route' => 'recetteInstructionDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        487 => [[['_route' => 'recetteImageAdd.update', '_controller' => 'App\\Controller\\RecetteController::addPictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        513 => [
             [['_route' => 'users.get', '_controller' => 'App\\Controller\\UserController::getUserById'], ['idUser'], ['GET' => 0], null, false, true, null],
             [['_route' => 'user.delete', '_controller' => 'App\\Controller\\UserController::deleteUser'], ['idUser'], ['DELETE' => 0], null, false, true, null],
         ],
-        492 => [
+        521 => [
             [['_route' => 'user.update', '_controller' => 'App\\Controller\\UserController::updateUser'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
