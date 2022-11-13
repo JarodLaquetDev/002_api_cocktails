@@ -32,6 +32,8 @@ return [
     'recette.update' => [['id'], ['_controller' => 'App\\Controller\\RecetteController::updateRecette'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/recette']], [], [], []],
     'recetteIngredientAdd.update' => [['id'], ['_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/recette_ingredient_add']], [], [], []],
     'recetteIngredientDelete.update' => [['id'], ['_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/recette_ingredient_delete']], [], [], []],
+    'recetteInstructionAdd.update' => [['id'], ['_controller' => 'App\\Controller\\RecetteController::addInstructionInRecette'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/recette_instruction_add']], [], [], []],
+    'recetteInstructionDelete.update' => [['id'], ['_controller' => 'App\\Controller\\RecetteController::deleteInstructionInRecette'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/recette_instruction_delete']], [], [], []],
     'recette.getByIngredient' => [['name'], ['_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], [], [['variable', '/', '[^/]++', 'name', true], ['text', '/api/recette/ingredient']], [], [], []],
     'app_user' => [[], ['_controller' => 'App\\Controller\\UserController::index'], [], [['text', '/user']], [], [], []],
     'user.getAll' => [[], ['_controller' => 'App\\Controller\\UserController::getAllUsers'], [], [['text', '/api/users']], [], [], []],
