@@ -66,7 +66,6 @@ class PictureController extends AbstractController
     public function getPicture(int $idPicture, SerializerInterface $serializer, PictureRepository $pictureRepository, UrlGeneratorInterface $urlGenerator, Request $request) : JsonResponse
     {
         $picture = $pictureRepository->find($idPicture);
-
         $relativePath = $picture->getPublicPath() . "/" . $picture->getRealPath();
         $location = $request->getUriForPath('/');
         $location = $location . str_replace("/images", "images", $relativePath);

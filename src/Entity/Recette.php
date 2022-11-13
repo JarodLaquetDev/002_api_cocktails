@@ -17,7 +17,7 @@ class Recette
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette","test"])]
+    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
     private ?int $id = null;
 
     // Nom d'une recette
@@ -28,6 +28,7 @@ class Recette
     #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette","test"])]
     private ?string $recetteName = null;
 
+    // Liste des ingrédients associés à la recette
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'ingredientRecette')]
     #[Groups(["getRecette","createRecette"])]
     private Collection $recetteIngredients;
@@ -36,6 +37,11 @@ class Recette
     // Ex : on
     #[ORM\Column(length: 20)]
     private ?string $status = null;
+
+    // Image associée à une recette
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
+    private ?Picture $imageRecette = null;
 
     public function __construct()
     {
@@ -124,6 +130,27 @@ class Recette
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+    /**
+     * Retourner l'image associée à la recette
+     *
+     * @return Picture|null
+     */
+    public function getImageRecette(): ?Picture
+    {
+        return $this->imageRecette;
+    }
+    /**
+     * Donner une image à une recette
+     *
+     * @param Picture|null $imageRecette
+     * @return self
+     */
+    public function setImageRecette(?Picture $imageRecette): self
+    {
+        $this->imageRecette = $imageRecette;
 
         return $this;
     }

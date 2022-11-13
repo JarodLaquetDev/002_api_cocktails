@@ -50,6 +50,10 @@ class Ingredient
     #[Groups(["getIngredient","test"])]
     private Collection $ingredientRecette;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient"])]
+    private ?Picture $ingredientImage = null;
+
     public function __construct()
     {
         $this->ingredientRecette = new ArrayCollection();
@@ -163,6 +167,18 @@ class Ingredient
         if ($this->ingredientRecette->removeElement($ingredientRecette)) {
             $ingredientRecette->removeRecetteIngredient($this);
         }
+
+        return $this;
+    }
+
+    public function getIngredientImage(): ?Picture
+    {
+        return $this->ingredientImage;
+    }
+
+    public function setIngredientImage(?Picture $ingredientImage): self
+    {
+        $this->ingredientImage = $ingredientImage;
 
         return $this;
     }

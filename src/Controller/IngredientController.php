@@ -40,7 +40,7 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @param Request $request
      * @return JsonResponse
-     */
+     */ 
     public function getAllIngredient(
         IngredientRepository $repository,
         SerializerInterface $serializer,
