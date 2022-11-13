@@ -170,12 +170,21 @@ class Ingredient
 
         return $this;
     }
-
+    /**
+     * Obtenir l'image d'un ingrédient
+     *
+     * @return Picture|null
+     */
     public function getIngredientImage(): ?Picture
     {
         return $this->ingredientImage;
     }
-
+    /**
+     * Donner une image à un ingrédient
+     *
+     * @param Picture|null $ingredientImage
+     * @return self
+     */
     public function setIngredientImage(?Picture $ingredientImage): self
     {
         $this->ingredientImage = $ingredientImage;
