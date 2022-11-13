@@ -43,9 +43,13 @@ class Recette
     #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
     private ?Picture $imageRecette = null;
 
+    #[ORM\ManyToMany(targetEntity: Instruction::class, inversedBy: 'recettes')]
+    private Collection $instructionRecette;
+
     public function __construct()
     {
         $this->recetteIngredients = new ArrayCollection();
+        $this->instructionRecette = new ArrayCollection();
     }
     /**
      * Obtenir l'id d'une recette
@@ -153,5 +157,29 @@ class Recette
         $this->imageRecette = $imageRecette;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Instruction>
+     */
+    public function getInstructionRecette(): Collection
+    {
+        return $this->instructionRecette;
+    }
+
+    public function addInstructionRecette(Instruction $instructionRecette): self
+    {
+        if (!$this->instructionRecette->contains($instructionRecette)) {
+            $this->instructionRecette->add($instructionRecette);
+        }
+
+        return $this;
+    }
+
+    public function removeInstructionRecette(Instruction $instructionRecette): self
+    {
+        $this->instructionRecette->removeElement($instructionRecette);
+
+        return $this; 
     }
 }

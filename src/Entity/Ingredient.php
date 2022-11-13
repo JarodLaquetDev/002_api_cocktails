@@ -47,7 +47,7 @@ class Ingredient
     private ?string $status = null;
 
     #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'recetteIngredients')]
-    #[Groups(["getIngredient","test"])]
+    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient"])]
     private Collection $ingredientRecette;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

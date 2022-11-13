@@ -63,6 +63,16 @@ class AppFixtures extends Fixture
             $manager->persist($ingredient);
         }
 
+                // Création d'instruction :
+        for($i=0;$i<$instructionNumber;$i++)
+        {
+            $instruction = new Instruction();
+            $instruction->setPhrase($this->faker->word());
+            $instruction->setStatus("on");
+            $manager->persist($instruction);
+            $listeInstruction[] = $instruction;
+        }
+
         // Création de recettes
         for($i=0;$i<$recetteNumber;$i++)
         {
@@ -70,15 +80,8 @@ class AppFixtures extends Fixture
             $recette->setRecetteName($this->faker->word());
             $recette->setStatus("on");
             $recette->addRecetteIngredient($listeIngredient[array_rand($listeIngredient)]);
+            $recette->addInstructionRecette($listeInstruction[array_rand($listeInstruction)]);
             $manager->persist($recette);
-        }
-
-        // Création d'instruction :
-        for($i=0;$i<$instructionNumber;$i++)
-        {
-            $instruction = new Instruction();
-            $instruction->setPhrase($this->faker->word());
-            $manager->persist($instruction);
         }
         $manager->flush();
     }

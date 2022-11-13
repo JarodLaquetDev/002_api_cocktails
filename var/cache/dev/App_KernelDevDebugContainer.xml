@@ -236,6 +236,13 @@
         <argument type="service" id=".service_locator.jIxfAsi.App\Controller\IngredientController"/>
       </call>
     </service>
+    <service id="App\Controller\InstructionController" class="App\Controller\InstructionController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\InstructionController"/>
+      </call>
+    </service>
     <service id="App\Controller\PictureController" class="App\Controller\PictureController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -3997,6 +4004,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\IngredientController" class="App\Controller\IngredientController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\IngredientController" class="App\Controller\IngredientController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\IngredientController" class="App\Controller\IngredientController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\InstructionController" class="App\Controller\InstructionController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\InstructionController" class="App\Controller\InstructionController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\InstructionController" class="App\Controller\InstructionController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\PictureController" class="App\Controller\PictureController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\PictureController" class="App\Controller\PictureController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\PictureController" class="App\Controller\PictureController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -4402,6 +4412,46 @@
         <argument key="urlGenerator" type="service_closure" id="router.default"/>
       </argument>
     </service>
+    <service id=".service_locator..UUEbSQ" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="repository" type="service_closure" id="App\Repository\InstructionRepository"/>
+        <argument key="serializer" type="service_closure" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.r_6FTsx" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="instruction" type="service_closure" id=".errored..service_locator.r_6FTsx.App\Entity\Instruction"/>
+        <argument key="serializer" type="service_closure" id="serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.SUN0Bfb" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="instruction" type="service_closure" id=".errored..service_locator.SUN0Bfb.App\Entity\Instruction"/>
+      </argument>
+    </service>
+    <service id=".service_locator.D9IFYjj" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="serializer" type="service_closure" id="serializer"/>
+        <argument key="urlGenerator" type="service_closure" id="router.default"/>
+        <argument key="validator" type="service_closure" id="validator"/>
+      </argument>
+    </service>
+    <service id=".service_locator.Wh.TevJ" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="instruction" type="service_closure" id=".errored..service_locator.Wh.TevJ.App\Entity\Instruction"/>
+        <argument key="recetteRepository" type="service_closure" id="App\Repository\RecetteRepository"/>
+        <argument key="serializer" type="service_closure" id="serializer"/>
+        <argument key="urlGenerator" type="service_closure" id="router.default"/>
+      </argument>
+    </service>
     <service id=".service_locator.3vRPUPK" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4504,15 +4554,6 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.GPGtF8v.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.D9IFYjj" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
-        <argument key="serializer" type="service_closure" id="serializer"/>
-        <argument key="urlGenerator" type="service_closure" id="router.default"/>
-        <argument key="validator" type="service_closure" id="validator"/>
-      </argument>
-    </service>
     <service id=".service_locator.F.HYg3X" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4522,7 +4563,7 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.F.HYg3X.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.diK8tHY" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.tjfOlz_" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\IngredientController::createIngredient" type="service_closure" id=".service_locator.RH.qiu."/>
@@ -4530,6 +4571,11 @@
         <argument key="App\Controller\IngredientController::getAllIngredient" type="service_closure" id=".service_locator.PSMRMAc"/>
         <argument key="App\Controller\IngredientController::getIngredient" type="service_closure" id=".service_locator.gov_ayN"/>
         <argument key="App\Controller\IngredientController::updateIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
+        <argument key="App\Controller\InstructionController::createInstruction" type="service_closure" id=".service_locator.D9IFYjj"/>
+        <argument key="App\Controller\InstructionController::deleteInstruction" type="service_closure" id=".service_locator.SUN0Bfb"/>
+        <argument key="App\Controller\InstructionController::getAllInstructions" type="service_closure" id=".service_locator..UUEbSQ"/>
+        <argument key="App\Controller\InstructionController::getInstruction" type="service_closure" id=".service_locator.r_6FTsx"/>
+        <argument key="App\Controller\InstructionController::updateIngredient" type="service_closure" id=".service_locator.Wh.TevJ"/>
         <argument key="App\Controller\PictureController::createPicture" type="service_closure" id=".service_locator.kbr8elP"/>
         <argument key="App\Controller\PictureController::deletePicture" type="service_closure" id=".service_locator.Q0GnMS6"/>
         <argument key="App\Controller\PictureController::getAllPictures" type="service_closure" id=".service_locator.3vRPUPK"/>
@@ -4557,6 +4603,11 @@
         <argument key="App\Controller\IngredientController:getAllIngredient" type="service_closure" id=".service_locator.PSMRMAc"/>
         <argument key="App\Controller\IngredientController:getIngredient" type="service_closure" id=".service_locator.gov_ayN"/>
         <argument key="App\Controller\IngredientController:updateIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
+        <argument key="App\Controller\InstructionController:createInstruction" type="service_closure" id=".service_locator.D9IFYjj"/>
+        <argument key="App\Controller\InstructionController:deleteInstruction" type="service_closure" id=".service_locator.SUN0Bfb"/>
+        <argument key="App\Controller\InstructionController:getAllInstructions" type="service_closure" id=".service_locator..UUEbSQ"/>
+        <argument key="App\Controller\InstructionController:getInstruction" type="service_closure" id=".service_locator.r_6FTsx"/>
+        <argument key="App\Controller\InstructionController:updateIngredient" type="service_closure" id=".service_locator.Wh.TevJ"/>
         <argument key="App\Controller\PictureController:createPicture" type="service_closure" id=".service_locator.kbr8elP"/>
         <argument key="App\Controller\PictureController:deletePicture" type="service_closure" id=".service_locator.Q0GnMS6"/>
         <argument key="App\Controller\PictureController:getAllPictures" type="service_closure" id=".service_locator.3vRPUPK"/>
@@ -4731,6 +4782,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.jIxfAsi" method="withContext"/>
     </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\InstructionController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\InstructionController"/>
+      <argument>App\Controller\InstructionController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
     <service id=".service_locator.jIxfAsi.App\Controller\PictureController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\PictureController"/>
       <argument>App\Controller\PictureController</argument>
@@ -4872,12 +4929,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.diK8tHY"/>
+      <argument type="service" id=".service_locator.tjfOlz_"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.diK8tHY"/>
+      <argument type="service" id=".service_locator.tjfOlz_"/>
     </service>
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
@@ -4894,6 +4951,9 @@
     <service id=".errored..service_locator.gov_ayN.App\Entity\Ingredient" class="App\Entity\Ingredient"/>
     <service id=".errored..service_locator.A.s9JAz.App\Entity\Ingredient" class="App\Entity\Ingredient"/>
     <service id=".errored..service_locator.ZhewDLY.App\Entity\Ingredient" class="App\Entity\Ingredient"/>
+    <service id=".errored..service_locator.r_6FTsx.App\Entity\Instruction" class="App\Entity\Instruction"/>
+    <service id=".errored..service_locator.SUN0Bfb.App\Entity\Instruction" class="App\Entity\Instruction"/>
+    <service id=".errored..service_locator.Wh.TevJ.App\Entity\Instruction" class="App\Entity\Instruction"/>
     <service id=".errored..service_locator.Q0GnMS6.App\Entity\Picture" class="App\Entity\Picture"/>
     <service id=".errored..service_locator.4OzzpGK.App\Entity\Picture" class="App\Entity\Picture"/>
     <service id=".errored..service_locator.6O2RgTD.App\Entity\Recette" class="App\Entity\Recette"/>
@@ -5612,7 +5672,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.diK8tHY"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.tjfOlz_"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.Rlg80n6" alias=".service_locator.WfO.0Vv"/>
@@ -5620,6 +5680,8 @@
     <service id=".service_locator.ZWyyUZj" alias=".service_locator.A.s9JAz"/>
     <service id=".service_locator.fGLcvDu" alias=".service_locator.RH.qiu."/>
     <service id=".service_locator.gonZ6I0" alias=".service_locator.ZhewDLY"/>
+    <service id=".service_locator.iW4x8bp" alias=".service_locator.SUN0Bfb"/>
+    <service id=".service_locator.RNLUBGZ" alias=".service_locator.Wh.TevJ"/>
     <service id=".service_locator.5TfxJcz" alias=".service_locator.35sFjx3"/>
     <service id=".service_locator.6_iJnkT" alias=".service_locator.Q0GnMS6"/>
     <service id=".service_locator.guLMU7c" alias=".service_locator.kbr8elP"/>
@@ -5630,7 +5692,7 @@
     <service id=".service_locator.ecXZS.n" alias=".service_locator.799zRvI"/>
     <service id=".service_locator.b76MKMg" alias=".service_locator.GPGtF8v"/>
     <service id=".service_locator.TuTSIgb" alias=".service_locator.F.HYg3X"/>
-    <service id=".service_locator.YC.Mlhd" alias=".service_locator.diK8tHY"/>
+    <service id=".service_locator.eduCtqu" alias=".service_locator.tjfOlz_"/>
     <service id=".service_locator.wKF4yn1" alias=".service_locator.19_mNxd"/>
     <service id=".service_locator.loUfwGe" alias=".service_locator.biruDiu"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
@@ -5659,6 +5721,11 @@
     <service id=".service_locator.kS_YNBN" alias=".service_locator.A.s9JAz"/>
     <service id=".service_locator.186czrY" alias=".service_locator.RH.qiu."/>
     <service id=".service_locator.CRa35c6" alias=".service_locator.ZhewDLY"/>
+    <service id=".service_locator.AClZYua" alias=".service_locator..UUEbSQ"/>
+    <service id=".service_locator.LvDXZ1e" alias=".service_locator.r_6FTsx"/>
+    <service id=".service_locator.Ls4XEFG" alias=".service_locator.SUN0Bfb"/>
+    <service id=".service_locator.cvrlpYC" alias=".service_locator.D9IFYjj"/>
+    <service id=".service_locator.hU0Uj9l" alias=".service_locator.Wh.TevJ"/>
     <service id=".service_locator.KdpADu2" alias=".service_locator.3vRPUPK"/>
     <service id=".service_locator.xdtkIAg" alias=".service_locator.35sFjx3"/>
     <service id=".service_locator.fDJF8xV" alias=".service_locator.Q0GnMS6"/>
@@ -5672,7 +5739,6 @@
     <service id=".service_locator.yWdT_kw" alias=".service_locator.Xoz2gd4"/>
     <service id=".service_locator.Gi5pDtq" alias=".service_locator.799zRvI"/>
     <service id=".service_locator.O99ujjA" alias=".service_locator.GPGtF8v"/>
-    <service id=".service_locator.cvrlpYC" alias=".service_locator.D9IFYjj"/>
     <service id=".service_locator.r2zTblL" alias=".service_locator.F.HYg3X"/>
     <service id=".service_locator.EPk3UeK" alias=".service_locator.jIxfAsi"/>
     <service id=".service_locator.oFh01MZ" alias=".service_locator.LAjDzTv"/>

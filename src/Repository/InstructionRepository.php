@@ -26,7 +26,7 @@ class InstructionRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush(); 
         }
     }
 
@@ -37,6 +37,20 @@ class InstructionRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+        /**
+     * Méthode pour sortir tous les ingrédients "on" avec une pagination
+     *
+     * @param [type] $page
+     * @param [type] $limit
+     * @return void
+     */
+    public function findWithPagination($page, $limit){
+        $qb = $this->createQueryBuilder('i');
+        $qb->setFirstResult(($page - 1) * $limit);
+        $qb->setMaxResults($limit);
+        $qb->where('i.status = \'on\'');
+        return $qb->getQuery()->getResult();
     }
 
 //    /**
