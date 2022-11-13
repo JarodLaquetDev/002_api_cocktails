@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
-class Ingredient
+class Ingredient 
 {
     // Identifiant unique
     // Ex : 130

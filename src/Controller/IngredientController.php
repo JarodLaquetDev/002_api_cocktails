@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ingredient;
+use App\Repository\PictureRepository;
 use App\Repository\RecetteRepository;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -245,6 +246,47 @@ class IngredientController extends AbstractController
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
         $ingredient->removeIngredientRecette($recetteRepository->find($idRecette));      
+
+        $entityManager->persist($ingredient);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
+    #[Route('/api/ingredient_image_add/{id}', name: 'ingredientPictureAdd.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Ajouter une image à un ingrédient
+     *
+     * @param Ingredient $ingredient
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param PictureRepository $pictureRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function addPictureInIngredient(
+        Ingredient $ingredient,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        PictureRepository $pictureRepository,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $ingredient = $serializer->deserialize(
+            $request->getContent(), 
+            Ingredient::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        );
+
+        $content = $request->toArray();
+        $idPicture = $content['idPicture'];
+        $ingredient->setIngredientImage($pictureRepository->find($idPicture));      
 
         $entityManager->persist($ingredient);
         $entityManager->flush();
