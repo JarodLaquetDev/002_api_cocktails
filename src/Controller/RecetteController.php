@@ -169,7 +169,7 @@ class RecetteController extends AbstractController
     }
 
     
-    #[Route('/api/recette_ingredient/{id}', name: 'recetteIngredient.update', methods: ['PUT'])]
+    #[Route('/api/recette_ingredient_add/{id}', name: 'recetteIngredientAdd.update', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Ajouter un ingrédient à une recette
@@ -201,6 +201,47 @@ class RecetteController extends AbstractController
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
         $recette->addRecetteIngredient($ingredientRepository->find($idIngredient));  
+
+        $entityManager->persist($recette);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
+    #[Route('/api/recette_ingredient_delete/{id}', name: 'recetteIngredientDelete.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Supprimer un ingrédient d'une recette
+     *
+     * @param Recette $recette
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function deleteIngredientInRecette(
+        Recette $recette,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        IngredientRepository $ingredientRepository,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $recette = $serializer->deserialize(
+            $request->getContent(), 
+            Recette::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
+        );
+
+        $content = $request->toArray();
+        $idIngredient = $content['idIngredient'];
+        $recette->removeRecetteIngredient($ingredientRepository->find($idIngredient));  
 
         $entityManager->persist($recette);
         $entityManager->flush();

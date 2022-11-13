@@ -53,11 +53,14 @@ return [
                             .')'
                             .'|ingredient/([^/]++)(*:247)'
                         .')'
-                        .'|_ingredient/([^/]++)(*:276)'
+                        .'|_ingredient_(?'
+                            .'|add/([^/]++)(*:283)'
+                            .'|delete/([^/]++)(*:306)'
+                        .')'
                     .')'
                     .'|user/([^/]++)(?'
-                        .'|(*:301)'
-                        .'|(*:309)'
+                        .'|(*:332)'
+                        .'|(*:340)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -86,12 +89,13 @@ return [
         ],
         219 => [[['_route' => 'recette.update', '_controller' => 'App\\Controller\\RecetteController::updateRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
         247 => [[['_route' => 'recette.getByIngredient', '_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], ['name'], ['GET' => 0], null, false, true, null]],
-        276 => [[['_route' => 'recetteIngredient.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        301 => [
+        283 => [[['_route' => 'recetteIngredientAdd.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        306 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        332 => [
             [['_route' => 'users.get', '_controller' => 'App\\Controller\\UserController::getUserById'], ['idUser'], ['GET' => 0], null, false, true, null],
             [['_route' => 'user.delete', '_controller' => 'App\\Controller\\UserController::deleteUser'], ['idUser'], ['DELETE' => 0], null, false, true, null],
         ],
-        309 => [
+        340 => [
             [['_route' => 'user.update', '_controller' => 'App\\Controller\\UserController::updateUser'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
