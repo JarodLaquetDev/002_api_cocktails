@@ -35,32 +35,35 @@ return [
                                 .'|(*:78)'
                                 .'|(*:85)'
                             .')'
-                            .'|_recette/([^/]++)(*:110)'
+                            .'|_recette_(?'
+                                .'|add/([^/]++)(*:117)'
+                                .'|delete/([^/]++)(*:140)'
+                            .')'
                         .')'
                         .'|struction/([^/]++)(?'
-                            .'|(*:140)'
-                            .'|(*:148)'
+                            .'|(*:171)'
+                            .'|(*:179)'
                         .')'
                     .')'
                     .'|picture/([^/]++)(?'
-                        .'|(*:177)'
+                        .'|(*:208)'
                     .')'
                     .'|recette(?'
                         .'|/(?'
                             .'|([^/]++)(?'
-                                .'|(*:211)'
-                                .'|(*:219)'
+                                .'|(*:242)'
+                                .'|(*:250)'
                             .')'
-                            .'|ingredient/([^/]++)(*:247)'
+                            .'|ingredient/([^/]++)(*:278)'
                         .')'
                         .'|_ingredient_(?'
-                            .'|add/([^/]++)(*:283)'
-                            .'|delete/([^/]++)(*:306)'
+                            .'|add/([^/]++)(*:314)'
+                            .'|delete/([^/]++)(*:337)'
                         .')'
                     .')'
                     .'|user/([^/]++)(?'
-                        .'|(*:332)'
-                        .'|(*:340)'
+                        .'|(*:363)'
+                        .'|(*:371)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -72,30 +75,31 @@ return [
             [['_route' => 'ingredient.delete', '_controller' => 'App\\Controller\\IngredientController::deleteIngredient'], ['idIngredient'], ['DELETE' => 0], null, false, true, null],
         ],
         85 => [[['_route' => 'ingredient.update', '_controller' => 'App\\Controller\\IngredientController::updateIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
-        110 => [[['_route' => 'ingredientRecette.update', '_controller' => 'App\\Controller\\IngredientController::addRecetteInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
-        140 => [
+        117 => [[['_route' => 'ingredientRecetteAdd.update', '_controller' => 'App\\Controller\\IngredientController::addRecetteInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
+        140 => [[['_route' => 'ingredientRecetteDelete.update', '_controller' => 'App\\Controller\\IngredientController::deleteRecetteInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
+        171 => [
             [['_route' => 'instruction.get', '_controller' => 'App\\Controller\\InstructionController::getInstruction'], ['idInstruction'], ['GET' => 0], null, false, true, null],
             [['_route' => 'instruction.delete', '_controller' => 'App\\Controller\\InstructionController::deleteInstruction'], ['idInstruction'], ['DELETE' => 0], null, false, true, null],
         ],
-        148 => [[['_route' => 'instruction.update', '_controller' => 'App\\Controller\\InstructionController::updateIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
-        177 => [
+        179 => [[['_route' => 'instruction.update', '_controller' => 'App\\Controller\\InstructionController::updateIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
+        208 => [
             [['_route' => 'picture.get', '_controller' => 'App\\Controller\\PictureController::getPicture'], ['idPicture'], ['GET' => 0], null, false, true, null],
             [['_route' => 'picture.delete', '_controller' => 'App\\Controller\\PictureController::deletePicture'], ['idPicture'], ['DELETE' => 0], null, false, true, null],
             [['_route' => 'picture.update', '_controller' => 'App\\Controller\\PictureController::updatePicture'], ['idPicture'], ['PUT' => 0], null, false, true, null],
         ],
-        211 => [
+        242 => [
             [['_route' => 'recette.get', '_controller' => 'App\\Controller\\RecetteController::getRecette'], ['idRecette'], ['GET' => 0], null, false, true, null],
             [['_route' => 'recette.delete', '_controller' => 'App\\Controller\\RecetteController::deleteRecette'], ['idRecette'], ['DELETE' => 0], null, false, true, null],
         ],
-        219 => [[['_route' => 'recette.update', '_controller' => 'App\\Controller\\RecetteController::updateRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        247 => [[['_route' => 'recette.getByIngredient', '_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], ['name'], ['GET' => 0], null, false, true, null]],
-        283 => [[['_route' => 'recetteIngredientAdd.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        306 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        332 => [
+        250 => [[['_route' => 'recette.update', '_controller' => 'App\\Controller\\RecetteController::updateRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        278 => [[['_route' => 'recette.getByIngredient', '_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], ['name'], ['GET' => 0], null, false, true, null]],
+        314 => [[['_route' => 'recetteIngredientAdd.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        337 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        363 => [
             [['_route' => 'users.get', '_controller' => 'App\\Controller\\UserController::getUserById'], ['idUser'], ['GET' => 0], null, false, true, null],
             [['_route' => 'user.delete', '_controller' => 'App\\Controller\\UserController::deleteUser'], ['idUser'], ['DELETE' => 0], null, false, true, null],
         ],
-        340 => [
+        371 => [
             [['_route' => 'user.update', '_controller' => 'App\\Controller\\UserController::updateUser'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

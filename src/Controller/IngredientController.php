@@ -172,7 +172,7 @@ class IngredientController extends AbstractController
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
-    #[Route('/api/ingredient_recette/{id}', name: 'ingredientRecette.update', methods: ['PUT'])]
+    #[Route('/api/ingredient_recette_add/{id}', name: 'ingredientRecetteAdd.update', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Ajouter une recette à un ingrédient
@@ -213,5 +213,45 @@ class IngredientController extends AbstractController
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
+    #[Route('/api/ingredient_recette_delete/{id}', name: 'ingredientRecetteDelete.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Supprimer une recette d'un ingrédient
+     *
+     * @param Ingredient $ingredient
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param RecetteRepository $recetteRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function deleteRecetteInIngredient(
+        Ingredient $ingredient,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        RecetteRepository $recetteRepository,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $ingredient = $serializer->deserialize(
+            $request->getContent(), 
+            Ingredient::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        );
+
+        $content = $request->toArray();
+        $idRecette = $content['idRecette'];
+        $ingredient->removeIngredientRecette($recetteRepository->find($idRecette));      
+
+        $entityManager->persist($ingredient);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
     
 }

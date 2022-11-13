@@ -4562,12 +4562,13 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.F.HYg3X.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.qiR4Vtv" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.HOX0qZD" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\IngredientController::addRecetteInIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
         <argument key="App\Controller\IngredientController::createIngredient" type="service_closure" id=".service_locator.RH.qiu."/>
         <argument key="App\Controller\IngredientController::deleteIngredient" type="service_closure" id=".service_locator.A.s9JAz"/>
+        <argument key="App\Controller\IngredientController::deleteRecetteInIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
         <argument key="App\Controller\IngredientController::getAllIngredient" type="service_closure" id=".service_locator.PSMRMAc"/>
         <argument key="App\Controller\IngredientController::getIngredient" type="service_closure" id=".service_locator.gov_ayN"/>
         <argument key="App\Controller\IngredientController::updateIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
@@ -4603,6 +4604,7 @@
         <argument key="App\Controller\IngredientController:addRecetteInIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
         <argument key="App\Controller\IngredientController:createIngredient" type="service_closure" id=".service_locator.RH.qiu."/>
         <argument key="App\Controller\IngredientController:deleteIngredient" type="service_closure" id=".service_locator.A.s9JAz"/>
+        <argument key="App\Controller\IngredientController:deleteRecetteInIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
         <argument key="App\Controller\IngredientController:getAllIngredient" type="service_closure" id=".service_locator.PSMRMAc"/>
         <argument key="App\Controller\IngredientController:getIngredient" type="service_closure" id=".service_locator.gov_ayN"/>
         <argument key="App\Controller\IngredientController:updateIngredient" type="service_closure" id=".service_locator.ZhewDLY"/>
@@ -4934,12 +4936,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.qiR4Vtv"/>
+      <argument type="service" id=".service_locator.HOX0qZD"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.qiR4Vtv"/>
+      <argument type="service" id=".service_locator.HOX0qZD"/>
     </service>
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
@@ -5677,7 +5679,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.qiR4Vtv"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.HOX0qZD"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.Rlg80n6" alias=".service_locator.WfO.0Vv"/>
@@ -5697,7 +5699,7 @@
     <service id=".service_locator.ecXZS.n" alias=".service_locator.799zRvI"/>
     <service id=".service_locator.b76MKMg" alias=".service_locator.GPGtF8v"/>
     <service id=".service_locator.TuTSIgb" alias=".service_locator.F.HYg3X"/>
-    <service id=".service_locator.a_1wM4j" alias=".service_locator.qiR4Vtv"/>
+    <service id=".service_locator.fKbcWRi" alias=".service_locator.HOX0qZD"/>
     <service id=".service_locator.wKF4yn1" alias=".service_locator.19_mNxd"/>
     <service id=".service_locator.loUfwGe" alias=".service_locator.biruDiu"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
