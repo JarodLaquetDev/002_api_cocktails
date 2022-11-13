@@ -40,51 +40,54 @@ return [
                                     .'|add/([^/]++)(*:120)'
                                     .'|delete/([^/]++)(*:143)'
                                 .')'
-                                .'|image_add/([^/]++)(*:170)'
+                                .'|image_(?'
+                                    .'|add/([^/]++)(*:173)'
+                                    .'|delete/([^/]++)(*:196)'
+                                .')'
                             .')'
                         .')'
                         .'|struction(?'
                             .'|/([^/]++)(?'
-                                .'|(*:204)'
-                                .'|(*:212)'
+                                .'|(*:231)'
+                                .'|(*:239)'
                             .')'
                             .'|_recette_(?'
-                                .'|add/([^/]++)(*:245)'
-                                .'|delete/([^/]++)(*:268)'
+                                .'|add/([^/]++)(*:272)'
+                                .'|delete/([^/]++)(*:295)'
                             .')'
                         .')'
                     .')'
                     .'|picture/([^/]++)(?'
-                        .'|(*:298)'
+                        .'|(*:325)'
                     .')'
                     .'|recette(?'
                         .'|/(?'
                             .'|([^/]++)(?'
-                                .'|(*:332)'
-                                .'|(*:340)'
+                                .'|(*:359)'
+                                .'|(*:367)'
                             .')'
-                            .'|ingredient/([^/]++)(*:368)'
+                            .'|ingredient/([^/]++)(*:395)'
                         .')'
                         .'|_i(?'
                             .'|n(?'
                                 .'|gredient_(?'
-                                    .'|add/([^/]++)(*:410)'
-                                    .'|delete/([^/]++)(*:433)'
+                                    .'|add/([^/]++)(*:437)'
+                                    .'|delete/([^/]++)(*:460)'
                                 .')'
                                 .'|struction_(?'
-                                    .'|add/([^/]++)(*:467)'
-                                    .'|delete/([^/]++)(*:490)'
+                                    .'|add/([^/]++)(*:494)'
+                                    .'|delete/([^/]++)(*:517)'
                                 .')'
                             .')'
                             .'|mage_(?'
-                                .'|add/([^/]++)(*:520)'
-                                .'|delete/([^/]++)(*:543)'
+                                .'|add/([^/]++)(*:547)'
+                                .'|delete/([^/]++)(*:570)'
                             .')'
                         .')'
                     .')'
                     .'|user/([^/]++)(?'
-                        .'|(*:570)'
-                        .'|(*:578)'
+                        .'|(*:597)'
+                        .'|(*:605)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -98,36 +101,37 @@ return [
         85 => [[['_route' => 'ingredient.update', '_controller' => 'App\\Controller\\IngredientController::updateIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
         120 => [[['_route' => 'ingredientRecetteAdd.update', '_controller' => 'App\\Controller\\IngredientController::addRecetteInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
         143 => [[['_route' => 'ingredientRecetteDelete.update', '_controller' => 'App\\Controller\\IngredientController::deleteRecetteInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
-        170 => [[['_route' => 'ingredientPictureAdd.update', '_controller' => 'App\\Controller\\IngredientController::addPictureInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
-        204 => [
+        173 => [[['_route' => 'ingredientPictureAdd.update', '_controller' => 'App\\Controller\\IngredientController::addPictureInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
+        196 => [[['_route' => 'ingredientPictureDelete.update', '_controller' => 'App\\Controller\\IngredientController::deletePictureInIngredient'], ['id'], ['PUT' => 0], null, false, true, null]],
+        231 => [
             [['_route' => 'instruction.get', '_controller' => 'App\\Controller\\InstructionController::getInstruction'], ['idInstruction'], ['GET' => 0], null, false, true, null],
             [['_route' => 'instruction.delete', '_controller' => 'App\\Controller\\InstructionController::deleteInstruction'], ['idInstruction'], ['DELETE' => 0], null, false, true, null],
         ],
-        212 => [[['_route' => 'instruction.update', '_controller' => 'App\\Controller\\InstructionController::updateInstruction'], ['id'], ['PUT' => 0], null, false, true, null]],
-        245 => [[['_route' => 'instructionRecetteAdd.update', '_controller' => 'App\\Controller\\InstructionController::addRecetteInInstruction'], ['id'], ['PUT' => 0], null, false, true, null]],
-        268 => [[['_route' => 'instructionRecetteDelete.update', '_controller' => 'App\\Controller\\InstructionController::deleteRecetteInInstruction'], ['id'], ['PUT' => 0], null, false, true, null]],
-        298 => [
+        239 => [[['_route' => 'instruction.update', '_controller' => 'App\\Controller\\InstructionController::updateInstruction'], ['id'], ['PUT' => 0], null, false, true, null]],
+        272 => [[['_route' => 'instructionRecetteAdd.update', '_controller' => 'App\\Controller\\InstructionController::addRecetteInInstruction'], ['id'], ['PUT' => 0], null, false, true, null]],
+        295 => [[['_route' => 'instructionRecetteDelete.update', '_controller' => 'App\\Controller\\InstructionController::deleteRecetteInInstruction'], ['id'], ['PUT' => 0], null, false, true, null]],
+        325 => [
             [['_route' => 'picture.get', '_controller' => 'App\\Controller\\PictureController::getPicture'], ['idPicture'], ['GET' => 0], null, false, true, null],
             [['_route' => 'picture.delete', '_controller' => 'App\\Controller\\PictureController::deletePicture'], ['idPicture'], ['DELETE' => 0], null, false, true, null],
             [['_route' => 'picture.update', '_controller' => 'App\\Controller\\PictureController::updatePicture'], ['idPicture'], ['PUT' => 0], null, false, true, null],
         ],
-        332 => [
+        359 => [
             [['_route' => 'recette.get', '_controller' => 'App\\Controller\\RecetteController::getRecette'], ['idRecette'], ['GET' => 0], null, false, true, null],
             [['_route' => 'recette.delete', '_controller' => 'App\\Controller\\RecetteController::deleteRecette'], ['idRecette'], ['DELETE' => 0], null, false, true, null],
         ],
-        340 => [[['_route' => 'recette.update', '_controller' => 'App\\Controller\\RecetteController::updateRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        368 => [[['_route' => 'recette.getByIngredient', '_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], ['name'], ['GET' => 0], null, false, true, null]],
-        410 => [[['_route' => 'recetteIngredientAdd.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        433 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        467 => [[['_route' => 'recetteInstructionAdd.update', '_controller' => 'App\\Controller\\RecetteController::addInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        490 => [[['_route' => 'recetteInstructionDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        520 => [[['_route' => 'recetteImageAdd.update', '_controller' => 'App\\Controller\\RecetteController::addPictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        543 => [[['_route' => 'recetteImageDelete.update', '_controller' => 'App\\Controller\\RecetteController::deletePictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        570 => [
+        367 => [[['_route' => 'recette.update', '_controller' => 'App\\Controller\\RecetteController::updateRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        395 => [[['_route' => 'recette.getByIngredient', '_controller' => 'App\\Controller\\RecetteController::getRecetteByIngredient'], ['name'], ['GET' => 0], null, false, true, null]],
+        437 => [[['_route' => 'recetteIngredientAdd.update', '_controller' => 'App\\Controller\\RecetteController::addIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        460 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        494 => [[['_route' => 'recetteInstructionAdd.update', '_controller' => 'App\\Controller\\RecetteController::addInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        517 => [[['_route' => 'recetteInstructionDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        547 => [[['_route' => 'recetteImageAdd.update', '_controller' => 'App\\Controller\\RecetteController::addPictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        570 => [[['_route' => 'recetteImageDelete.update', '_controller' => 'App\\Controller\\RecetteController::deletePictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        597 => [
             [['_route' => 'users.get', '_controller' => 'App\\Controller\\UserController::getUserById'], ['idUser'], ['GET' => 0], null, false, true, null],
             [['_route' => 'user.delete', '_controller' => 'App\\Controller\\UserController::deleteUser'], ['idUser'], ['DELETE' => 0], null, false, true, null],
         ],
-        578 => [
+        605 => [
             [['_route' => 'user.update', '_controller' => 'App\\Controller\\UserController::updateUser'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

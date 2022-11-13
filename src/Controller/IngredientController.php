@@ -295,5 +295,44 @@ class IngredientController extends AbstractController
         $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
+
+    #[Route('/api/ingredient_image_delete/{id}', name: 'ingredientPictureDelete.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Supprimer une image d'un ingrédient
+     *
+     * @param Ingredient $ingredient
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param PictureRepository $pictureRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function deletePictureInIngredient(
+        Ingredient $ingredient,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        PictureRepository $pictureRepository,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $ingredient = $serializer->deserialize(
+            $request->getContent(), 
+            Ingredient::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        );
+
+        $ingredient->setIngredientImage(null);      
+
+        $entityManager->persist($ingredient);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
     
 }
