@@ -178,6 +178,7 @@ class RecetteController extends AbstractController
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
+    
     #[Route('/api/recette_ingredient/{id}', name: 'recetteIngredient.update', methods: ['PUT'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**

@@ -30,7 +30,7 @@ class Recette
 
     // Liste des ingrédients associés à la recette
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'ingredientRecette')]
-    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
+    #[Groups(["getRecette","getAllRecettes","createRecette"])]
     private Collection $recetteIngredients;
 
     // Status d'une recette
@@ -40,11 +40,11 @@ class Recette
 
     // Image associée à une recette
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
+    #[Groups(["getRecette","getAllRecettes","createRecette"])]
     private ?Picture $imageRecette = null;
 
     #[ORM\ManyToMany(targetEntity: Instruction::class, inversedBy: 'recettes')]
-    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
+    #[Groups(["getRecette","getAllRecettes","createRecette"])]
     private Collection $instructionRecette;
 
     public function __construct()
