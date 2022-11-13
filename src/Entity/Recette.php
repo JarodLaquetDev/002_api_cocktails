@@ -25,12 +25,12 @@ class Recette
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Une recette doit avoir un nom")]
     #[Assert\Length(min: 3, minMessage: "Le nom de la recette doit etre superieur a {{ limit }} caractere")]
-    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette","test"])]
+    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
     private ?string $recetteName = null;
 
     // Liste des ingrédients associés à la recette
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'ingredientRecette')]
-    #[Groups(["getRecette","createRecette"])]
+    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
     private Collection $recetteIngredients;
 
     // Status d'une recette
@@ -44,6 +44,7 @@ class Recette
     private ?Picture $imageRecette = null;
 
     #[ORM\ManyToMany(targetEntity: Instruction::class, inversedBy: 'recettes')]
+    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
     private Collection $instructionRecette;
 
     public function __construct()
@@ -82,7 +83,7 @@ class Recette
         return $this;
     }
     /**
-     * Obtenur les ingrédients associés à une recette
+     * Obtenir les ingrédients associés à une recette
      *
      * @return Collection
      */

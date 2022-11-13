@@ -20,7 +20,7 @@ class Instruction
     // Phrase associée à une instruction
     // Ex : presser la menthe
     #[ORM\Column(length: 255)]
-    #[Groups(["getAllInstructions","getInstruction", "getAllRecettes","getIngredient"])]
+    #[Groups(["getAllInstructions","getInstruction"])]
     private ?string $phrase = null;
 
     // Statut de l'instruction
@@ -32,6 +32,7 @@ class Instruction
     private ?string $status = null;
 
     #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'instructionRecette')]
+    #[Groups(["getAllInstructions","getInstruction"])]
     private Collection $recettes;
 
     public function __construct()

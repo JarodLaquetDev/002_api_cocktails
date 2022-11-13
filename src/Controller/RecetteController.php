@@ -116,11 +116,11 @@ class RecetteController extends AbstractController
     {
         $recette = $serializer->deserialize($request->getContent(), Recette::class, 'json');
         $recette->setStatus('on');
-
+        /*
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
         $recipe = $ingredientRepository->find($idIngredient);
-        $recette->addRecetteIngredient($recipe);        
+        $recette->addRecetteIngredient($recipe);   */     
 
         $errors = $validator->validate($recette);
         //dd($errors->count());
@@ -164,11 +164,52 @@ class RecetteController extends AbstractController
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
         );
-
+        /*
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
 
         $recette->addRecetteIngredient($ingredientRepository->find($idIngredient));        
+        */
+        $entityManager->persist($recette);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
+    #[Route('/api/recette_ingredient/{id}', name: 'recetteIngredient.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Ajouter un ingrédient à une recette
+     *
+     * @param Recette $recette
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function addIngredientInRecette(
+        Recette $recette,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        IngredientRepository $ingredientRepository,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $recette = $serializer->deserialize(
+            $request->getContent(), 
+            Recette::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
+        );
+
+        $content = $request->toArray();
+        $idIngredient = $content['idIngredient'];
+        $recette->addRecetteIngredient($ingredientRepository->find($idIngredient));  
 
         $entityManager->persist($recette);
         $entityManager->flush();

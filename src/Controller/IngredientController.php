@@ -120,11 +120,12 @@ class IngredientController extends AbstractController
     {
         $ingredient = $serializer->deserialize($request->getContent(), Ingredient::class, 'json');
         $ingredient->setStatus('on');
-
+        /*
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
         $recipe = $recetteRepository->find($idRecette);
-        $ingredient->addIngredientRecette($recipe);        
+        $ingredient->addIngredientRecette($recipe);     
+        */   
 
         $errors = $validator->validate($ingredient);
         //dd($errors->count());
@@ -168,11 +169,12 @@ class IngredientController extends AbstractController
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
         );
-
+        /*
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
 
-        $ingredient->addIngredientRecette($recetteRepository->find($idRecette));        
+        $ingredient->addIngredientRecette($recetteRepository->find($idRecette));   
+        */     
 
         $entityManager->persist($ingredient);
         $entityManager->flush();
