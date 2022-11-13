@@ -7,6 +7,7 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\Ingredient;
 use App\Entity\Recette;
 use App\Entity\User;
+use App\Entity\Instruction;
 use Faker\Factory;
 use Faker\Generator;
 
@@ -28,6 +29,7 @@ class AppFixtures extends Fixture
         $userNumber = 10;
         $ingredientNumber = 100;
         $recetteNumber = 15;
+        $instructionNumber = 30;
 
         // Création d'un itilisateur Administrateur
         $adminUser = new User();
@@ -69,6 +71,14 @@ class AppFixtures extends Fixture
             $recette->setStatus("on");
             $recette->addRecetteIngredient($listeIngredient[array_rand($listeIngredient)]);
             $manager->persist($recette);
+        }
+
+        // Création d'instruction :
+        for($i=0;$i<$instructionNumber;$i++)
+        {
+            $instruction = new Instruction();
+            $instruction->setPhrase($this->faker->word());
+            $manager->persist($instruction);
         }
         $manager->flush();
     }

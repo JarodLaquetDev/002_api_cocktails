@@ -271,6 +271,10 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\InstructionRepository" class="App\Repository\InstructionRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\PictureRepository" class="App\Repository\PictureRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -2328,7 +2332,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.McyG_un"/>
+      <argument type="service" id=".service_locator.OyC6bAZ"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -4008,6 +4012,8 @@
     <service id=".abstract.instanceof.App\EventSubscriber\ExceptionSubscriber" class="App\EventSubscriber\ExceptionSubscriber" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\IngredientRepository" class="App\Repository\IngredientRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\IngredientRepository" class="App\Repository\IngredientRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\InstructionRepository" class="App\Repository\InstructionRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\InstructionRepository" class="App\Repository\InstructionRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PictureRepository" class="App\Repository\PictureRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\PictureRepository" class="App\Repository\PictureRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\RecetteRepository" class="App\Repository\RecetteRepository" autowire="true" abstract="true"/>
@@ -4658,10 +4664,11 @@
         <argument key="App\EntityListener\UserListener" type="service_closure" id="App\EntityListener\UserListener"/>
       </argument>
     </service>
-    <service id=".service_locator.McyG_un" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.OyC6bAZ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\IngredientRepository" type="service_closure" id="App\Repository\IngredientRepository"/>
+        <argument key="App\Repository\InstructionRepository" type="service_closure" id="App\Repository\InstructionRepository"/>
         <argument key="App\Repository\PictureRepository" type="service_closure" id="App\Repository\PictureRepository"/>
         <argument key="App\Repository\RecetteRepository" type="service_closure" id="App\Repository\RecetteRepository"/>
         <argument key="App\Repository\UserRepository" type="service_closure" id="App\Repository\UserRepository"/>
