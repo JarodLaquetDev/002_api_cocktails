@@ -55,6 +55,9 @@ Cette API Cocktails, comme son nom l'indique, permet à ses utilisateurs de cons
 * Créer un utilisateur (Admin)
 * Modifier un utilisateur (Admin)
 
+##### Fonctionnalités :
+* Obtenir toutes les recettes associées à un ingrédient entré par l'utilisateur
+
 
 ## Contact
 Jarod LAQUET -email: jarod.laquet@ynov.com
