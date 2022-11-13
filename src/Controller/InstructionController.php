@@ -146,7 +146,7 @@ class InstructionController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
      */
-    public function updateIngredient(
+    public function updateInstruction(
         Instruction $instruction,
         Request $request,
         EntityManagerInterface $entityManager,
@@ -160,6 +160,86 @@ class InstructionController extends AbstractController
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
         );
+        $entityManager->persist($instruction);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
+        return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
+    #[Route('/api/instruction_recette_add/{id}', name: 'instructionRecetteAdd.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Ajouter une recette à une instruction
+     *
+     * @param Instruction $instruction
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function addRecetteInInstruction(
+        Instruction $instruction,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        UrlGeneratorInterface $urlGenerator,
+        recetteRepository $recetteRepository
+    ) : JsonResponse
+    {
+        $instruction = $serializer->deserialize(
+            $request->getContent(), 
+            Instruction::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
+        );
+
+        $content = $request->toArray();
+        $idRecette = $content['idRecette'];
+        $instruction->addRecette($recetteRepository->find($idRecette));  
+
+        $entityManager->persist($instruction);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
+        return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
+    #[Route('/api/instruction_recette_delete/{id}', name: 'instructionRecetteDelete.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Supprimer une recette d'une instruction
+     *
+     * @param Instruction $instruction
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function deleteRecetteInInstruction(
+        Instruction $instruction,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        UrlGeneratorInterface $urlGenerator,
+        recetteRepository $recetteRepository
+    ) : JsonResponse
+    {
+        $instruction = $serializer->deserialize(
+            $request->getContent(), 
+            Instruction::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
+        );
+
+        $content = $request->toArray();
+        $idRecette = $content['idRecette'];
+        $instruction->removeRecette($recetteRepository->find($idRecette));  
+
         $entityManager->persist($instruction);
         $entityManager->flush();
         
