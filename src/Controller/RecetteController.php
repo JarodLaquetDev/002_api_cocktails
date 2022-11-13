@@ -119,7 +119,6 @@ class RecetteController extends AbstractController
         $recette->setStatus('on');   
 
         $errors = $validator->validate($recette);
-        //dd($errors->count());
         if($errors->count() > 0){
             return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
