@@ -73,12 +73,15 @@ return [
                                     .'|delete/([^/]++)(*:460)'
                                 .')'
                             .')'
-                            .'|mage_add/([^/]++)(*:487)'
+                            .'|mage_(?'
+                                .'|add/([^/]++)(*:490)'
+                                .'|delete/([^/]++)(*:513)'
+                            .')'
                         .')'
                     .')'
                     .'|user/([^/]++)(?'
-                        .'|(*:513)'
-                        .'|(*:521)'
+                        .'|(*:540)'
+                        .'|(*:548)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -114,12 +117,13 @@ return [
         403 => [[['_route' => 'recetteIngredientDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteIngredientInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
         437 => [[['_route' => 'recetteInstructionAdd.update', '_controller' => 'App\\Controller\\RecetteController::addInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
         460 => [[['_route' => 'recetteInstructionDelete.update', '_controller' => 'App\\Controller\\RecetteController::deleteInstructionInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        487 => [[['_route' => 'recetteImageAdd.update', '_controller' => 'App\\Controller\\RecetteController::addPictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
-        513 => [
+        490 => [[['_route' => 'recetteImageAdd.update', '_controller' => 'App\\Controller\\RecetteController::addPictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        513 => [[['_route' => 'recetteImageDelete.update', '_controller' => 'App\\Controller\\RecetteController::deletePictureInRecette'], ['id'], ['PUT' => 0], null, false, true, null]],
+        540 => [
             [['_route' => 'users.get', '_controller' => 'App\\Controller\\UserController::getUserById'], ['idUser'], ['GET' => 0], null, false, true, null],
             [['_route' => 'user.delete', '_controller' => 'App\\Controller\\UserController::deleteUser'], ['idUser'], ['DELETE' => 0], null, false, true, null],
         ],
-        521 => [
+        548 => [
             [['_route' => 'user.update', '_controller' => 'App\\Controller\\UserController::updateUser'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

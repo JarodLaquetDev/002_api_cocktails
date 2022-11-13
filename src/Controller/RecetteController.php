@@ -375,6 +375,45 @@ class RecetteController extends AbstractController
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
+    #[Route('/api/recette_image_delete/{id}', name: 'recetteImageDelete.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
+    /**
+     * Supprimer une image d'une recette
+     *
+     * @param Recette $recette
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param IngredientRepository $ingredientRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return JsonResponse
+     */
+    public function deletePictureInRecette(
+        Recette $recette,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface $serializer,
+        PictureRepository $pictureRepository,
+        UrlGeneratorInterface $urlGenerator
+    ) : JsonResponse
+    {
+        $recette = $serializer->deserialize(
+            $request->getContent(), 
+            Recette::class, 
+            'json',
+            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
+        );
+        
+        $recette->setImageRecette(null);  
+
+        $entityManager->persist($recette);
+        $entityManager->flush();
+        
+        $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
+    }
+
     #[Route('/api/recette/ingredient/{name}', name: 'recette.getByIngredient', methods: ['GET'])]
     /**
      * Obtenir toutes les recettes associées à un ingrédient (par le nom)
