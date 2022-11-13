@@ -96,7 +96,12 @@ class Instruction
     {
         return $this->recettes;
     }
-
+    /**
+     * Ajouter une recette à une instruction
+     *
+     * @param Recette $recette
+     * @return self
+     */
     public function addRecette(Recette $recette): self
     {
         if (!$this->recettes->contains($recette)) {
@@ -106,7 +111,12 @@ class Instruction
 
         return $this;
     }
-
+    /**
+     * Supprimer une recette liée à une instruction
+     *
+     * @param Recette $recette
+     * @return self
+     */
     public function removeRecette(Recette $recette): self
     {
         if ($this->recettes->removeElement($recette)) {
