@@ -115,12 +115,7 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $recette = $serializer->deserialize($request->getContent(), Recette::class, 'json');
-        $recette->setStatus('on');
-        /*
-        $content = $request->toArray();
-        $idIngredient = $content['idIngredient'];
-        $recipe = $ingredientRepository->find($idIngredient);
-        $recette->addRecetteIngredient($recipe);   */     
+        $recette->setStatus('on');   
 
         $errors = $validator->validate($recette);
         //dd($errors->count());
@@ -164,12 +159,7 @@ class RecetteController extends AbstractController
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
         );
-        /*
-        $content = $request->toArray();
-        $idIngredient = $content['idIngredient'];
 
-        $recette->addRecetteIngredient($ingredientRepository->find($idIngredient));        
-        */
         $entityManager->persist($recette);
         $entityManager->flush();
         

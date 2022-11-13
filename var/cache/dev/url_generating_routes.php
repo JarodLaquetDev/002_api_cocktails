@@ -10,6 +10,7 @@ return [
     'ingredient.delete' => [['idIngredient'], ['_controller' => 'App\\Controller\\IngredientController::deleteIngredient'], [], [['variable', '/', '[^/]++', 'idIngredient', true], ['text', '/api/ingredient']], [], [], []],
     'ingredient.create' => [[], ['_controller' => 'App\\Controller\\IngredientController::createIngredient'], [], [['text', '/api/ingredient']], [], [], []],
     'ingredient.update' => [['id'], ['_controller' => 'App\\Controller\\IngredientController::updateIngredient'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/ingredient']], [], [], []],
+    'ingredientRecette.update' => [['id'], ['_controller' => 'App\\Controller\\IngredientController::addRecetteInIngredient'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/ingredient_recette']], [], [], []],
     'app_instruction' => [[], ['_controller' => 'App\\Controller\\InstructionController::index'], [], [['text', '/instruction']], [], [], []],
     'instructions.getAll' => [[], ['_controller' => 'App\\Controller\\InstructionController::getAllInstructions'], [], [['text', '/api/instructions']], [], [], []],
     'instruction.get' => [['idInstruction'], ['_controller' => 'App\\Controller\\InstructionController::getInstruction'], [], [['variable', '/', '[^/]++', 'idInstruction', true], ['text', '/api/instruction']], [], [], []],
