@@ -53,7 +53,7 @@ class PictureController extends AbstractController
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("pictureCache");
             $picture = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
-            return $serializer->serialize($picture, 'json', ['groups' => "getAllInstructions"]);
+            return $serializer->serialize($picture, 'json', ['groups' => "getAllPictures"]);
         });
         return new JsonResponse($jsonPictures, 200, [], true);
     }
@@ -97,9 +97,11 @@ class PictureController extends AbstractController
      */
     public function deletePicture(
         Picture $picture,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager,
+        TagAwareCacheInterface $cache 
     ) : JsonResponse
     {
+        $cache->invalidateTags(["pictureCache"]);
         $entityManager->remove($picture);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
