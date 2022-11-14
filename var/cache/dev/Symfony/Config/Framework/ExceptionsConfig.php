@@ -29,7 +29,7 @@ class ExceptionsConfig
     }
 
     /**
-     * The status code of the response. Null to let Symfony decide.
+     * The status code of the response. Null or 0 to let Symfony decide.
      * @default null
      * @param ParamConfigurator|mixed $value
      * @return $this
