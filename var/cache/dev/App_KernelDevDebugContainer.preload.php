@@ -422,3 +422,10 @@ $classes[] = 'Vich\UploaderBundle\Handler\UploadHandler';
 $classes[] = 'Vich\UploaderBundle\Injector\FileInjector';
 
 $preloaded = Preloader::preload($classes);
+
+$classes = [];
+$classes[] = 'Symfony\\Component\\Routing\\Generator\\CompiledUrlGenerator';
+$classes[] = 'Symfony\\Bundle\\FrameworkBundle\\Routing\\RedirectableCompiledUrlMatcher';
+$classes[] = 'Vich\\UploaderBundle\\Mapping\\Annotation\\Uploadable';
+$classes[] = 'Vich\\UploaderBundle\\Mapping\\Annotation\\UploadableField';
+$preloaded = Preloader::preload($classes, $preloaded);

@@ -53,10 +53,13 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $idCache = 'getAllIngredient';
-        $jsonIngredients = $cache->get($idCache, function(ItemInterface $item) use ($repository, $serializer){
+        $jsonIngredients = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request, $serializer){
             echo "MISE EN CACHE";
+            $page = $request->get('page', 1);
+            $limit = $request->get('limit', 50);
+            $limit = $limit > 20 ? 20: $limit;
             $item->tag("ingredientCache");
-            $ingredient = $repository->findAll();//meme chose que $repository->findAll()
+            $ingredient = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
             return $serializer->serialize($ingredient, 'json', ['groups' => "getAllIngredients"]);
         });
 
