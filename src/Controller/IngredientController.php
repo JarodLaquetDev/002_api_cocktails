@@ -86,7 +86,8 @@ class IngredientController extends AbstractController
         SerializerInterface $serializer 
     ) : JsonResponse
     {
-        $jsonIngredients = $serializer->serialize($ingredient, 'json', ['groups' => "getIngredient"]);
+        $context = SerializationContext::create()->setGroups(["getIngredient"]);
+        $jsonIngredients = $serializer->serialize($ingredient, 'json', $context);
         return new JsonResponse($jsonIngredients, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
@@ -152,7 +153,8 @@ class IngredientController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        $context = SerializationContext::create()->setGroups(["getIngredient"]);
+        $jsonIngredient = $serializer->serialize($ingredient, 'json', $context);
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
