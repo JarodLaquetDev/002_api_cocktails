@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -41,16 +43,22 @@ class UserController extends AbstractController
     public function getAllUsers(
         UserRepository $repository,
         SerializerInterface $serializer,
-        Request $request 
+        Request $request,
+        TagAwareCacheInterface $cache 
     ) : JsonResponse
     {
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 50);
-        $limit = $limit > 20 ? 20: $limit;
+        $idCache = 'getAllUser';
+        $jsonUsers = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request, $serializer){
+            echo "MISE EN CACHE";
+            $page = $request->get('page', 1);
+            $limit = $request->get('limit', 50);
+            $limit = $limit > 20 ? 20: $limit;
+            $item->tag("userCache");
+            $user =  $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            return $serializer->serialize($user, 'json', ['groups' => "getAllUsers"]);
+        });
 
-        $users = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
-        $jsonRecettes = $serializer->serialize($users, 'json', ['groups' => "getAllUsers"]);
-        return new JsonResponse($jsonRecettes, 200, [], true);
+        return new JsonResponse($jsonUsers, 200, [], true);
     }
 
     #[Route('/api/user/{idUser}', name: 'users.get', methods: ['GET'])]
@@ -84,9 +92,11 @@ class UserController extends AbstractController
      */
     public function deleteUser(
         User $user,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager,
+        TagAwareCacheInterface $cache 
     ) : JsonResponse
     {
+        $cache->invalidateTags(["userCache"]);
         $entityManager->remove($user);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
