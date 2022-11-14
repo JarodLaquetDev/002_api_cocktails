@@ -99,7 +99,8 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
-        $entityManager->remove($ingredient);
+        $ingredient->setStatus("off");
+        $entityManager->persist($ingredient);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
