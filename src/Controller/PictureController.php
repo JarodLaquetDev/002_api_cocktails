@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -39,14 +41,20 @@ class PictureController extends AbstractController
     public function getAllPictures(
         PictureRepository $repository,
         SerializerInterface $serializer,
-        Request $request
+        Request $request,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 50);
-        $limit = $limit > 20 ? 20: $limit;
-        $pictures = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
-        $jsonPictures = $serializer->serialize($pictures, 'json', ['groups' => "getAllPictures"]);
+        $idCache = 'getAllPicture';
+        $jsonPictures = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request, $serializer){
+            echo "MISE EN CACHE";
+            $page = $request->get('page', 1);
+            $limit = $request->get('limit', 50);
+            $limit = $limit > 20 ? 20: $limit;
+            $item->tag("pictureCache");
+            $picture = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            return $serializer->serialize($picture, 'json', ['groups' => "getAllInstructions"]);
+        });
         return new JsonResponse($jsonPictures, 200, [], true);
     }
 
@@ -74,6 +82,7 @@ class PictureController extends AbstractController
             return new JsonResponse($serializer->serialize($picture, 'json', ["groups" => "getPicture"]), Response::HTTP_OK, ["Location" => $location], true);
         }
         return new JsonResponse(null, JsonResponse::HTTP_NOT_FOUND);
+        
     }
 
     #[Route('/api/picture/{idPicture}', name: 'picture.delete', methods: ['DELETE'])]
