@@ -6,9 +6,22 @@ use App\Repository\RecetteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
 
+ /**
+ * @Hateoas\Relation( 
+ *      "self",
+ *      href=@Hateoas\Route(
+ *          "recette.get",
+ *          parameters = {
+ *              "idRecette" = "expr(object.getId())"
+ *          },
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getAllRecettes")
+ * )
+ */
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 class Recette
 {
@@ -37,7 +50,7 @@ class Recette
     // Ex : on
     #[ORM\Column(length: 20)]
     private ?string $status = null;
-
+ 
     // Image associée à une recette
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[Groups(["getRecette","getAllRecettes","createRecette","getAllInstructions","getInstruction"])]

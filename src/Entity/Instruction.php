@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 
  /**
- * @Hateoas\Relation(
+ * @Hateoas\Relation( 
  *      "self",
  *      href=@Hateoas\Route(
  *          "instruction.get",

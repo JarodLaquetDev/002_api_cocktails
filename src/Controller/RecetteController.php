@@ -14,13 +14,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\Serialize;
+use JMS\Serializer\SerializationContext;
 
 class RecetteController extends AbstractController
 {
@@ -59,7 +61,8 @@ class RecetteController extends AbstractController
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("recetteCache");
             $recette = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
-            return $serializer->serialize($recette, 'json', ['groups' => "getAllRecettes"]);
+            $context = SerializationContext::create()->setGroups(["getAllRecettes"]);
+            return $serializer->serialize($recette, 'json', $context);
         });
 
         return new JsonResponse($jsonRecette, 200, [], true);
@@ -80,8 +83,9 @@ class RecetteController extends AbstractController
         SerializerInterface $serializer 
     ) : JsonResponse
     {
-        $jsonRecette = $serializer->serialize($recette, 'json', ['groups' => "getRecette"]);
-        return new JsonResponse($jsonRecette, Response::HTTP_OK, ['accept' => 'json'], true);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecettes = $serializer->serialize($recette, 'json', $context);
+        return new JsonResponse($jsonRecettes, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
     #[Route('/api/recette/{idRecette}', name: 'recette.delete', methods: ['DELETE'])]
@@ -145,8 +149,9 @@ class RecetteController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'createRecette']);
-        return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecettes = $serializer->serialize($recette, 'json', $context);
+        return new JsonResponse($jsonRecettes, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
     #[Route('/api/recette/{id}', name: 'recette.update', methods: ['PUT'])]
@@ -174,18 +179,23 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
-        $recette = $serializer->deserialize(
+        
+        $updateRecette = $serializer->deserialize(
             $request->getContent(), 
-            Recette::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
+            Ingredient::class, 
+            'json'
         );
+
+        $recette->setRecetteName($updateRecette->getRecetteName() ? $updateRecette->getRecetteName() : $recette->getRecetteName());
+        $recette->setStatus($updateRecette->getStatus() ? $updateRecette->getStatus() : $recette->getStatus());
+
 
         $entityManager->persist($recette);
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecette = $serializer->serialize($recette, 'json', $context);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -215,12 +225,6 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
-        $recette = $serializer->deserialize(
-            $request->getContent(), 
-            Recette::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
-        );
 
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
@@ -230,7 +234,8 @@ class RecetteController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecette = $serializer->serialize($recette, 'json', $context);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -259,12 +264,6 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
-        $recette = $serializer->deserialize(
-            $request->getContent(), 
-            Recette::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
-        );
 
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
@@ -274,7 +273,8 @@ class RecetteController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecette = $serializer->serialize($recette, 'json', $context);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -303,12 +303,6 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
-        $recette = $serializer->deserialize(
-            $request->getContent(), 
-            Recette::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
-        );
 
         $content = $request->toArray();
         $idInstruction = $content['idInstruction'];
@@ -318,7 +312,8 @@ class RecetteController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecette = $serializer->serialize($recette, 'json', $context);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -347,12 +342,6 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
-        $recette = $serializer->deserialize(
-            $request->getContent(), 
-            Recette::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
-        );
 
         $content = $request->toArray();
         $idInstruction = $content['idInstruction'];
@@ -362,7 +351,8 @@ class RecetteController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecette = $serializer->serialize($recette, 'json', $context);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -391,12 +381,6 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
-        $recette = $serializer->deserialize(
-            $request->getContent(), 
-            Recette::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
-        );
 
         $content = $request->toArray();
         $idPicture = $content['idPicture'];
@@ -406,7 +390,8 @@ class RecetteController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecette = $serializer->serialize($recette, 'json', $context);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -435,12 +420,6 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
-        $recette = $serializer->deserialize(
-            $request->getContent(), 
-            Recette::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $recette]
-        );
         
         $recette->setImageRecette(null);  
 
@@ -448,7 +427,8 @@ class RecetteController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $recette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonRecette = $serializer->serialize($recette, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getRecette"]);
+        $jsonRecette = $serializer->serialize($recette, 'json', $context);
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -469,7 +449,8 @@ class RecetteController extends AbstractController
         // Si une recette est associée à cet ingrédient
         if(!empty($recette))
         {
-            $jsonRecette = $serializer->serialize($recette, 'json', ["groups" => 'getRecette']);
+            $context = SerializationContext::create()->setGroups(["getRecette"]);
+            $jsonRecette = $serializer->serialize($recette, 'json', $context);
             return New JsonResponse($jsonRecette,Response::HTTP_OK, [],true);
 
         }

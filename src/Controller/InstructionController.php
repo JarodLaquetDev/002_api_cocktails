@@ -71,7 +71,7 @@ class InstructionController extends AbstractController
      * Obtenir les informations d'une instruction spécifique de la BDD
      *
      * @param Instruction $instruction
-     * @param SerializerInterface $serializer
+     * @param SerializerInterface $serializer 
      * @return JsonResponse
      */ 
     public function getInstruction(
