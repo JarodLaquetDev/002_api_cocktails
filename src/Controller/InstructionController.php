@@ -41,6 +41,7 @@ class InstructionController extends AbstractController
      * @param InstructionRepository $repository
      * @param SerializerInterface $serializer
      * @param Request $request
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */ 
     public function getAllInstructions(
@@ -90,6 +91,7 @@ class InstructionController extends AbstractController
      *
      * @param Instruction $instruction
      * @param EntityManagerInterface $entityManager
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteInstruction(

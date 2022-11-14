@@ -40,6 +40,8 @@ class RecetteController extends AbstractController
      *
      * @param RecetteRepository $repository
      * @param SerializerInterface $serializer
+     * @param Request $request
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function getAllRecettes(
@@ -90,6 +92,7 @@ class RecetteController extends AbstractController
      *
      * @param Recette $recette
      * @param EntityManagerInterface $entityManager
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteRecette(

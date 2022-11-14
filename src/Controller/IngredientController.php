@@ -43,6 +43,7 @@ class IngredientController extends AbstractController
      * @param IngredientRepository $repository
      * @param SerializerInterface $serializer
      * @param Request $request
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function getAllIngredient(
@@ -93,6 +94,7 @@ class IngredientController extends AbstractController
      *
      * @param Ingredient $ingredient
      * @param EntityManagerInterface $entityManager
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteIngredient(

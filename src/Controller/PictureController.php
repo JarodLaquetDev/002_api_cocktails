@@ -36,6 +36,7 @@ class PictureController extends AbstractController
      *
      * @param PictureRepository $repository
      * @param SerializerInterface $serializer
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function getAllPictures(
@@ -93,6 +94,7 @@ class PictureController extends AbstractController
      *
      * @param Picture $picture
      * @param EntityManagerInterface $entityManager
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deletePicture(

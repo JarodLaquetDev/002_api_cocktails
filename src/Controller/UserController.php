@@ -38,6 +38,8 @@ class UserController extends AbstractController
      *
      * @param UserRepository $repository
      * @param SerializerInterface $serializer
+     * @param Request $request
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function getAllUsers(
@@ -88,6 +90,7 @@ class UserController extends AbstractController
      *
      * @param User $user
      * @param EntityManagerInterface $entityManager
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteUser(
