@@ -17,7 +17,7 @@ class Ingredient
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getAllIngredients","getIngredient","createRecette","getRecette"])]
+    #[Groups(["getAllIngredients","getIngredient","createRecette","getRecette","getAllInstructions","getInstruction"])]
     private ?int $id = null;
 
     // Nom d'un ingrédient
@@ -26,7 +26,7 @@ class Ingredient
     #[Assert\Length(min: 3, minMessage: "Le nom de l'ingredient doit etre superieur a {{ limit }} caractere")]
     #[Assert\NotNull()]
     #[ORM\Column(length: 20)]
-    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient","createRecette"])]
+    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient","createRecette","getAllInstructions","getInstruction"])]
     private ?string $ingredientName = null;
 
     // Quantité de l'ingrédient
@@ -35,7 +35,7 @@ class Ingredient
     #[Assert\NotBlank(message: "Un ingredient doit avoir une quantite")]
     #[Assert\Length(min: 1, minMessage: "Le nom de l'ingredient doit etre superieur a {{ limit }} caractere")]
     #[Assert\NotNull()]
-    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient"])]
+    #[Groups(["getAllIngredients","getRecette", "getAllRecettes","getIngredient","getAllInstructions","getInstruction"])]
     private ?float $ingredientQuantity = null;
 
     // Statut de l'ingrédient

@@ -43,6 +43,7 @@ class IngredientController extends AbstractController
      * @param IngredientRepository $repository
      * @param SerializerInterface $serializer
      * @param Request $request
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function getAllIngredient(
@@ -93,6 +94,7 @@ class IngredientController extends AbstractController
      *
      * @param Ingredient $ingredient
      * @param EntityManagerInterface $entityManager
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteIngredient(
@@ -102,7 +104,8 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
-        $entityManager->remove($ingredient);
+        $ingredient->setStatus("off");
+        $entityManager->persist($ingredient);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
@@ -118,6 +121,7 @@ class IngredientController extends AbstractController
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @param ValidatorInterface $validator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function createIngredient(
@@ -126,9 +130,11 @@ class IngredientController extends AbstractController
         SerializerInterface $serializer,
         RecetteRepository $recetteRepository,
         UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache,
         ValidatorInterface $validator
     ) : JsonResponse
     {
+        $cache->invalidateTags(["ingredientCache"]);
         $ingredient = $serializer->deserialize($request->getContent(), Ingredient::class, 'json');
         $ingredient->setStatus('on');
 
@@ -157,6 +163,7 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function updateIngredient(
@@ -165,9 +172,11 @@ class IngredientController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         RecetteRepository $recetteRepository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["ingredientCache"]);
         $ingredient = $serializer->deserialize(
             $request->getContent(), 
             Ingredient::class, 
@@ -194,6 +203,7 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function addRecetteInIngredient(
@@ -202,9 +212,11 @@ class IngredientController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         RecetteRepository $recetteRepository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["ingredientCache"]);
         $ingredient = $serializer->deserialize(
             $request->getContent(), 
             Ingredient::class, 
@@ -235,6 +247,7 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteRecetteInIngredient(
@@ -243,9 +256,11 @@ class IngredientController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         RecetteRepository $recetteRepository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["ingredientCache"]);
         $ingredient = $serializer->deserialize(
             $request->getContent(), 
             Ingredient::class, 
@@ -276,6 +291,7 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @param PictureRepository $pictureRepository
      * @param UrlGeneratorInterface $urlGenerator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function addPictureInIngredient(
@@ -284,9 +300,11 @@ class IngredientController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         PictureRepository $pictureRepository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["ingredientCache"]);
         $ingredient = $serializer->deserialize(
             $request->getContent(), 
             Ingredient::class, 
@@ -317,6 +335,7 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @param PictureRepository $pictureRepository
      * @param UrlGeneratorInterface $urlGenerator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deletePictureInIngredient(
@@ -325,9 +344,11 @@ class IngredientController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         PictureRepository $pictureRepository,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["ingredientCache"]);
         $ingredient = $serializer->deserialize(
             $request->getContent(), 
             Ingredient::class, 

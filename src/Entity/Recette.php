@@ -17,7 +17,7 @@ class Recette
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
+    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette","getAllInstructions","getInstruction"])]
     private ?int $id = null;
 
     // Nom d'une recette
@@ -25,12 +25,12 @@ class Recette
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Une recette doit avoir un nom")]
     #[Assert\Length(min: 3, minMessage: "Le nom de la recette doit etre superieur a {{ limit }} caractere")]
-    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette"])]
+    #[Groups(["getRecette", "getAllRecettes","getIngredient","createRecette","getAllInstructions","getInstruction"])]
     private ?string $recetteName = null;
 
     // Liste des ingrédients associés à la recette
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'ingredientRecette')]
-    #[Groups(["getRecette","getAllRecettes","createRecette"])]
+    #[Groups(["getRecette","getAllRecettes","createRecette","getAllInstructions","getInstruction"])]
     private Collection $recetteIngredients;
 
     // Status d'une recette
@@ -40,7 +40,7 @@ class Recette
 
     // Image associée à une recette
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Groups(["getRecette","getAllRecettes","createRecette"])]
+    #[Groups(["getRecette","getAllRecettes","createRecette","getAllInstructions","getInstruction"])]
     private ?Picture $imageRecette = null;
 
     #[ORM\ManyToMany(targetEntity: Instruction::class, inversedBy: 'recettes')]

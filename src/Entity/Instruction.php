@@ -15,6 +15,7 @@ class Instruction
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getAllInstructions","getInstruction"])]
     private ?int $id = null;
 
     // Phrase associée à une instruction
