@@ -50,17 +50,17 @@ class RecetteController extends AbstractController
     ) : JsonResponse
     {
         $idCache = 'getAllRecette';
-        $recette = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request){
+        $jsonRecette = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request, $serializer){
             echo "MISE EN CACHE";
             $page = $request->get('page', 1);
             $limit = $request->get('limit', 50);
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("recetteCache");
-            return $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            $recette = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            return $serializer->serialize($recette, 'json', ['groups' => "getAllRecettes"]);
         });
 
-        $jsonRecettes = $serializer->serialize($recette, 'json', ['groups' => "getAllRecettes"]);
-        return new JsonResponse($jsonRecettes, 200, [], true);
+        return new JsonResponse($jsonRecette, 200, [], true);
     }
 
     #[Route('/api/recette/{idRecette}', name: 'recette.get', methods: ['GET'])]
