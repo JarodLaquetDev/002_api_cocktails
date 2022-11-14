@@ -42,19 +42,18 @@ class InstructionController extends AbstractController
      * @param SerializerInterface $serializer
      * @param Request $request
      * @return JsonResponse
-     */ 
+     */
     public function getAllInstructions(
         InstructionRepository $repository,
         SerializerInterface $serializer,
-        Request $request, 
+        Request $request,
         TagAwareCacheInterface $cache
-    ) : JsonResponse
-    {
+    ): JsonResponse {
         $idCache = 'getAllInstruction';
-        $jsonInstruction = $cache->get($idCache, function(ItemInterface $item) use ($repository, $serializer){
+        $jsonInstruction = $cache->get($idCache, function (ItemInterface $item) use ($repository, $serializer) {
             echo "MISE EN CACHE";
             $item->tag("instructionCache");
-            $instruction = $repository->findAll();//meme chose que $repository->findAll()
+            $instruction = $repository->findAll(); //meme chose que $repository->findAll()
             return $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
         });
 
@@ -70,12 +69,11 @@ class InstructionController extends AbstractController
      * @param Instruction $instruction
      * @param SerializerInterface $serializer
      * @return JsonResponse
-     */ 
+     */
     public function getInstruction(
         Instruction $instruction,
-        SerializerInterface $serializer 
-    ) : JsonResponse
-    {
+        SerializerInterface $serializer
+    ): JsonResponse {
         $jsonInstruction = $serializer->serialize($instruction, 'json', ['groups' => "getInstruction"]);
         return new JsonResponse($jsonInstruction, Response::HTTP_OK, ['accept' => 'json'], true);
     }
@@ -94,8 +92,7 @@ class InstructionController extends AbstractController
         Instruction $instruction,
         EntityManagerInterface $entityManager,
         TagAwareCacheInterface $cache
-    ) : JsonResponse
-    {
+    ): JsonResponse {
         $cache->invalidateTags(["instructionCache"]);
         $entityManager->remove($instruction);
         $entityManager->flush();
@@ -122,22 +119,21 @@ class InstructionController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         ValidatorInterface $validator,
         TagAwareCacheInterface $cache
-    ) : JsonResponse
-    {
+    ): JsonResponse {
         $cache->invalidateTags(["instructionCache"]);
 
         $instruction = $serializer->deserialize($request->getContent(), Instruction::class, 'json');
-        $instruction->setStatus('on');      
+        $instruction->setStatus('on');
 
         $errors = $validator->validate($instruction);
         //dd($errors->count());
-        if($errors->count() > 0){
+        if ($errors->count() > 0) {
             return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
 
         $entityManager->persist($instruction);
         $entityManager->flush();
-        
+
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
@@ -162,19 +158,18 @@ class InstructionController extends AbstractController
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
         TagAwareCacheInterface $cache
-    ) : JsonResponse
-    {
+    ): JsonResponse {
         $cache->invalidateTags(["instructionCache"]);
 
         $instruction = $serializer->deserialize(
-            $request->getContent(), 
-            Instruction::class, 
+            $request->getContent(),
+            Instruction::class,
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
         );
         $entityManager->persist($instruction);
         $entityManager->flush();
-        
+
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
@@ -200,24 +195,23 @@ class InstructionController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         recetteRepository $recetteRepository,
         TagAwareCacheInterface $cache
-    ) : JsonResponse
-    {
+    ): JsonResponse {
         $cache->invalidateTags(["instructionCache"]);
 
         $instruction = $serializer->deserialize(
-            $request->getContent(), 
-            Instruction::class, 
+            $request->getContent(),
+            Instruction::class,
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
         );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
-        $instruction->addRecette($recetteRepository->find($idRecette));  
+        $instruction->addRecette($recetteRepository->find($idRecette));
 
         $entityManager->persist($instruction);
         $entityManager->flush();
-        
+
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
@@ -243,24 +237,23 @@ class InstructionController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         recetteRepository $recetteRepository,
         TagAwareCacheInterface $cache
-    ) : JsonResponse
-    {
+    ): JsonResponse {
         $cache->invalidateTags(["instructionCache"]);
 
         $instruction = $serializer->deserialize(
-            $request->getContent(), 
-            Instruction::class, 
+            $request->getContent(),
+            Instruction::class,
             'json',
             [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
         );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
-        $instruction->removeRecette($recetteRepository->find($idRecette));  
+        $instruction->removeRecette($recetteRepository->find($idRecette));
 
         $entityManager->persist($instruction);
         $entityManager->flush();
-        
+
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
