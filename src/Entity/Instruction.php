@@ -110,7 +110,7 @@ class Instruction
     public function getRecettes(): Collection
     {
         return $this->recettes;
-    }
+    } 
     /**
      * Ajouter une recette à une instruction
      *
