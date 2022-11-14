@@ -56,7 +56,7 @@ class InstructionController extends AbstractController
             $page = $request->get('page', 1);
             $limit = $request->get('limit', 50);
             $limit = $limit > 20 ? 20: $limit;
-            $item->tag("recetteCache");
+            $item->tag("instructionCache");
             $instruction = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
             return $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
         });
@@ -94,9 +94,11 @@ class InstructionController extends AbstractController
      */
     public function deleteInstruction(
         Instruction $instruction,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["instructionCache"]);
         $entityManager->remove($instruction);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
