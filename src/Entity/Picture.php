@@ -19,7 +19,6 @@ class Picture
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getPicture", "getAllPictures"])]
     private ?int $id = null;
 
     // Nom d'une image

@@ -41,7 +41,6 @@ class InstructionController extends AbstractController
      * @param InstructionRepository $repository
      * @param SerializerInterface $serializer
      * @param Request $request
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */ 
     public function getAllInstructions(
@@ -57,7 +56,7 @@ class InstructionController extends AbstractController
             $page = $request->get('page', 1);
             $limit = $request->get('limit', 50);
             $limit = $limit > 20 ? 20: $limit;
-            $item->tag("instructionCache");
+            $item->tag("recetteCache");
             $instruction = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
             return $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
         });
@@ -91,16 +90,13 @@ class InstructionController extends AbstractController
      *
      * @param Instruction $instruction
      * @param EntityManagerInterface $entityManager
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteInstruction(
         Instruction $instruction,
-        EntityManagerInterface $entityManager,
-        TagAwareCacheInterface $cache
+        EntityManagerInterface $entityManager 
     ) : JsonResponse
     {
-        $cache->invalidateTags(["instructionCache"]);
         $entityManager->remove($instruction);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
@@ -117,7 +113,6 @@ class InstructionController extends AbstractController
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @param ValidatorInterface $validator
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function createInstruction(
@@ -125,11 +120,9 @@ class InstructionController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        ValidatorInterface $validator,
-        TagAwareCacheInterface $cache
+        ValidatorInterface $validator
     ) : JsonResponse
     {
-        $cache->invalidateTags(["instructionCache"]);
         $instruction = $serializer->deserialize($request->getContent(), Instruction::class, 'json');
         $instruction->setStatus('on');      
 
@@ -157,7 +150,6 @@ class InstructionController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function updateInstruction(
@@ -165,11 +157,9 @@ class InstructionController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
-        UrlGeneratorInterface $urlGenerator,
-        TagAwareCacheInterface $cache
+        UrlGeneratorInterface $urlGenerator
     ) : JsonResponse
     {
-        $cache->invalidateTags(["instructionCache"]);
         $instruction = $serializer->deserialize(
             $request->getContent(), 
             Instruction::class, 
@@ -194,7 +184,6 @@ class InstructionController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function addRecetteInInstruction(
@@ -203,11 +192,9 @@ class InstructionController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        recetteRepository $recetteRepository,
-        TagAwareCacheInterface $cache
+        recetteRepository $recetteRepository
     ) : JsonResponse
     {
-        $cache->invalidateTags(["instructionCache"]);
         $instruction = $serializer->deserialize(
             $request->getContent(), 
             Instruction::class, 
@@ -237,7 +224,6 @@ class InstructionController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deleteRecetteInInstruction(
@@ -246,11 +232,9 @@ class InstructionController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        recetteRepository $recetteRepository,
-        TagAwareCacheInterface $cache
+        recetteRepository $recetteRepository
     ) : JsonResponse
     {
-        $cache->invalidateTags(["instructionCache"]);
         $instruction = $serializer->deserialize(
             $request->getContent(), 
             Instruction::class, 

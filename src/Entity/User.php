@@ -17,7 +17,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getAllUsers", "getUser"])]
     private ?int $id = null;
 
     // Nom d'un utilisateur

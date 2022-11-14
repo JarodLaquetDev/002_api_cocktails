@@ -5,12 +5,10 @@ namespace App\Controller;
 use App\Entity\Picture;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -36,26 +34,19 @@ class PictureController extends AbstractController
      *
      * @param PictureRepository $repository
      * @param SerializerInterface $serializer
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function getAllPictures(
         PictureRepository $repository,
         SerializerInterface $serializer,
-        Request $request,
-        TagAwareCacheInterface $cache
+        Request $request
     ) : JsonResponse
     {
-        $idCache = 'getAllPicture';
-        $jsonPictures = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request, $serializer){
-            echo "MISE EN CACHE";
-            $page = $request->get('page', 1);
-            $limit = $request->get('limit', 50);
-            $limit = $limit > 20 ? 20: $limit;
-            $item->tag("pictureCache");
-            $picture = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
-            return $serializer->serialize($picture, 'json', ['groups' => "getAllPictures"]);
-        });
+        $page = $request->get('page', 1);
+        $limit = $request->get('limit', 50);
+        $limit = $limit > 20 ? 20: $limit;
+        $pictures = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
+        $jsonPictures = $serializer->serialize($pictures, 'json', ['groups' => "getAllPictures"]);
         return new JsonResponse($jsonPictures, 200, [], true);
     }
 
@@ -83,7 +74,6 @@ class PictureController extends AbstractController
             return new JsonResponse($serializer->serialize($picture, 'json', ["groups" => "getPicture"]), Response::HTTP_OK, ["Location" => $location], true);
         }
         return new JsonResponse(null, JsonResponse::HTTP_NOT_FOUND);
-        
     }
 
     #[Route('/api/picture/{idPicture}', name: 'picture.delete', methods: ['DELETE'])]
@@ -94,16 +84,13 @@ class PictureController extends AbstractController
      *
      * @param Picture $picture
      * @param EntityManagerInterface $entityManager
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function deletePicture(
         Picture $picture,
-        EntityManagerInterface $entityManager,
-        TagAwareCacheInterface $cache 
+        EntityManagerInterface $entityManager 
     ) : JsonResponse
     {
-        $cache->invalidateTags(["pictureCache"]);
         $entityManager->remove($picture);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
@@ -118,12 +105,10 @@ class PictureController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param UrlGeneratorInterface $urlGenerator
      * @param SerializerInterface $serializer
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
-    public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, TagAwareCacheInterface $cache): JsonResponse
+    public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer): JsonResponse
     {
-        $cache->invalidateTags(["pictureCache"]);
         $picture = new Picture();
         $files = $request->files->get('file');
         $picture->setFile($files);
@@ -151,7 +136,6 @@ class PictureController extends AbstractController
      * @param SerializerInterface $serializer
      * @param PictureRepository $ingredientRepository
      * @param UrlGeneratorInterface $urlGenerator
-     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function updatePicture(
@@ -161,11 +145,9 @@ class PictureController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        PictureRepository $pictureRepository,
-        TagAwareCacheInterface $cache
+        PictureRepository $pictureRepository
     ) : JsonResponse
     {
-        $cache->invalidateTags(["pictureCache"]);
         $picture = new Picture();
         $autre = $pictureRepository->find($idPicture);  
         $files = $request->files->get('file');
