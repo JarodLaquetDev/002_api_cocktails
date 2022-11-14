@@ -14,7 +14,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class PictureController extends AbstractController
 {
@@ -27,7 +28,7 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/api/pictures', name: 'picture.getAll')]
+    #[Route('/api/pictures', name: 'picture.getAll',  methods:['GET'])]
     #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     /**
      * Obtenir la liste de toutes les images de la BDD
@@ -39,14 +40,25 @@ class PictureController extends AbstractController
     public function getAllPictures(
         PictureRepository $repository,
         SerializerInterface $serializer,
-        Request $request
+        Request $request,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 50);
-        $limit = $limit > 20 ? 20: $limit;
-        $pictures = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
-        $jsonPictures = $serializer->serialize($pictures, 'json', ['groups' => "getAllPictures"]);
+        // $page = $request->get('page', 1);
+        // $limit = $request->get('limit', 50);
+        // $limit = $limit > 20 ? 20: $limit;
+        // $pictures = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
+        // $jsonPictures = $serializer->serialize($pictures, 'json', ['groups' => "getAllPictures"]);
+        // return new JsonResponse($jsonPictures, 200, [], true);
+
+        $idCache = 'getAllPictures';
+        $jsonPictures = $cache->get($idCache, function(ItemInterface $item) use ($repository, $serializer){
+            echo "MISE EN CACHE";
+            $item->tag("picturesCache");
+            $pictures = $repository->findAll();//meme chose que $repository->findAll()
+            return $serializer->serialize($pictures, 'json', ['groups' => "getAllPictures"]);
+        });
+
         return new JsonResponse($jsonPictures, 200, [], true);
     }
 
@@ -88,9 +100,11 @@ class PictureController extends AbstractController
      */
     public function deletePicture(
         Picture $picture,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["picturesCache"]);
         $entityManager->remove($picture);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
@@ -107,8 +121,16 @@ class PictureController extends AbstractController
      * @param SerializerInterface $serializer
      * @return JsonResponse
      */
-    public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer): JsonResponse
+    public function createPicture(
+        Request $request, 
+        EntityManagerInterface $entityManager, 
+        UrlGeneratorInterface $urlGenerator, 
+        SerializerInterface $serializer,
+        TagAwareCacheInterface $cache
+        ): JsonResponse
     {
+        $cache->invalidateTags(["picturesCache"]);
+
         $picture = new Picture();
         $files = $request->files->get('file');
         $picture->setFile($files);
@@ -145,9 +167,12 @@ class PictureController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        PictureRepository $pictureRepository
+        PictureRepository $pictureRepository,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["picturesCache"]);
+
         $picture = new Picture();
         $autre = $pictureRepository->find($idPicture);  
         $files = $request->files->get('file');

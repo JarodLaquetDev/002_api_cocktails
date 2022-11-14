@@ -16,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class UserController extends AbstractController
 {
@@ -29,7 +31,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/api/users', name: 'user.getAll')]
+    #[Route('/api/users', name: 'user.getAll', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Obtenir la liste de tous les utilisateurs de la BDD
@@ -41,16 +43,27 @@ class UserController extends AbstractController
     public function getAllUsers(
         UserRepository $repository,
         SerializerInterface $serializer,
-        Request $request 
+        Request $request,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 50);
-        $limit = $limit > 20 ? 20: $limit;
+        // $page = $request->get('page', 1);
+        // $limit = $request->get('limit', 50);
+        // $limit = $limit > 20 ? 20: $limit;
 
-        $users = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
-        $jsonRecettes = $serializer->serialize($users, 'json', ['groups' => "getAllUsers"]);
-        return new JsonResponse($jsonRecettes, 200, [], true);
+        // $users = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
+        // $jsonRecettes = $serializer->serialize($users, 'json', ['groups' => "getAllUsers"]);
+        // return new JsonResponse($jsonRecettes, 200, [], true);
+
+        $idCache = 'getAllUsers';
+        $jsonUsers = $cache->get($idCache, function(ItemInterface $item) use ($repository, $serializer){
+            echo "MISE EN CACHE";
+            $item->tag("usersCache");
+            $user = $repository->findAll();
+            return $serializer->serialize($user, 'json', ['groups' => "getAllUsers"]);
+        });
+
+        return new JsonResponse($jsonUsers, 200, [], true);
     }
 
     #[Route('/api/user/{idUser}', name: 'users.get', methods: ['GET'])]
@@ -84,9 +97,11 @@ class UserController extends AbstractController
      */
     public function deleteUser(
         User $user,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["usersCache"]);
         $entityManager->remove($user);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
@@ -110,9 +125,12 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["usersCache"]);
+        
         $user = $serializer->deserialize($request->getContent(), User::class, 'json'); 
         $password = $user->getPassword();
         $username = $user->getUsername();
@@ -150,9 +168,11 @@ class UserController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["usersCache"]);
         $user = $serializer->deserialize(
             $request->getContent(), 
             User::class, 
