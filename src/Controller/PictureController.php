@@ -118,10 +118,12 @@ class PictureController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param UrlGeneratorInterface $urlGenerator
      * @param SerializerInterface $serializer
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
-    public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer): JsonResponse
+    public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, TagAwareCacheInterface $cache): JsonResponse
     {
+        $cache->invalidateTags(["pictureCache"]);
         $picture = new Picture();
         $files = $request->files->get('file');
         $picture->setFile($files);
@@ -149,6 +151,7 @@ class PictureController extends AbstractController
      * @param SerializerInterface $serializer
      * @param PictureRepository $ingredientRepository
      * @param UrlGeneratorInterface $urlGenerator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function updatePicture(
@@ -158,9 +161,11 @@ class PictureController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        PictureRepository $pictureRepository
+        PictureRepository $pictureRepository,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["pictureCache"]);
         $picture = new Picture();
         $autre = $pictureRepository->find($idPicture);  
         $files = $request->files->get('file');
