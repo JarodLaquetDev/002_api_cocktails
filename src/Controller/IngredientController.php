@@ -227,12 +227,6 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
@@ -242,7 +236,8 @@ class IngredientController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        $context = SerializationContext::create()->setGroups(["getIngredient"]);
+        $jsonIngredient = $serializer->serialize($ingredient, 'json', $context);
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -271,12 +266,6 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
@@ -286,7 +275,8 @@ class IngredientController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        $context = SerializationContext::create()->setGroups(["getIngredient"]);
+        $jsonIngredient = $serializer->serialize($ingredient, 'json', $context);
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -315,12 +305,6 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
 
         $content = $request->toArray();
         $idPicture = $content['idPicture'];
@@ -330,7 +314,8 @@ class IngredientController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        $context = SerializationContext::create()->setGroups(["getIngredient"]);
+        $jsonIngredient = $serializer->serialize($ingredient, 'json', $context);
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -359,12 +344,6 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
 
         $ingredient->setIngredientImage(null);      
 
@@ -372,7 +351,8 @@ class IngredientController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        $context = SerializationContext::create()->setGroups(["getIngredient"]);
+        $jsonIngredient = $serializer->serialize($ingredient, 'json', $context);
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
     
