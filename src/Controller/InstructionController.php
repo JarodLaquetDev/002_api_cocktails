@@ -14,13 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\Serialize;
+use JMS\Serializer\SerializationContext;
 
 class InstructionController extends AbstractController
 {
@@ -59,7 +61,8 @@ class InstructionController extends AbstractController
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("instructionCache");
             $instruction = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
-            return $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
+            $ingredient =  $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            $context = SerializationContext::create()->setGroups(["getAllInstructions"]);
         });
         return new JsonResponse($jsonRecettes, 200, [], true);
     }
