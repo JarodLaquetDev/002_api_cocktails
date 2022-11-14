@@ -7,6 +7,7 @@ use App\Repository\RecetteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InstructionRepository;
 use Symfony\Bundle\MakerBundle\Validator;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,26 +50,16 @@ class InstructionController extends AbstractController
         TagAwareCacheInterface $cache
     ) : JsonResponse
     {
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 50);
-        $limit = $limit > 20 ? 20: $limit;
-
-        $instruction = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
-
-        $jsonInstructions = $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
-        return new JsonResponse($jsonInstructions, 200, [], true);
-
         $idCache = 'getAllInstruction';
-        $instruction = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request){
+        $jsonRecettes = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request, $serializer){
             echo "MISE EN CACHE";
             $page = $request->get('page', 1);
             $limit = $request->get('limit', 50);
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("recetteCache");
-            return $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            $instruction = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            return $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
         });
-
-        $jsonRecettes = $serializer->serialize($recette, 'json', ['groups' => "getAllRecettes"]);
         return new JsonResponse($jsonRecettes, 200, [], true);
     }
 
