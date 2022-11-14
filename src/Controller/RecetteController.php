@@ -455,7 +455,7 @@ class RecetteController extends AbstractController
 
         }
         // Si aucune recette n'est associée à cet ingrédient
-        else
+        else 
         {
             return New JsonResponse(['message' => 'Aucune recette avec cet ingredient'], Response::HTTP_NOT_FOUND);
         }

@@ -45,7 +45,7 @@ class Recette
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'ingredientRecette')]
     #[Groups(["getRecette","getAllRecettes","createRecette","getAllInstructions","getInstruction"])]
     private Collection $recetteIngredients;
-
+ 
     // Status d'une recette
     // Ex : on
     #[ORM\Column(length: 20)]

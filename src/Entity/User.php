@@ -3,11 +3,24 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
 
+ /**
+ * @Hateoas\Relation( 
+ *      "self",
+ *      href=@Hateoas\Route(
+ *          "user.get",
+ *          parameters = {
+ *              "idUser" = "expr(object.getId())"
+ *          },
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getAllUsers")
+ * )
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\EntityListeners(['App\EntityListener\UserListener'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -17,7 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getAllUsers", "getUser"])]
+    #[Groups(["getAllUsers", "getUser"])] 
     private ?int $id = null;
 
     // Nom d'un utilisateur

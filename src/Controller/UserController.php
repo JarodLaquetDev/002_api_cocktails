@@ -11,13 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\Serialize;
+use JMS\Serializer\SerializationContext;
 
 class UserController extends AbstractController
 {
@@ -57,7 +59,8 @@ class UserController extends AbstractController
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("userCache");
             $user =  $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
-            return $serializer->serialize($user, 'json', ['groups' => "getAllUsers"]);
+            $context = SerializationContext::create()->setGroups(["getAllUsers"]);
+            return $serializer->serialize($user, 'json', $context);
         });
 
         return new JsonResponse($jsonUsers, 200, [], true);
@@ -78,7 +81,8 @@ class UserController extends AbstractController
         SerializerInterface $serializer 
     ) : JsonResponse
     {
-        $jsonUser = $serializer->serialize($user, 'json', ['groups' => "getUser"]);
+        $context = SerializationContext::create()->setGroups(["getUser"]);
+        $jsonUser = $serializer->serialize($user, 'json', $context);
         return new JsonResponse($jsonUser, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
@@ -146,7 +150,8 @@ class UserController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("users.get", ['idUser' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonUser = $serializer->serialize($user, "json", ["groups" => 'createUser']);
+        $context = SerializationContext::create()->setGroups(["getUser"]);
+        $jsonUser = $serializer->serialize($user, 'json', $context);
         return new JsonResponse($jsonUser, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -173,18 +178,24 @@ class UserController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["userCache"]);
-        $user = $serializer->deserialize(
+        
+        $updateUser = $serializer->deserialize(
             $request->getContent(), 
-            User::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $user]
+            Ingredient::class, 
+            'json'
         );
+
+        $user->setUsername($updateUser->getUsername() ? $updateUser->getUsername() : $user->getUsername());
+        $user->setStatus($updateUser->getStatus() ? $updateUser->getStatus() : $user->getStatus());
+        $user->setRoles($updateUser->getRoles() ? $updateUser->getRoles() : $user->getStatus());
+        $user->setPassword($updateUser->getPassword() ? $updateUser->getPassword() : $user->getPassword());
 
         $entityManager->persist($user);
         $entityManager->flush();
         
         $location = $urlGenerator->generate("recette.get", ['idRecette' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonUser = $serializer->serialize($user, "json", ["groups" => 'getRecette']);
+        $context = SerializationContext::create()->setGroups(["getUser"]);
+        $jsonUser = $serializer->serialize($user, 'json', $context);
         return new JsonResponse($jsonUser, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 }
