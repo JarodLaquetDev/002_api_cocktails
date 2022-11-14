@@ -116,6 +116,7 @@ class UserController extends AbstractController
      * @param UserRepository $ingredientRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @param ValidatorInterface $validator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function createUser(
@@ -123,9 +124,11 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["userCache"]);
         $user = $serializer->deserialize($request->getContent(), User::class, 'json'); 
         $password = $user->getPassword();
         $username = $user->getUsername();
@@ -156,6 +159,7 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
+     * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      */
     public function updateUser(
@@ -163,9 +167,11 @@ class UserController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["userCache"]);
         $user = $serializer->deserialize(
             $request->getContent(), 
             User::class, 
