@@ -20,6 +20,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class IngredientController extends AbstractController
 {
@@ -45,14 +48,19 @@ class IngredientController extends AbstractController
     public function getAllIngredient(
         IngredientRepository $repository,
         SerializerInterface $serializer,
-        Request $request 
+        Request $request,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 50);
-        $limit = $limit > 20 ? 20: $limit;
-
-        $ingredient = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
+        $idCache = 'getAllIngredient';
+        $ingredient = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request){
+            echo "MISE EN CACHE";
+            $page = $request->get('page', 1);
+            $limit = $request->get('limit', 50);
+            $limit = $limit > 20 ? 20: $limit;
+            $item->tag("ingredientCache");
+            return $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+        });
 
         $jsonIngredients = $serializer->serialize($ingredient, 'json', ['groups' => "getAllIngredients"]);
         return new JsonResponse($jsonIngredients, 200, [], true);
