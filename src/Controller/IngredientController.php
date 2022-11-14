@@ -13,7 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\SerializerInterface;
+//use Symfony\Component\Serializer\SerializerInterface;
+use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\Serialize;
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -61,7 +64,8 @@ class IngredientController extends AbstractController
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("ingredientCache");
             $ingredient =  $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
-            return $serializer->serialize($ingredient, 'json', ['groups' => "getAllIngredients"]);
+            $context = SerializationContext::create()->setGroups(["getAllIngredients"]);
+            return $serializer->serialize($ingredient, 'json', $context);
         });
 
         return new JsonResponse($jsonIngredients, 200, [], true);
