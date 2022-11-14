@@ -6,18 +6,15 @@ use App\Entity\Instruction;
 use App\Repository\RecetteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InstructionRepository;
-use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\Serializer\SerializerInterface;
@@ -61,8 +58,8 @@ class InstructionController extends AbstractController
             $limit = $limit > 20 ? 20: $limit;
             $item->tag("instructionCache");
             $instruction = $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
-            $ingredient =  $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
             $context = SerializationContext::create()->setGroups(["getAllInstructions"]);
+            return $serializer->serialize($instruction, 'json', $context);
         });
         return new JsonResponse($jsonRecettes, 200, [], true);
     }
@@ -82,7 +79,8 @@ class InstructionController extends AbstractController
         SerializerInterface $serializer 
     ) : JsonResponse
     {
-        $jsonInstruction = $serializer->serialize($instruction, 'json', ['groups' => "getInstruction"]);
+        $context = SerializationContext::create()->setGroups(["getInstruction"]);
+        $jsonInstruction = $serializer->serialize($instruction, 'json', $context);
         return new JsonResponse($jsonInstruction, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
@@ -147,7 +145,8 @@ class InstructionController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
+        $context = SerializationContext::create()->setGroups(["getInstruction"]);
+        $jsonInstruction = $serializer->serialize($instruction, 'json', $context);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -174,17 +173,23 @@ class InstructionController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["instructionCache"]);
-        $instruction = $serializer->deserialize(
+
+        $updateInstruction = $serializer->deserialize(
             $request->getContent(), 
-            Instruction::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
+            Ingredient::class, 
+            'json'
         );
+
+        $instruction->setPhrase($updateInstruction->getPhrase() ? $updateInstruction->getPhrase() : $instruction->getPhrase());
+        $instruction->setStatus($updateInstruction->getStatus() ? $updateInstruction->getStatus() : $instruction->getStatus());
+
+
         $entityManager->persist($instruction);
         $entityManager->flush();
         
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
+        $context = SerializationContext::create()->setGroups(["getInstruction"]);
+        $jsonInstruction = $serializer->serialize($instruction, 'json', $context);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -212,12 +217,6 @@ class InstructionController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["instructionCache"]);
-        $instruction = $serializer->deserialize(
-            $request->getContent(), 
-            Instruction::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
-        );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
@@ -227,7 +226,8 @@ class InstructionController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
+        $context = SerializationContext::create()->setGroups(["getInstruction"]);
+        $jsonInstruction = $serializer->serialize($instruction, 'json', $context);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
@@ -255,12 +255,6 @@ class InstructionController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["instructionCache"]);
-        $instruction = $serializer->deserialize(
-            $request->getContent(), 
-            Instruction::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $instruction]
-        );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
@@ -270,7 +264,8 @@ class InstructionController extends AbstractController
         $entityManager->flush();
         
         $location = $urlGenerator->generate("instruction.get", ['idInstruction' => $instruction->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonInstruction = $serializer->serialize($instruction, "json", ["groups" => 'getInstruction']);
+        $context = SerializationContext::create()->setGroups(["getInstruction"]);
+        $jsonInstruction = $serializer->serialize($instruction, 'json', $context);
         return new JsonResponse($jsonInstruction, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 }
