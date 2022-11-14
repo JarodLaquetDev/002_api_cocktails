@@ -183,18 +183,22 @@ class IngredientController extends AbstractController
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
-        $ingredient = $serializer->deserialize(
+        $updateIngredient = $serializer->deserialize(
             $request->getContent(), 
             Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );    
+            'json'
+        );
+
+        $ingredient->setIngredientName($updateIngredient->getIngredientName() ? $updateIngredient->getIngredientName() : $ingredient->getIngredientName());
+        $ingredient->setIngredientQuantity($updateIngredient->getIngredientQuantity() ? $updateIngredient->getIngredientQuantity() : $ingredient->getIngredientQuantity());
+        $ingredient->setStatus($updateIngredient->getStatus() ? $updateIngredient->getStatus() : $ingredient->getStatus());
 
         $entityManager->persist($ingredient);
         $entityManager->flush();
         
         $location = $urlGenerator->generate("ingredient.get", ['idIngredient' => $ingredient->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $jsonIngredient = $serializer->serialize($ingredient, "json", ["groups" => 'getIngredient']);
+        $context = SerializationContext::create()->setGroups(["getIngredient"]);
+        $jsonIngredient = $serializer->serialize($ingredient, 'json', $context);
         return new JsonResponse($jsonIngredient, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
