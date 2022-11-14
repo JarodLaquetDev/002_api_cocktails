@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class InstructionController extends AbstractController
 {
@@ -49,27 +50,15 @@ class InstructionController extends AbstractController
         TagAwareCacheInterface $cache
     ) : JsonResponse
     {
-        $page = $request->get('page', 1);
-        $limit = $request->get('limit', 50);
-        $limit = $limit > 20 ? 20: $limit;
-
-        $instruction = $repository->findWithPagination($page, $limit); //meme chose que $repository->findAll()
-
-        $jsonInstructions = $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
-        return new JsonResponse($jsonInstructions, 200, [], true);
-
         $idCache = 'getAllInstruction';
-        $instruction = $cache->get($idCache, function(ItemInterface $item) use ($repository, $request){
+        $jsonInstruction = $cache->get($idCache, function(ItemInterface $item) use ($repository, $serializer){
             echo "MISE EN CACHE";
-            $page = $request->get('page', 1);
-            $limit = $request->get('limit', 50);
-            $limit = $limit > 20 ? 20: $limit;
-            $item->tag("recetteCache");
-            return $repository->findWithPagination($page, $limit);//meme chose que $repository->findAll()
+            $item->tag("instructionCache");
+            $instruction = $repository->findAll();//meme chose que $repository->findAll()
+            return $serializer->serialize($instruction, 'json', ['groups' => "getAllInstructions"]);
         });
 
-        $jsonRecettes = $serializer->serialize($recette, 'json', ['groups' => "getAllRecettes"]);
-        return new JsonResponse($jsonRecettes, 200, [], true);
+        return new JsonResponse($jsonInstruction, 200, [], true);
     }
 
     #[Route('/api/instruction/{idInstruction}', name: 'instruction.get', methods: ['GET'])]
@@ -103,9 +92,11 @@ class InstructionController extends AbstractController
      */
     public function deleteInstruction(
         Instruction $instruction,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["instructionCache"]);
         $entityManager->remove($instruction);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
@@ -129,9 +120,12 @@ class InstructionController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["instructionCache"]);
+
         $instruction = $serializer->deserialize($request->getContent(), Instruction::class, 'json');
         $instruction->setStatus('on');      
 
@@ -166,9 +160,12 @@ class InstructionController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["instructionCache"]);
+
         $instruction = $serializer->deserialize(
             $request->getContent(), 
             Instruction::class, 
@@ -201,9 +198,12 @@ class InstructionController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        recetteRepository $recetteRepository
+        recetteRepository $recetteRepository,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["instructionCache"]);
+
         $instruction = $serializer->deserialize(
             $request->getContent(), 
             Instruction::class, 
@@ -241,9 +241,12 @@ class InstructionController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        recetteRepository $recetteRepository
+        recetteRepository $recetteRepository,
+        TagAwareCacheInterface $cache
     ) : JsonResponse
     {
+        $cache->invalidateTags(["instructionCache"]);
+
         $instruction = $serializer->deserialize(
             $request->getContent(), 
             Instruction::class, 

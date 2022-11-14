@@ -16,6 +16,7 @@ class Picture
 {
     // Identifiant unique
     // Ex : 130
+    #[Groups(["getPicture","getAllPictures"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

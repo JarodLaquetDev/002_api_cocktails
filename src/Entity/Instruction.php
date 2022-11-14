@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: InstructionRepository::class)]
 class Instruction
 {
+    #[Groups(["getAllInstructions","getInstruction"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

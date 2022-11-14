@@ -14,6 +14,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     // Identifiant unique
     // Ex : 130
+    #[Groups(["getAllUsers", "getUser"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
