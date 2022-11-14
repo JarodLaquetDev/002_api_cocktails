@@ -182,12 +182,21 @@ class IngredientController extends AbstractController
     {
         $cache->invalidateTags(["ingredientCache"]);
 
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );    
+        // $ingredient = $serializer->deserialize(
+        //     $request->getContent(), 
+        //     Ingredient::class, 
+        //     'json',
+        //     [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        // );
+        
+        $updatedIngredient = $serializer->deserialize(
+             $request->getContent(), 
+             Ingredient::class, 
+             'json'
+        );
+
+        $ingredient->setIngredientName($updatedIngredient->getIngredientName() ? $updatedIngredient->getIngredientName() : $ingredient->getIngredientName());
+        $ingredient->setIngredientQuantity($updatedIngredient->getIngredientQuantity() ? $updatedIngredient->getIngredientQuantity() : $ingredient->getIngredientQuantity());
 
         $entityManager->persist($ingredient);
         $entityManager->flush();
@@ -223,12 +232,12 @@ class IngredientController extends AbstractController
     {
         $cache->invalidateTags(["ingredientCache"]);
 
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
+        // $ingredient = $serializer->deserialize(
+        //     $request->getContent(), 
+        //     Ingredient::class, 
+        //     'json',
+        //     [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        // );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
@@ -268,12 +277,12 @@ class IngredientController extends AbstractController
     {
         $cache->invalidateTags(["ingredientCache"]);
 
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
+        // $ingredient = $serializer->deserialize(
+        //     $request->getContent(), 
+        //     Ingredient::class, 
+        //     'json',
+        //     [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        // );
 
         $content = $request->toArray();
         $idRecette = $content['idRecette'];
@@ -313,12 +322,12 @@ class IngredientController extends AbstractController
     {
         $cache->invalidateTags(["ingredientCache"]);
 
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
+        // $ingredient = $serializer->deserialize(
+        //     $request->getContent(), 
+        //     Ingredient::class, 
+        //     'json',
+        //     [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        // );
 
         $content = $request->toArray();
         $idPicture = $content['idPicture'];
@@ -358,12 +367,12 @@ class IngredientController extends AbstractController
     {
         $cache->invalidateTags(["ingredientCache"]);
 
-        $ingredient = $serializer->deserialize(
-            $request->getContent(), 
-            Ingredient::class, 
-            'json',
-            [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
-        );
+        // $ingredient = $serializer->deserialize(
+        //     $request->getContent(), 
+        //     Ingredient::class, 
+        //     'json',
+        //     [AbstractNormalizer::OBJECT_TO_POPULATE => $ingredient]
+        // );
 
         $ingredient->setIngredientImage(null);      
 
