@@ -6,8 +6,22 @@ use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
 
+ /**
+ * @Hateoas\Relation(
+ *      "self",
+ *      href=@Hateoas\Route(
+ *          "picture.get",
+ *          parameters = {
+ *              "idPicture" = "expr(object.getId())"
+ *          },
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(groups="getAllPictures")
+ * )
+ */
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
 /**
  * @Vich\Uploadable()
