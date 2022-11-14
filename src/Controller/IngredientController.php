@@ -97,9 +97,11 @@ class IngredientController extends AbstractController
      */
     public function deleteIngredient(
         Ingredient $ingredient,
-        EntityManagerInterface $entityManager 
+        EntityManagerInterface $entityManager,
+        TagAwareCacheInterface $cache 
     ) : JsonResponse
     {
+        $cache->invalidateTags(["ingredientCache"]);
         $entityManager->remove($ingredient);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
