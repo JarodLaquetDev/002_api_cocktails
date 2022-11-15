@@ -182,7 +182,7 @@ class RecetteController extends AbstractController
         
         $updateRecette = $serializer->deserialize(
             $request->getContent(), 
-            Ingredient::class, 
+            Recette::class, 
             'json'
         );
 
@@ -451,8 +451,7 @@ class RecetteController extends AbstractController
         {
             $context = SerializationContext::create()->setGroups(["getRecette"]);
             $jsonRecette = $serializer->serialize($recette, 'json', $context);
-            return New JsonResponse($jsonRecette,Response::HTTP_OK, [],true);
-
+            return New JsonResponse($jsonRecette, Response::HTTP_OK, [], true);
         }
         // Si aucune recette n'est associée à cet ingrédient
         else 

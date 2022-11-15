@@ -8,6 +8,10 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
+        '/api/token/refresh' => [
+            [['_route' => 'gesdinet_jwt_refresh_token'], null, null, null, false, false, null],
+            [['_route' => 'api_refresh_token'], null, null, null, false, false, null],
+        ],
         '/api/doc.json' => [[['_route' => 'app.swagger', '_controller' => 'nelmio_api_doc.controller.swagger'], null, ['GET' => 0], null, false, false, null]],
         '/api/doc' => [[['_route' => 'app.swagger_ui', '_controller' => 'nelmio_api_doc.controller.swagger_ui'], null, ['GET' => 0], null, false, false, null]],
         '/ingredient' => [[['_route' => 'app_ingredient', '_controller' => 'App\\Controller\\IngredientController::index'], null, null, null, false, false, null]],

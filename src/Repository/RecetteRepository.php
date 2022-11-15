@@ -77,7 +77,7 @@ class RecetteRepository extends ServiceEntityRepository
      */
     public function findRecetteByIngredient(string $nameIngredient){
         $qb = $this->createQueryBuilder('r')
-            ->where("r.status = 'on'")
+            ->where('r.status = \'on\'')
             ->innerJoin('r.recetteIngredients', 'i')
             ->andWhere('i.ingredientName = :nameIngredient')
             ->setParameter('nameIngredient', $nameIngredient);

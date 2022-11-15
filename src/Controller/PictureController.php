@@ -103,12 +103,14 @@ class PictureController extends AbstractController
      * @return JsonResponse
      */
     public function deletePicture(
-        Picture $picture,
+        int $idPicture,
         EntityManagerInterface $entityManager,
-        TagAwareCacheInterface $cache 
+        TagAwareCacheInterface $cache,
+        PictureRepository $repository 
     ) : JsonResponse
     {
         $cache->invalidateTags(["pictureCache"]);
+        $picture = $repository->find($idPicture);
         $picture->setStatus("off");
         $entityManager->persist($picture);
         $entityManager->flush();

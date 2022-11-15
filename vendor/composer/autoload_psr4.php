@@ -78,6 +78,7 @@ return array(
     'JMS\\Serializer\\' => array($vendorDir . '/jms/serializer/src'),
     'JMS\\SerializerBundle\\' => array($vendorDir . '/jms/serializer-bundle'),
     'Hateoas\\' => array($vendorDir . '/willdurand/hateoas/src'),
+    'Gesdinet\\JWTRefreshTokenBundle\\' => array($vendorDir . '/gesdinet/jwt-refresh-token-bundle'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'Doctrine\\SqlFormatter\\' => array($vendorDir . '/doctrine/sql-formatter/src'),
     'Doctrine\\Persistence\\' => array($vendorDir . '/doctrine/persistence/src/Persistence'),
