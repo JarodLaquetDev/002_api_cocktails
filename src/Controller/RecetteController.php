@@ -526,7 +526,7 @@ class RecetteController extends AbstractController
         $recette = New Recette();
         $recette = $repository->findRecetteByIngredient($name);
         // Si une recette est associée à cet ingrédient
-        if(!empty($recette))
+        if($recette)
         {
             $context = SerializationContext::create()->setGroups(["getRecette"]);
             $jsonRecette = $serializer->serialize($recette, 'json', $context);
