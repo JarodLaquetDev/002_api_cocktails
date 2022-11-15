@@ -20,6 +20,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\Serialize;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class InstructionController extends AbstractController
 {
@@ -42,6 +45,7 @@ class InstructionController extends AbstractController
      * @param Request $request
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */ 
     public function getAllInstructions(
         InstructionRepository $repository,
@@ -73,6 +77,7 @@ class InstructionController extends AbstractController
      * @param Instruction $instruction
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */ 
     public function getInstruction(
         Instruction $instruction,
@@ -94,6 +99,7 @@ class InstructionController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function deleteInstruction(
         Instruction $instruction,
@@ -121,6 +127,7 @@ class InstructionController extends AbstractController
      * @param ValidatorInterface $validator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function createInstruction(
         Request $request,
@@ -162,6 +169,7 @@ class InstructionController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function updateInstruction(
         Instruction $instruction,
@@ -205,6 +213,7 @@ class InstructionController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function addRecetteInInstruction(
         Instruction $instruction,
@@ -243,6 +252,7 @@ class InstructionController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function deleteRecetteInInstruction(
         Instruction $instruction,

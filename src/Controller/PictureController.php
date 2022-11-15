@@ -18,6 +18,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\Serialize;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 
 class PictureController extends AbstractController
@@ -40,6 +43,7 @@ class PictureController extends AbstractController
      * @param SerializerInterface $serializer
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function getAllPictures(
         PictureRepository $repository,
@@ -74,6 +78,7 @@ class PictureController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param Request $request
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function getPicture(int $idPicture, SerializerInterface $serializer, PictureRepository $pictureRepository, UrlGeneratorInterface $urlGenerator, Request $request) : JsonResponse
     {
@@ -101,6 +106,7 @@ class PictureController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function deletePicture(
         int $idPicture,
@@ -128,6 +134,7 @@ class PictureController extends AbstractController
      * @param SerializerInterface $serializer
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, TagAwareCacheInterface $cache): JsonResponse
     {
@@ -162,6 +169,7 @@ class PictureController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function updatePicture(
         int $idPicture,

@@ -26,6 +26,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class IngredientController extends AbstractController
 {
@@ -48,6 +51,7 @@ class IngredientController extends AbstractController
      * @param Request $request
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function getAllIngredient(
         IngredientRepository $repository,
@@ -80,6 +84,7 @@ class IngredientController extends AbstractController
      * @param Ingredient $ingredient
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */ 
     public function getIngredient(
         Ingredient $ingredient,
@@ -101,6 +106,7 @@ class IngredientController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function deleteIngredient(
         Ingredient $ingredient,
@@ -128,6 +134,19 @@ class IngredientController extends AbstractController
      * @param ValidatorInterface $validator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
+     * @OA\Parameter(
+     *      name="ingredient_name",
+     *      in="query",
+     *      description="Le nom de l'ingrédient que l'on souhaite créer",
+     *      @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *      name="ingredient_quantity",
+     *      in="query",
+     *      description="La quantité de l'ingrédient que l'on souhaite créer",
+     *      @OA\Schema(type="int")
+     * )
      */
     public function createIngredient(
         Request $request,
@@ -171,6 +190,20 @@ class IngredientController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
+     * @OA\Parameter(
+     *      name="ingredient_name",
+     *      in="query",
+     *      description="Le nom de l'ingrédient que l'on souhaite modifier",
+     *      @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *      name="ingredient_quantity",
+     *      in="query",
+     *      description="La quantité de l'ingrédient que l'on souhaite modifier",
+     *      @OA\Schema(type="int")
+     * )
+     * 
      */
     public function updateIngredient(
         Ingredient $ingredient,
@@ -215,6 +248,13 @@ class IngredientController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
+     * @OA\Parameter(
+     *      name="idRecette",
+     *      in="query",
+     *      description="L'id de la recette que l'on souhaite ajouter à l'ingrédient'",
+     *      @OA\Schema(type="int")
+     * )
      */
     public function addRecetteInIngredient(
         Ingredient $ingredient,
@@ -254,6 +294,13 @@ class IngredientController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
+     * @OA\Parameter(
+     *      name="idRecette",
+     *      in="query",
+     *      description="L'id de la recette que l'on souhaite retirer de l'ingrédient'",
+     *      @OA\Schema(type="int")
+     * )
      */
     public function deleteRecetteInIngredient(
         Ingredient $ingredient,
@@ -293,6 +340,13 @@ class IngredientController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
+     * @OA\Parameter(
+     *      name="idPicture",
+     *      in="query",
+     *      description="L'id de la picture que l'on souhaite ajouter à l'ingrédient'",
+     *      @OA\Schema(type="int")
+     * )
      */
     public function addPictureInIngredient(
         Ingredient $ingredient,
@@ -332,6 +386,13 @@ class IngredientController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
+     * @OA\Parameter(
+     *      name="idPicture",
+     *      in="query",
+     *      description="L'id de la picture que l'on souhaite retirer de l'ingrédient'",
+     *      @OA\Schema(type="int")
+     * )
      */
     public function deletePictureInIngredient(
         Ingredient $ingredient,

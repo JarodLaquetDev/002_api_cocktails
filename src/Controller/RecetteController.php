@@ -23,6 +23,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\Serialize;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class RecetteController extends AbstractController
 {
@@ -45,6 +48,7 @@ class RecetteController extends AbstractController
      * @param Request $request
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function getAllRecettes(
         RecetteRepository $repository,
@@ -77,6 +81,7 @@ class RecetteController extends AbstractController
      * @param Recette $recette
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function getRecette(
         Recette $recette,
@@ -98,6 +103,7 @@ class RecetteController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function deleteRecette(
         Recette $recette,
@@ -125,6 +131,7 @@ class RecetteController extends AbstractController
      * @param ValidatorInterface $validator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function createRecette(
         Request $request,
@@ -167,6 +174,7 @@ class RecetteController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function updateRecette(
         Recette $recette,
@@ -213,6 +221,7 @@ class RecetteController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function addIngredientInRecette(
         Recette $recette,
@@ -252,6 +261,7 @@ class RecetteController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function deleteIngredientInRecette(
         Recette $recette,
@@ -291,6 +301,7 @@ class RecetteController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function addInstructionInRecette(
         Recette $recette,
@@ -330,6 +341,7 @@ class RecetteController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function deleteInstructionInRecette(
         Recette $recette,
@@ -369,6 +381,7 @@ class RecetteController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function addPictureInRecette(
         Recette $recette,
@@ -408,6 +421,7 @@ class RecetteController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function deletePictureInRecette(
         Recette $recette,
@@ -440,6 +454,7 @@ class RecetteController extends AbstractController
      * @param RecetteRepository $repository
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Recettes")
      */
     public function getRecetteByIngredient(Request $request, RecetteRepository $repository, SerializerInterface $serializer): JsonResponse
     {

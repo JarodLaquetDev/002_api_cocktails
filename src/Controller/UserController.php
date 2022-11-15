@@ -20,6 +20,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\Serialize;
 use JMS\Serializer\SerializationContext;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class UserController extends AbstractController
 {
@@ -43,6 +46,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function getAllUsers(
         UserRepository $repository,
@@ -75,6 +79,7 @@ class UserController extends AbstractController
      * @param User $user
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function getUserById(
         User $user,
@@ -96,6 +101,7 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function deleteUser(
         User $user,
@@ -123,6 +129,7 @@ class UserController extends AbstractController
      * @param ValidatorInterface $validator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function createUser(
         Request $request,
@@ -167,6 +174,7 @@ class UserController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function updateUser(
         User $user,
