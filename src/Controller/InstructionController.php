@@ -21,12 +21,9 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Cache\ItemInterface;
-<<<<<<< HEAD
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
-=======
->>>>>>> ec8992ce53f1abf8c6245e60f1b4d38cae590f74
 
 class InstructionController extends AbstractController
 {
@@ -48,10 +45,7 @@ class InstructionController extends AbstractController
      * @param SerializerInterface $serializer
      * @param Request $request
      * @return JsonResponse
-<<<<<<< HEAD
      * @OA\Tag(name="Instructions")
-=======
->>>>>>> ec8992ce53f1abf8c6245e60f1b4d38cae590f74
      */
     public function getAllInstructions(
         InstructionRepository $repository,
@@ -79,10 +73,7 @@ class InstructionController extends AbstractController
      * @param Instruction $instruction
      * @param SerializerInterface $serializer
      * @return JsonResponse
-<<<<<<< HEAD
      * @OA\Tag(name="Instructions")
-=======
->>>>>>> ec8992ce53f1abf8c6245e60f1b4d38cae590f74
      */
     public function getInstruction(
         Instruction $instruction,
