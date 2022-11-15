@@ -18,6 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class UserController extends AbstractController
 {
@@ -39,6 +42,7 @@ class UserController extends AbstractController
      * @param UserRepository $repository
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function getAllUsers(
         UserRepository $repository,
@@ -75,6 +79,7 @@ class UserController extends AbstractController
      * @param User $user
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function getUserById(
         User $user,
@@ -94,6 +99,7 @@ class UserController extends AbstractController
      * @param User $user
      * @param EntityManagerInterface $entityManager
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function deleteUser(
         User $user,
@@ -119,6 +125,7 @@ class UserController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param ValidatorInterface $validator
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function createUser(
         Request $request,
@@ -162,6 +169,7 @@ class UserController extends AbstractController
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Users")
      */
     public function updateUser(
         User $user,

@@ -16,6 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class PictureController extends AbstractController
 {
@@ -36,6 +39,7 @@ class PictureController extends AbstractController
      * @param PictureRepository $repository
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function getAllPictures(
         PictureRepository $repository,
@@ -74,6 +78,7 @@ class PictureController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param Request $request
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function getPicture(int $idPicture, SerializerInterface $serializer, PictureRepository $pictureRepository, UrlGeneratorInterface $urlGenerator, Request $request) : JsonResponse
     {
@@ -97,6 +102,7 @@ class PictureController extends AbstractController
      * @param Picture $picture
      * @param EntityManagerInterface $entityManager
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function deletePicture(
         Picture $picture,
@@ -120,6 +126,7 @@ class PictureController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function createPicture(
         Request $request, 
@@ -159,6 +166,7 @@ class PictureController extends AbstractController
      * @param PictureRepository $ingredientRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Pictures")
      */
     public function updatePicture(
         int $idPicture,

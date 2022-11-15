@@ -21,6 +21,9 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Cache\ItemInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class InstructionController extends AbstractController
 {
@@ -42,6 +45,7 @@ class InstructionController extends AbstractController
      * @param SerializerInterface $serializer
      * @param Request $request
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function getAllInstructions(
         InstructionRepository $repository,
@@ -69,6 +73,7 @@ class InstructionController extends AbstractController
      * @param Instruction $instruction
      * @param SerializerInterface $serializer
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function getInstruction(
         Instruction $instruction,
@@ -87,6 +92,7 @@ class InstructionController extends AbstractController
      * @param Instruction $instruction
      * @param EntityManagerInterface $entityManager
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function deleteInstruction(
         Instruction $instruction,
@@ -111,6 +117,7 @@ class InstructionController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param ValidatorInterface $validator
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function createInstruction(
         Request $request,
@@ -150,6 +157,7 @@ class InstructionController extends AbstractController
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function updateInstruction(
         Instruction $instruction,
@@ -186,6 +194,7 @@ class InstructionController extends AbstractController
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function addRecetteInInstruction(
         Instruction $instruction,
@@ -228,6 +237,7 @@ class InstructionController extends AbstractController
      * @param SerializerInterface $serializer
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Instructions")
      */
     public function deleteRecetteInInstruction(
         Instruction $instruction,

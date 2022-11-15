@@ -26,6 +26,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 
 class IngredientController extends AbstractController
 {
@@ -47,6 +50,7 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @param Request $request
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function getAllIngredient(
         IngredientRepository $repository,
@@ -79,7 +83,8 @@ class IngredientController extends AbstractController
      * @param Ingredient $ingredient
      * @param SerializerInterface $serializer
      * @return JsonResponse
-     */ 
+     * @OA\Tag(name="Ingredients")
+     */
     public function getIngredient(
         Ingredient $ingredient,
         SerializerInterface $serializer 
@@ -100,6 +105,7 @@ class IngredientController extends AbstractController
      * @param Ingredient $ingredient
      * @param EntityManagerInterface $entityManager
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function deleteIngredient(
         Ingredient $ingredient,
@@ -126,6 +132,7 @@ class IngredientController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param ValidatorInterface $validator
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function createIngredient(
         Request $request,
@@ -169,6 +176,7 @@ class IngredientController extends AbstractController
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function updateIngredient(
         Ingredient $ingredient,
@@ -219,6 +227,7 @@ class IngredientController extends AbstractController
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function addRecetteInIngredient(
         Ingredient $ingredient,
@@ -264,6 +273,7 @@ class IngredientController extends AbstractController
      * @param RecetteRepository $recetteRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function deleteRecetteInIngredient(
         Ingredient $ingredient,
@@ -309,6 +319,7 @@ class IngredientController extends AbstractController
      * @param PictureRepository $pictureRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function addPictureInIngredient(
         Ingredient $ingredient,
@@ -354,6 +365,7 @@ class IngredientController extends AbstractController
      * @param PictureRepository $pictureRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return JsonResponse
+     * @OA\Tag(name="Ingredients")
      */
     public function deletePictureInIngredient(
         Ingredient $ingredient,
