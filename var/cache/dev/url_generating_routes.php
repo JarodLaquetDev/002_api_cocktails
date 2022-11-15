@@ -4,6 +4,9 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
+    'gesdinet_jwt_refresh_token' => [[], [], [], [['text', '/api/token/refresh']], [], [], []],
+    'app.swagger' => [[], ['_controller' => 'nelmio_api_doc.controller.swagger'], [], [['text', '/api/doc.json']], [], [], []],
+    'app.swagger_ui' => [[], ['_controller' => 'nelmio_api_doc.controller.swagger_ui'], [], [['text', '/api/doc']], [], [], []],
     'app_ingredient' => [[], ['_controller' => 'App\\Controller\\IngredientController::index'], [], [['text', '/ingredient']], [], [], []],
     'ingredients.getAll' => [[], ['_controller' => 'App\\Controller\\IngredientController::getAllIngredient'], [], [['text', '/api/ingredients']], [], [], []],
     'ingredient.get' => [['idIngredient'], ['_controller' => 'App\\Controller\\IngredientController::getIngredient'], [], [['variable', '/', '[^/]++', 'idIngredient', true], ['text', '/api/ingredient']], [], [], []],
