@@ -151,7 +151,6 @@ class InstructionController extends AbstractController
         $instruction->setStatus('on');      
 
         $errors = $validator->validate($instruction);
-        //dd($errors->count());
         if($errors->count() > 0){
             return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
@@ -193,6 +192,7 @@ class InstructionController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
+        ValidatorInterface $validator,
         TagAwareCacheInterface $cache
     ) : JsonResponse
     {
@@ -208,6 +208,11 @@ class InstructionController extends AbstractController
         $instruction->setStatus($updateInstruction->getStatus() ? $updateInstruction->getStatus() : $instruction->getStatus());
 
 
+        $errors = $validator->validate($instruction);
+        if($errors->count() > 0){
+            return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
+        
         $entityManager->persist($instruction);
         $entityManager->flush();
         

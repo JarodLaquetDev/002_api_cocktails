@@ -202,7 +202,8 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,
         UrlGeneratorInterface $urlGenerator,
-        TagAwareCacheInterface $cache
+        TagAwareCacheInterface $cache,
+        ValidatorInterface $validator
     ) : JsonResponse
     {
         $cache->invalidateTags(["userCache"]);
@@ -217,6 +218,11 @@ class UserController extends AbstractController
         $user->setStatus($updateUser->getStatus() ? $updateUser->getStatus() : $user->getStatus());
         $user->setRoles($updateUser->getRoles() ? $updateUser->getRoles() : $user->getStatus());
         $user->setPassword($updateUser->getPassword() ? $updateUser->getPassword() : $user->getPassword());
+
+        $errors = $validator->validate($user);
+        if($errors->count() > 0){
+            return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
 
         $entityManager->persist($user);
         $entityManager->flush();

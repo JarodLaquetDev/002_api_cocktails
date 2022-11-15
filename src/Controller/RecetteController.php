@@ -199,7 +199,8 @@ class RecetteController extends AbstractController
         SerializerInterface $serializer,
         IngredientRepository $ingredientRepository,
         UrlGeneratorInterface $urlGenerator,
-        TagAwareCacheInterface $cache
+        TagAwareCacheInterface $cache,
+        ValidatorInterface $validator
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
@@ -213,6 +214,10 @@ class RecetteController extends AbstractController
         $recette->setRecetteName($updateRecette->getRecetteName() ? $updateRecette->getRecetteName() : $recette->getRecetteName());
         $recette->setStatus($updateRecette->getStatus() ? $updateRecette->getStatus() : $recette->getStatus());
 
+        $errors = $validator->validate($recette);
+        if($errors->count() > 0){
+            return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
 
         $entityManager->persist($recette);
         $entityManager->flush();
@@ -254,7 +259,8 @@ class RecetteController extends AbstractController
         SerializerInterface $serializer,
         IngredientRepository $ingredientRepository,
         UrlGeneratorInterface $urlGenerator,
-        TagAwareCacheInterface $cache
+        TagAwareCacheInterface $cache,
+        ValidatorInterface $validator
     ) : JsonResponse
     {
         $cache->invalidateTags(["recetteCache"]);
@@ -262,6 +268,8 @@ class RecetteController extends AbstractController
         $content = $request->toArray();
         $idIngredient = $content['idIngredient'];
         $recette->addRecetteIngredient($ingredientRepository->find($idIngredient));  
+
+        
 
         $entityManager->persist($recette);
         $entityManager->flush();

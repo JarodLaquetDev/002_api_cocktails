@@ -160,7 +160,6 @@ class IngredientController extends AbstractController
         $ingredient->setStatus('on');
 
         $errors = $validator->validate($ingredient);
-        //dd($errors->count());
         if($errors->count() > 0){
             return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
         }
@@ -205,7 +204,8 @@ class IngredientController extends AbstractController
         SerializerInterface $serializer,
         RecetteRepository $recetteRepository,
         UrlGeneratorInterface $urlGenerator,
-        TagAwareCacheInterface $cache
+        TagAwareCacheInterface $cache,
+        ValidatorInterface $validator
     ) : JsonResponse
     {
         $cache->invalidateTags(["ingredientCache"]);
@@ -218,6 +218,11 @@ class IngredientController extends AbstractController
         $ingredient->setIngredientName($updateIngredient->getIngredientName() ? $updateIngredient->getIngredientName() : $ingredient->getIngredientName());
         $ingredient->setIngredientQuantity($updateIngredient->getIngredientQuantity() ? $updateIngredient->getIngredientQuantity() : $ingredient->getIngredientQuantity());
         $ingredient->setStatus($updateIngredient->getStatus() ? $updateIngredient->getStatus() : $ingredient->getStatus());
+
+        $errors = $validator->validate($ingredient);
+        if($errors->count() > 0){
+            return new JsonResponse($serializer->serialize($errors, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
 
         $entityManager->persist($ingredient);
         $entityManager->flush();
