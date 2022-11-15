@@ -65,7 +65,7 @@ class PictureController extends AbstractController
         });
         return new JsonResponse($jsonPictures, 200, [], true);
     }
-
+ 
     #[Route('api/picture/{idPicture}', name:'picture.get', methods:['GET'])]
     #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     #[ParamConverter("Picture", options : ["id" => "idPicture"])]

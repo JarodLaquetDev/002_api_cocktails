@@ -35,7 +35,7 @@ class RecetteController extends AbstractController
         return $this->json([
             'message' => 'Welcome to your new controller!',
             'path' => 'src/Controller/RecetteController.php',
-        ]);
+        ]); 
     }
 
     #[Route('/api/recettes', name: 'recette.getAll')]
@@ -132,6 +132,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="recette_name", type="string")
+     *      )
+     * )
      */
     public function createRecette(
         Request $request,
@@ -175,6 +183,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="recette_name", type="string")
+     *      )
+     * )
      */
     public function updateRecette(
         Recette $recette,
@@ -222,6 +238,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idIngredient", type="int")
+     *      )
+     * )
      */
     public function addIngredientInRecette(
         Recette $recette,
@@ -262,6 +286,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idIngredient", type="int")
+     *      )
+     * )
      */
     public function deleteIngredientInRecette(
         Recette $recette,
@@ -302,6 +334,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idInstruction", type="int")
+     *      )
+     * )
      */
     public function addInstructionInRecette(
         Recette $recette,
@@ -342,6 +382,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idInstruction", type="int")
+     *      )
+     * )
      */
     public function deleteInstructionInRecette(
         Recette $recette,
@@ -382,6 +430,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idPicture", type="int")
+     *      )
+     * )
      */
     public function addPictureInRecette(
         Recette $recette,
@@ -422,6 +478,14 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idPicture", type="int")
+     *      )
+     * )
      */
     public function deletePictureInRecette(
         Recette $recette,
