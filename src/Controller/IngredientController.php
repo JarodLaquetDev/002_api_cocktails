@@ -135,17 +135,14 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
-     * @OA\Parameter(
-     *      name="ingredient_name",
-     *      in="query",
-     *      description="Le nom de l'ingrédient que l'on souhaite créer",
-     *      @OA\Schema(type="string")
-     * )
-     * @OA\Parameter(
-     *      name="ingredient_quantity",
-     *      in="query",
-     *      description="La quantité de l'ingrédient que l'on souhaite créer",
-     *      @OA\Schema(type="int")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="ingredient_name", type="string"),
+     *          @OA\Property(property="ingredient_quantity", type="int")
+     *      )
      * )
      */
     public function createIngredient(
@@ -191,19 +188,15 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
-     * @OA\Parameter(
-     *      name="ingredient_name",
-     *      in="query",
-     *      description="Le nom de l'ingrédient que l'on souhaite modifier",
-     *      @OA\Schema(type="string")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="ingredient_name", type="string"),
+     *          @OA\Property(property="ingredient_quantity", type="int")
+     *      )
      * )
-     * @OA\Parameter(
-     *      name="ingredient_quantity",
-     *      in="query",
-     *      description="La quantité de l'ingrédient que l'on souhaite modifier",
-     *      @OA\Schema(type="int")
-     * )
-     * 
      */
     public function updateIngredient(
         Ingredient $ingredient,
@@ -249,11 +242,13 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
-     * @OA\Parameter(
-     *      name="idRecette",
-     *      in="query",
-     *      description="L'id de la recette que l'on souhaite ajouter à l'ingrédient'",
-     *      @OA\Schema(type="int")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idRecette", type="int")
+     *      )
      * )
      */
     public function addRecetteInIngredient(
@@ -295,11 +290,13 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
-     * @OA\Parameter(
-     *      name="idRecette",
-     *      in="query",
-     *      description="L'id de la recette que l'on souhaite retirer de l'ingrédient'",
-     *      @OA\Schema(type="int")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idRecette", type="int")
+     *      )
      * )
      */
     public function deleteRecetteInIngredient(
@@ -341,11 +338,13 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
-     * @OA\Parameter(
-     *      name="idPicture",
-     *      in="query",
-     *      description="L'id de la picture que l'on souhaite ajouter à l'ingrédient'",
-     *      @OA\Schema(type="int")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idPicture", type="int")
+     *      )
      * )
      */
     public function addPictureInIngredient(
@@ -387,11 +386,13 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
-     * @OA\Parameter(
-     *      name="idPicture",
-     *      in="query",
-     *      description="L'id de la picture que l'on souhaite retirer de l'ingrédient'",
-     *      @OA\Schema(type="int")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idPicture", type="int")
+     *      )
      * )
      */
     public function deletePictureInIngredient(
