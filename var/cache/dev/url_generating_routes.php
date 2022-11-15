@@ -51,4 +51,5 @@ return [
     'user.create' => [[], ['_controller' => 'App\\Controller\\UserController::createUser'], [], [['text', '/api/user']], [], [], []],
     'user.update' => [['id'], ['_controller' => 'App\\Controller\\UserController::updateUser'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/user']], [], [], []],
     'api_login_check' => [[], [], [], [['text', '/api/login_check']], [], [], []],
+    'api_refresh_token' => [[], [], [], [['text', '/api/token/refresh']], [], [], []],
 ];

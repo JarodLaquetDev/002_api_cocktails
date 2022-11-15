@@ -2,6 +2,7 @@
 
 namespace Symfony\Config\Doctrine;
 
+require_once __DIR__.\DIRECTORY_SEPARATOR.'Orm'.\DIRECTORY_SEPARATOR.'ControllerResolverConfig.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'Orm'.\DIRECTORY_SEPARATOR.'EntityManagerConfig.php';
 
 use Symfony\Component\Config\Loader\ParamConfigurator;
@@ -16,6 +17,7 @@ class OrmConfig
     private $autoGenerateProxyClasses;
     private $proxyDir;
     private $proxyNamespace;
+    private $controllerResolver;
     private $entityManagers;
     private $resolveTargetEntities;
     private $_usedProperties = [];
@@ -73,6 +75,21 @@ class OrmConfig
         return $this;
     }
 
+    /**
+     * @default {"enabled":true,"auto_mapping":true,"evict_cache":false}
+    */
+    public function controllerResolver(array $value = []): \Symfony\Config\Doctrine\Orm\ControllerResolverConfig
+    {
+        if (null === $this->controllerResolver) {
+            $this->_usedProperties['controllerResolver'] = true;
+            $this->controllerResolver = new \Symfony\Config\Doctrine\Orm\ControllerResolverConfig($value);
+        } elseif (0 < \func_num_args()) {
+            throw new InvalidConfigurationException('The node created by "controllerResolver()" has already been initialized. You cannot pass values the second time you call controllerResolver().');
+        }
+
+        return $this->controllerResolver;
+    }
+
     public function entityManager(string $name, array $value = []): \Symfony\Config\Doctrine\Orm\EntityManagerConfig
     {
         if (!isset($this->entityManagers[$name])) {
@@ -122,6 +139,12 @@ class OrmConfig
             unset($value['proxy_namespace']);
         }
 
+        if (array_key_exists('controller_resolver', $value)) {
+            $this->_usedProperties['controllerResolver'] = true;
+            $this->controllerResolver = new \Symfony\Config\Doctrine\Orm\ControllerResolverConfig($value['controller_resolver']);
+            unset($value['controller_resolver']);
+        }
+
         if (array_key_exists('entity_managers', $value)) {
             $this->_usedProperties['entityManagers'] = true;
             $this->entityManagers = array_map(function ($v) { return new \Symfony\Config\Doctrine\Orm\EntityManagerConfig($v); }, $value['entity_managers']);
@@ -153,6 +176,9 @@ class OrmConfig
         }
         if (isset($this->_usedProperties['proxyNamespace'])) {
             $output['proxy_namespace'] = $this->proxyNamespace;
+        }
+        if (isset($this->_usedProperties['controllerResolver'])) {
+            $output['controller_resolver'] = $this->controllerResolver->toArray();
         }
         if (isset($this->_usedProperties['entityManagers'])) {
             $output['entity_managers'] = array_map(function ($v) { return $v->toArray(); }, $this->entityManagers);
