@@ -130,6 +130,16 @@ class UserController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Users")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="username", type="string"),
+     *          @OA\Property(property="roles", type="string"),
+     *          @OA\Property(property="password", type="string"),
+     *      )
+     * )
      */
     public function createUser(
         Request $request,
@@ -175,6 +185,16 @@ class UserController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Users")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="username", type="string"),
+     *          @OA\Property(property="roles", type="string"),
+     *          @OA\Property(property="password", type="string"),
+     *      )
+     * )
      */
     public function updateUser(
         User $user,
