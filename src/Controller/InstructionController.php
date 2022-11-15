@@ -129,7 +129,7 @@ class InstructionController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter une instruction dans la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -179,7 +179,7 @@ class InstructionController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Mettre à jour une instruction de la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -231,7 +231,7 @@ class InstructionController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter une recette à une instruction",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -278,7 +278,7 @@ class InstructionController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Supprimer une recette liée à une instruction",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",

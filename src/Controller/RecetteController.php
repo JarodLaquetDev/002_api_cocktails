@@ -133,7 +133,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter une recette dans la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -184,7 +184,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Mettre à jour une recette de la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -239,7 +239,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter un ingrédient à une recette",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -287,7 +287,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Supprimer un ingrédient d'une recette",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -335,7 +335,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter une instruction à une recette",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -383,7 +383,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Supprimer une instruction d'une recette",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -431,7 +431,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter une image à une recette",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -479,7 +479,7 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Supprimer une image d'une recette",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",

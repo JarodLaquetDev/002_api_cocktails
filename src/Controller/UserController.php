@@ -131,7 +131,7 @@ class UserController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Users")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter un utilisateur dans la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -186,7 +186,7 @@ class UserController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Users")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Mettre à jour un utilisateur de la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",

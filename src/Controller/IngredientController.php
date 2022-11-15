@@ -136,7 +136,7 @@ class IngredientController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter un ingrédient dans la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -189,7 +189,7 @@ class IngredientController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Mettre à jour un ingrédient de la BDD",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -243,7 +243,7 @@ class IngredientController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter une recette à un ingrédient",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -291,7 +291,7 @@ class IngredientController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Supprimer une recette liée à un ingrédient",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -339,7 +339,7 @@ class IngredientController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Ajouter une image à un ingrédient",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
@@ -387,7 +387,7 @@ class IngredientController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
      * @OA\RequestBody(
-     *      description= "Je ne sais pas",
+     *      description= "Supprimer une image associée à un ingrédient",
      *      required= true,
      *      @OA\JsonContent(
      *          type="object",
