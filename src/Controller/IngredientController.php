@@ -399,7 +399,7 @@ class IngredientController extends AbstractController
         Ingredient $ingredient,
         Request $request,
         EntityManagerInterface $entityManager,
-        SerializerInterface $serializer,
+        SerializerInterface $serializer, 
         PictureRepository $pictureRepository,
         UrlGeneratorInterface $urlGenerator,
         TagAwareCacheInterface $cache

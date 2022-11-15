@@ -28,7 +28,7 @@ class InstructionController extends AbstractController
 {
     #[Route('/instruction', name: 'app_instruction')]
     public function index(): JsonResponse
-    {
+    { 
         return $this->json([
             'message' => 'Welcome to your new controller!',
             'path' => 'src/Controller/InstructionController.php',
@@ -128,6 +128,14 @@ class InstructionController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="phrase", type="string")
+     *      )
+     * )
      */
     public function createInstruction(
         Request $request,
@@ -170,6 +178,14 @@ class InstructionController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="phrase", type="string")
+     *      )
+     * )
      */
     public function updateInstruction(
         Instruction $instruction,
@@ -214,6 +230,14 @@ class InstructionController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idRecette", type="int")
+     *      )
+     * )
      */
     public function addRecetteInInstruction(
         Instruction $instruction,
@@ -253,6 +277,14 @@ class InstructionController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
+     * @OA\RequestBody(
+     *      description= "Je ne sais pas",
+     *      required= true,
+     *      @OA\JsonContent(
+     *          type="object",
+     *          @OA\Property(property="idRecette", type="int")
+     *      )
+     * )
      */
     public function deleteRecetteInInstruction(
         Instruction $instruction,

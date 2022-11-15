@@ -13,7 +13,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
  /**
  * @Hateoas\Relation(
- *      "self",
+ *      "self", 
  *      href=@Hateoas\Route(
  *          "ingredient.get",
  *          parameters = {
