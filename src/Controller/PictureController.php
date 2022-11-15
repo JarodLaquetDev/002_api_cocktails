@@ -34,7 +34,7 @@ class PictureController extends AbstractController
         ]);
     }
 
-    #[Route('/api/pictures', name: 'picture.getAll')]
+    #[Route('/api/pictures', name: 'picture.getAll', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     /**
      * Obtenir la liste de toutes les images de la BDD

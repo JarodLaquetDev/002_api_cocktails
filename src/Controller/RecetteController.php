@@ -38,7 +38,7 @@ class RecetteController extends AbstractController
         ]); 
     }
 
-    #[Route('/api/recettes', name: 'recette.getAll')]
+    #[Route('/api/recettes', name: 'recette.getAll', methods: ['GET'])]
     #[IsGranted('ROLE_USER', message: 'Absence de droits')]
     /**
      * Obtenir la liste de toutes les recettes de la BDD

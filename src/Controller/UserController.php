@@ -36,7 +36,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/api/users', name: 'user.getAll')]
+    #[Route('/api/users', name: 'user.getAll', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     /**
      * Obtenir la liste de tous les utilisateurs de la BDD
