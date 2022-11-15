@@ -84,4 +84,26 @@ class RecetteRepository extends ServiceEntityRepository
 
             return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Méthode pour obtenir toutes les recettes associées à un ingrédient (par le nom)
+     *
+     * @param string $name
+     * @return void
+     */
+    public function test($nameIngredient){
+        
+        $qb = $this->createQueryBuilder('r')
+        ->innerJoin('r.recetteIngredients', 'i')
+        ->where('r.status = \'on\'');
+
+        // on admet une table recIng de relation entre ingredients et recette 
+        //
+        //SELECT * FROM recIng WHERE id IN (SELECT IdRecette FROM i AS ing1 WHERE ing1 = ?) AND (SELECT IdRecette FROM i AS ing2 WHERE ing2 = ?)
+        for($i = 0; $i < count($nameIngredient); $i++)
+        {
+            $qb->andWhere('i.ingredientName = :nameIngredient')->setParameter('nameIngredient', $nameIngredient[$i]);
+        }
+        return $qb->getQuery()->getResult();
+    }
 }

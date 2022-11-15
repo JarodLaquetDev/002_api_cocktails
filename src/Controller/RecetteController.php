@@ -518,7 +518,36 @@ class RecetteController extends AbstractController
         return new JsonResponse($jsonRecette, Response::HTTP_CREATED, ["Location" => $location], true);
     }
 
-    #[Route('/api/recette/ingredient/{name}', name: 'recette.getByIngredient', methods: ['GET'])]
+    // #[Route('/api/recette/ingredient/{name}', name: 'recette.getByIngredient', methods: ['GET'])]
+    // /**
+    //  * Obtenir toutes les recettes associées à un ingrédient (par le nom)
+    //  *
+    //  * @param Request $request
+    //  * @param RecetteRepository $repository
+    //  * @param SerializerInterface $serializer
+    //  * @return JsonResponse
+    //  * @OA\Tag(name="Recettes")
+    //  */
+    // public function getRecetteByIngredient(Request $request, RecetteRepository $repository, SerializerInterface $serializer): JsonResponse
+    // {
+    //     $name = $request->get('name');
+    //     $recette = New Recette();
+    //     $recette = $repository->findRecetteByIngredient($name);
+    //     // Si une recette est associée à cet ingrédient
+    //     if($recette)
+    //     {
+    //         $context = SerializationContext::create()->setGroups(["getRecette"]);
+    //         $jsonRecette = $serializer->serialize($recette, 'json', $context);
+    //         return New JsonResponse($jsonRecette, Response::HTTP_OK, [], true);
+    //     }
+    //     // Si aucune recette n'est associée à cet ingrédient
+    //     else 
+    //     {
+    //         return New JsonResponse(['message' => 'Aucune recette avec cet ingredient'], Response::HTTP_NOT_FOUND);
+    //     }
+    // }
+
+    #[Route('/api/recettes/ingredients', name: 'recette.getByIngredient', methods: ['GET'])]
     /**
      * Obtenir toutes les recettes associées à un ingrédient (par le nom)
      *
@@ -528,11 +557,10 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      */
-    public function getRecetteByIngredient(Request $request, RecetteRepository $repository, SerializerInterface $serializer): JsonResponse
+    public function getRecettesByIngredients(Request $request, RecetteRepository $repository, SerializerInterface $serializer): JsonResponse
     {
-        $name = $request->get('name');
-        $recette = New Recette();
-        $recette = $repository->findRecetteByIngredient($name);
+        $tableau = $request->get('tableau');
+        $recette = $repository->test($tableau);
         // Si une recette est associée à cet ingrédient
         if($recette)
         {
