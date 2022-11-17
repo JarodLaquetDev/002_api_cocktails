@@ -46,7 +46,7 @@ class PictureController extends AbstractController
      * @OA\Tag(name="Pictures")
      * @OA\Response(
      *         response="200",
-     *         description="Return all pictures")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -87,7 +87,7 @@ class PictureController extends AbstractController
      * @OA\Tag(name="Pictures")
      * @OA\Response(
      *         response="200",
-     *         description="Return this picture")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -120,8 +120,8 @@ class PictureController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
      * @OA\Response(
-     *         response="200",
-     *         description="Delete this picture")
+     *         response="204",
+     *         description="No content")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -154,8 +154,8 @@ class PictureController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
      * @OA\Response(
-     *         response="200",
-     *         description="Create a picture")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -195,8 +195,8 @@ class PictureController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
      * @OA\Response(
-     *         response="200",
-     *         description="Update this picture")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")

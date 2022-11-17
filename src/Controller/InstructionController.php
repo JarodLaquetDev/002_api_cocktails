@@ -48,7 +48,7 @@ class InstructionController extends AbstractController
      * @OA\Tag(name="Instructions")
      * @OA\Response(
      *         response="200",
-     *         description="Return all instructions")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -86,7 +86,7 @@ class InstructionController extends AbstractController
      * @OA\Tag(name="Instructions")
      * @OA\Response(
      *         response="200",
-     *         description="Return this instruction")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -113,8 +113,8 @@ class InstructionController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
      * @OA\Response(
-     *         response="200",
-     *         description="Delete this instruction")
+     *         response="204",
+     *         description="No content")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -155,8 +155,8 @@ class InstructionController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Create this instruction")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -210,8 +210,8 @@ class InstructionController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Update this instruction")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -274,8 +274,8 @@ class InstructionController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Add a recette to this instruction")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -327,8 +327,8 @@ class InstructionController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Delete a recette from this instruction")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")

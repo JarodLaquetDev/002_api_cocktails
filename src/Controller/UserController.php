@@ -49,7 +49,7 @@ class UserController extends AbstractController
      * @OA\Tag(name="Users")
      * @OA\Response(
      *         response="200",
-     *         description="Return all pictures")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -88,7 +88,7 @@ class UserController extends AbstractController
      * @OA\Tag(name="Users")
      * @OA\Response(
      *         response="200",
-     *         description="Return this user")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -115,8 +115,8 @@ class UserController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Users")
      * @OA\Response(
-     *         response="200",
-     *         description="Delete this user")
+     *         response="204",
+     *         description="No content")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -159,8 +159,8 @@ class UserController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Create this user")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -220,8 +220,8 @@ class UserController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Update this user")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")

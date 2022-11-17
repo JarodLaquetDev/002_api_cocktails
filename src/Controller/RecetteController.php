@@ -51,7 +51,7 @@ class RecetteController extends AbstractController
      * @OA\Tag(name="Recettes")
      * @OA\Response(
      *         response="200",
-     *         description="Return all recettes")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -90,7 +90,7 @@ class RecetteController extends AbstractController
      * @OA\Tag(name="Recettes")
      * @OA\Response(
      *         response="200",
-     *         description="Return this recette")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -117,8 +117,8 @@ class RecetteController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
      * @OA\Response(
-     *         response="200",
-     *         description="Delete this recette")
+     *         response="204",
+     *         description="No content")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -159,8 +159,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Create this recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -216,8 +216,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Update a recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -282,8 +282,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Add an ingredient to this recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -339,8 +339,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Delete an ingredient from this recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -393,8 +393,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Add an instruction to this recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -447,8 +447,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Delete an instruction from this recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -501,8 +501,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Add a picture to this recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -555,8 +555,8 @@ class RecetteController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Delete a picture from this recette")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")

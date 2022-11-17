@@ -54,7 +54,7 @@ class IngredientController extends AbstractController
      * @OA\Tag(name="Ingredients")
      * @OA\Response(
      *         response="200",
-     *         description="Return all ingredients")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -93,7 +93,7 @@ class IngredientController extends AbstractController
      * @OA\Tag(name="Ingredients")
      * @OA\Response(
      *         response="200",
-     *         description="Return this ingredient")
+     *         description="OK")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -120,8 +120,8 @@ class IngredientController extends AbstractController
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
      * @OA\Response(
-     *         response="200",
-     *         description="Delete this ingredient")
+     *         response="204",
+     *         description="No content")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -163,8 +163,8 @@ class IngredientController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Create this ingredient")
+     *         response="201",
+     *         description="Created")
      */
     public function createIngredient(
         Request $request,
@@ -218,8 +218,8 @@ class IngredientController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Update this ingredient")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -283,8 +283,8 @@ class IngredientController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Add a recette to this ingredient")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -337,8 +337,8 @@ class IngredientController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Delete a recette from this ingredient")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -391,8 +391,8 @@ class IngredientController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Add a picture to this ingredient")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -445,8 +445,8 @@ class IngredientController extends AbstractController
      *      )
      * )
      * @OA\Response(
-     *         response="200",
-     *         description="Delete a picture from this ingredient")
+     *         response="201",
+     *         description="Created")
      * @OA\Response(
      *         response="404",
      *         description="Not found")
