@@ -44,6 +44,12 @@ class PictureController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return all pictures")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function getAllPictures(
         PictureRepository $repository,
@@ -79,6 +85,12 @@ class PictureController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return this picture")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function getPicture(int $idPicture, SerializerInterface $serializer, PictureRepository $pictureRepository, UrlGeneratorInterface $urlGenerator, Request $request) : JsonResponse
     {
@@ -107,6 +119,12 @@ class PictureController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete this picture")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deletePicture(
         int $idPicture,
@@ -135,6 +153,12 @@ class PictureController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
+     * @OA\Response(
+     *         response="200",
+     *         description="Create a picture")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function createPicture(Request $request, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, SerializerInterface $serializer, TagAwareCacheInterface $cache): JsonResponse
     {
@@ -170,6 +194,12 @@ class PictureController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
+     * @OA\Response(
+     *         response="200",
+     *         description="Update this picture")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function updatePicture(
         int $idPicture,

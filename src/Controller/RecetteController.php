@@ -49,6 +49,12 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return all recettes")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function getAllRecettes(
         RecetteRepository $repository,
@@ -82,6 +88,12 @@ class RecetteController extends AbstractController
      * @param SerializerInterface $serializer
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function getRecette(
         Recette $recette,
@@ -104,6 +116,12 @@ class RecetteController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Recettes")
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteRecette(
         Recette $recette,
@@ -140,6 +158,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="recette_name", type="string")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Create this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function createRecette(
         Request $request,
@@ -191,6 +215,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="recette_name", type="string")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Update a recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function updateRecette(
         Recette $recette,
@@ -251,6 +281,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="idIngredient", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Add an ingredient to this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function addIngredientInRecette(
         Recette $recette,
@@ -302,6 +338,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="idIngredient", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete an ingredient from this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteIngredientInRecette(
         Recette $recette,
@@ -350,6 +392,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="idInstruction", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Add an instruction to this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function addInstructionInRecette(
         Recette $recette,
@@ -398,6 +446,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="idInstruction", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete an instruction from this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteInstructionInRecette(
         Recette $recette,
@@ -446,6 +500,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="idPicture", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Add a picture to this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function addPictureInRecette(
         Recette $recette,
@@ -494,6 +554,12 @@ class RecetteController extends AbstractController
      *          @OA\Property(property="idPicture", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete a picture from this recette")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deletePictureInRecette(
         Recette $recette,
