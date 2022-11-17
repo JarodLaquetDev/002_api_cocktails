@@ -46,7 +46,9 @@ class PictureController extends AbstractController
      * @OA\Tag(name="Pictures")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=Picture::class, 
+     *         groups={"getAllPictures"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -87,7 +89,9 @@ class PictureController extends AbstractController
      * @OA\Tag(name="Pictures")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=Picture::class, 
+     *         groups={"getAllPictures"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -155,7 +159,9 @@ class PictureController extends AbstractController
      * @OA\Tag(name="Pictures")
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Picture::class, 
+     *         groups={"getAllPictures"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -196,7 +202,9 @@ class PictureController extends AbstractController
      * @OA\Tag(name="Pictures")
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Picture::class, 
+     *         groups={"getAllPictures"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")

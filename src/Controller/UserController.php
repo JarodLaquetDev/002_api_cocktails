@@ -49,7 +49,9 @@ class UserController extends AbstractController
      * @OA\Tag(name="Users")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=User::class, 
+     *         groups={"getAllUsers"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -88,7 +90,9 @@ class UserController extends AbstractController
      * @OA\Tag(name="Users")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=User::class, 
+     *         groups={"getAllUsers"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -160,7 +164,9 @@ class UserController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=User::class, 
+     *         groups={"getAllUsers"})))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -221,7 +227,9 @@ class UserController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=User::class, 
+     *         groups={"getAllUsers"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")

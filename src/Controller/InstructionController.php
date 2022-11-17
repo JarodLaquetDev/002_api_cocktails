@@ -48,7 +48,10 @@ class InstructionController extends AbstractController
      * @OA\Tag(name="Instructions")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=Instruction::class, 
+     *         groups={"getAllInstructions"})
+     * )
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -86,7 +89,9 @@ class InstructionController extends AbstractController
      * @OA\Tag(name="Instructions")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=Instruction::class, 
+     *         groups={"getAllInstructions"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -156,7 +161,9 @@ class InstructionController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Instruction::class, 
+     *         groups={"getAllInstructions"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -211,7 +218,9 @@ class InstructionController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Instruction::class, 
+     *         groups={"getAllInstructions"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -275,7 +284,9 @@ class InstructionController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Instruction::class, 
+     *         groups={"getAllInstructions"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -328,7 +339,9 @@ class InstructionController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Instruction::class, 
+     *         groups={"getAllInstructions"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")

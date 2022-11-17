@@ -51,7 +51,9 @@ class RecetteController extends AbstractController
      * @OA\Tag(name="Recettes")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -90,7 +92,9 @@ class RecetteController extends AbstractController
      * @OA\Tag(name="Recettes")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -160,7 +164,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -217,7 +223,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -283,7 +291,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -340,7 +350,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -394,7 +406,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -448,7 +462,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -502,7 +518,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -556,7 +574,9 @@ class RecetteController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Recette::class, 
+     *         groups={"getAllRecettes"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")

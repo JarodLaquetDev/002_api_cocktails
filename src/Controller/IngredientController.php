@@ -54,10 +54,10 @@ class IngredientController extends AbstractController
      * @OA\Tag(name="Ingredients")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
-     * @OA\Response(
-     *         response="404",
-     *         description="Not found")
+     *         description="OK",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"})
+     * )
      */
     public function getAllIngredient(
         IngredientRepository $repository,
@@ -93,7 +93,9 @@ class IngredientController extends AbstractController
      * @OA\Tag(name="Ingredients")
      * @OA\Response(
      *         response="200",
-     *         description="OK")
+     *         description="OK",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"}))
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -164,7 +166,10 @@ class IngredientController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"})
+     * )
      */
     public function createIngredient(
         Request $request,
@@ -219,7 +224,10 @@ class IngredientController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"})
+     * )
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -284,7 +292,10 @@ class IngredientController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"})
+     * )
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -338,7 +349,10 @@ class IngredientController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"})
+     * )
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -392,7 +406,10 @@ class IngredientController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"})
+     * )
      * @OA\Response(
      *         response="404",
      *         description="Not found")
@@ -446,7 +463,10 @@ class IngredientController extends AbstractController
      * )
      * @OA\Response(
      *         response="201",
-     *         description="Created")
+     *         description="Created",
+     *         @Model(type=Ingredient::class, 
+     *         groups={"getAllIngredients"})
+     * )
      * @OA\Response(
      *         response="404",
      *         description="Not found")
