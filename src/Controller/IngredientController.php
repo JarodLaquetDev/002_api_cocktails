@@ -52,6 +52,12 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return all ingredients")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function getAllIngredient(
         IngredientRepository $repository,
@@ -85,7 +91,13 @@ class IngredientController extends AbstractController
      * @param SerializerInterface $serializer
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
-     */ 
+     * @OA\Response(
+     *         response="200",
+     *         description="Return this ingredient")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
+     */
     public function getIngredient(
         Ingredient $ingredient,
         SerializerInterface $serializer 
@@ -107,6 +119,12 @@ class IngredientController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Ingredients")
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete this ingredient")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteIngredient(
         Ingredient $ingredient,
@@ -144,6 +162,9 @@ class IngredientController extends AbstractController
      *          @OA\Property(property="ingredient_quantity", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Create this ingredient")
      */
     public function createIngredient(
         Request $request,
@@ -196,6 +217,12 @@ class IngredientController extends AbstractController
      *          @OA\Property(property="ingredient_quantity", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Update this ingredient")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function updateIngredient(
         Ingredient $ingredient,
@@ -255,6 +282,12 @@ class IngredientController extends AbstractController
      *          @OA\Property(property="idRecette", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Add a recette to this ingredient")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function addRecetteInIngredient(
         Ingredient $ingredient,
@@ -303,6 +336,12 @@ class IngredientController extends AbstractController
      *          @OA\Property(property="idRecette", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete a recette from this ingredient")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteRecetteInIngredient(
         Ingredient $ingredient,
@@ -351,6 +390,12 @@ class IngredientController extends AbstractController
      *          @OA\Property(property="idPicture", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Add a picture to this ingredient")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function addPictureInIngredient(
         Ingredient $ingredient,
@@ -399,6 +444,12 @@ class IngredientController extends AbstractController
      *          @OA\Property(property="idPicture", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete a picture from this ingredient")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deletePictureInIngredient(
         Ingredient $ingredient,
