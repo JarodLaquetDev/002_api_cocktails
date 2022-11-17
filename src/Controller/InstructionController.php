@@ -46,6 +46,12 @@ class InstructionController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return all instructions")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */ 
     public function getAllInstructions(
         InstructionRepository $repository,
@@ -78,6 +84,12 @@ class InstructionController extends AbstractController
      * @param SerializerInterface $serializer
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return this instruction")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */ 
     public function getInstruction(
         Instruction $instruction,
@@ -100,6 +112,12 @@ class InstructionController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Instructions")
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete this instruction")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteInstruction(
         Instruction $instruction,
@@ -136,6 +154,12 @@ class InstructionController extends AbstractController
      *          @OA\Property(property="phrase", type="string")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Create this instruction")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function createInstruction(
         Request $request,
@@ -185,6 +209,12 @@ class InstructionController extends AbstractController
      *          @OA\Property(property="phrase", type="string")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Update this instruction")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function updateInstruction(
         Instruction $instruction,
@@ -243,6 +273,12 @@ class InstructionController extends AbstractController
      *          @OA\Property(property="idRecette", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Add a recette to this instruction")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function addRecetteInInstruction(
         Instruction $instruction,
@@ -290,6 +326,12 @@ class InstructionController extends AbstractController
      *          @OA\Property(property="idRecette", type="int")
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete a recette from this instruction")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteRecetteInInstruction(
         Instruction $instruction,
