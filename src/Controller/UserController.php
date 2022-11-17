@@ -47,6 +47,12 @@ class UserController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Users")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return all pictures")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function getAllUsers(
         UserRepository $repository,
@@ -80,6 +86,12 @@ class UserController extends AbstractController
      * @param SerializerInterface $serializer
      * @return JsonResponse
      * @OA\Tag(name="Users")
+     * @OA\Response(
+     *         response="200",
+     *         description="Return this user")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function getUserById(
         User $user,
@@ -102,6 +114,12 @@ class UserController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Users")
+     * @OA\Response(
+     *         response="200",
+     *         description="Delete this user")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function deleteUser(
         User $user,
@@ -140,6 +158,12 @@ class UserController extends AbstractController
      *          @OA\Property(property="password", type="string"),
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Create this user")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function createUser(
         Request $request,
@@ -195,6 +219,12 @@ class UserController extends AbstractController
      *          @OA\Property(property="password", type="string"),
      *      )
      * )
+     * @OA\Response(
+     *         response="200",
+     *         description="Update this user")
+     * @OA\Response(
+     *         response="404",
+     *         description="Not found")
      */
     public function updateUser(
         User $user,
