@@ -157,6 +157,9 @@ class PictureController extends AbstractController
      * @param TagAwareCacheInterface $cache
      * @return JsonResponse
      * @OA\Tag(name="Pictures")
+     * @OA\RequestBody(
+     *      @OA\MediaType(mediaType="multipart/form-data",
+     *          @OA\Schema(ref="#/components/schemas/FileUpload")))
      * @OA\Response(
      *         response="201",
      *         description="Created",
