@@ -16,6 +16,6 @@ if (!\class_exists(App_KernelDevDebugContainer::class, false)) {
 
 return new \ContainerOGhOxFW\App_KernelDevDebugContainer([
     'container.build_hash' => 'OGhOxFW',
-    'container.build_id' => '2bc054de',
-    'container.build_time' => 1668761963,
+    'container.build_id' => 'f32fa439',
+    'container.build_time' => 1668764621,
 ], __DIR__.\DIRECTORY_SEPARATOR.'ContainerOGhOxFW');

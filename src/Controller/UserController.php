@@ -158,8 +158,7 @@ class UserController extends AbstractController
      *      @OA\JsonContent(
      *          type="object",
      *          @OA\Property(property="username", type="string"),
-     *          @OA\Property(property="roles", type="string"),
-     *          @OA\Property(property="password", type="string"),
+     *          @OA\Property(property="password", type="string")
      *      )
      * )
      * @OA\Response(
@@ -184,9 +183,11 @@ class UserController extends AbstractController
         $user = $serializer->deserialize($request->getContent(), User::class, 'json'); 
         $password = $user->getPassword();
         $username = $user->getUsername();
+        $role = $user->getRoles();
         $user->setStatus("on");
         $user->setUsername($username.'@'.$password);
         $user->setPassword($password);  
+        $user->setRoles(['ROLE_USER']);
         
         $errors = $validator->validate($user);
         if($errors->count() > 0){
@@ -196,7 +197,7 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
         
-        $location = $urlGenerator->generate("users.get", ['idUser' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $location = $urlGenerator->generate("user.get", ['idUser' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $context = SerializationContext::create()->setGroups(["getUser"]);
         $jsonUser = $serializer->serialize($user, 'json', $context);
         return new JsonResponse($jsonUser, Response::HTTP_CREATED, ["Location" => $location], true);
@@ -221,7 +222,6 @@ class UserController extends AbstractController
      *      @OA\JsonContent(
      *          type="object",
      *          @OA\Property(property="username", type="string"),
-     *          @OA\Property(property="roles", type="string"),
      *          @OA\Property(property="password", type="string"),
      *      )
      * )
@@ -248,7 +248,7 @@ class UserController extends AbstractController
         
         $updateUser = $serializer->deserialize(
             $request->getContent(), 
-            Ingredient::class, 
+            User::class, 
             'json'
         );
 
@@ -265,7 +265,7 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
         
-        $location = $urlGenerator->generate("recette.get", ['idRecette' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $location = $urlGenerator->generate("user.get", ['idUser' => $user->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $context = SerializationContext::create()->setGroups(["getUser"]);
         $jsonUser = $serializer->serialize($user, 'json', $context);
         return new JsonResponse($jsonUser, Response::HTTP_CREATED, ["Location" => $location], true);

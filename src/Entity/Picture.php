@@ -40,21 +40,21 @@ class Picture
     // Nom d'une image
     // Ex : vacances_130
     #[ORM\Column(length: 255)]
-    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette", "getAllIngredients", "getAllRecettes"])]
     private ?string $realName = null;
 
     // Chemin privée d'une image
     #[ORM\Column(length: 255)]
-    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette", "getAllRecettes"])]
     private ?string $realPath = null;
 
     // Chemin public d'une image
     #[ORM\Column(length: 255)]
-    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette", "getAllRecettes"])]
     private ?string $publicPath = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette", "getAllRecettes"])]
     private ?string $mimeType = null;
 
     // Status d'une image
