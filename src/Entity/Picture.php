@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use App\Repository\RecetteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
@@ -39,21 +40,21 @@ class Picture
     // Nom d'une image
     // Ex : vacances_130
     #[ORM\Column(length: 255)]
-    #[Groups(["getPicture", "getAllPictures"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
     private ?string $realName = null;
 
     // Chemin privée d'une image
     #[ORM\Column(length: 255)]
-    #[Groups(["getPicture", "getAllPictures"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
     private ?string $realPath = null;
 
     // Chemin public d'une image
     #[ORM\Column(length: 255)]
-    #[Groups(["getPicture", "getAllPictures"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
     private ?string $publicPath = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(["getPicture", "getAllPictures"])]
+    #[Groups(["getPicture", "getAllPictures", "getIngredient", "getRecette"])]
     private ?string $mimeType = null;
 
     // Status d'une image
