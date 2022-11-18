@@ -163,6 +163,9 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     private function normalizeClassName(string $className): string
     {
+        /**
+         * @phpstan-ignore-next-line
+         */
         return ltrim($className, '\\');
     }
 

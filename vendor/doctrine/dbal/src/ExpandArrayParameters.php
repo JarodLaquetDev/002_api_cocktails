@@ -27,7 +27,7 @@ final class ExpandArrayParameters implements Visitor
     private array $convertedSQL = [];
 
     /** @var list<mixed> */
-    private array $convertedParameters = [];
+    private array $convertedParameteres = [];
 
     /** @var array<int,Type|int|string|null> */
     private array $convertedTypes = [];
@@ -79,7 +79,7 @@ final class ExpandArrayParameters implements Visitor
     /** @return list<mixed> */
     public function getParameters(): array
     {
-        return $this->convertedParameters;
+        return $this->convertedParameteres;
     }
 
     /**
@@ -89,8 +89,8 @@ final class ExpandArrayParameters implements Visitor
     private function acceptParameter($key, $value): void
     {
         if (! isset($this->originalTypes[$key])) {
-            $this->convertedSQL[]        = '?';
-            $this->convertedParameters[] = $value;
+            $this->convertedSQL[]         = '?';
+            $this->convertedParameteres[] = $value;
 
             return;
         }
@@ -130,10 +130,10 @@ final class ExpandArrayParameters implements Visitor
     {
         $this->convertedSQL[] = implode(', ', array_fill(0, count($values), '?'));
 
-        $index = count($this->convertedParameters);
+        $index = count($this->convertedParameteres);
 
         foreach ($values as $value) {
-            $this->convertedParameters[]  = $value;
+            $this->convertedParameteres[] = $value;
             $this->convertedTypes[$index] = $type;
 
             $index++;

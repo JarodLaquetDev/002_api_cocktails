@@ -20,7 +20,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Twig\Extension\AbstractExtension;
-use Twig\Extension\RuntimeExtensionInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
@@ -37,7 +36,7 @@ final class MakeTwigExtension extends AbstractMaker
 
     public static function getCommandDescription(): string
     {
-        return 'Creates a new Twig extension with its runtime class';
+        return 'Creates a new Twig extension class';
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConfig): void
@@ -50,41 +49,22 @@ final class MakeTwigExtension extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
-        $name = $input->getArgument('name');
-
         $extensionClassNameDetails = $generator->createClassNameDetails(
-            $name,
+            $input->getArgument('name'),
             'Twig\\Extension\\',
             'Extension'
-        );
-
-        $runtimeClassNameDetails = $generator->createClassNameDetails(
-            $name,
-            'Twig\\Runtime\\',
-            'Runtime'
         );
 
         $useStatements = new UseStatementGenerator([
             AbstractExtension::class,
             TwigFilter::class,
             TwigFunction::class,
-            $runtimeClassNameDetails->getFullName(),
-        ]);
-
-        $runtimeUseStatements = new UseStatementGenerator([
-            RuntimeExtensionInterface::class,
         ]);
 
         $generator->generateClass(
             $extensionClassNameDetails->getFullName(),
             'twig/Extension.tpl.php',
-            ['use_statements' => $useStatements, 'runtime_class_name' => $runtimeClassNameDetails->getShortName()]
-        );
-
-        $generator->generateClass(
-            $runtimeClassNameDetails->getFullName(),
-            'twig/Runtime.tpl.php',
-            ['use_statements' => $runtimeUseStatements]
+            ['use_statements' => $useStatements]
         );
 
         $generator->writeChanges();

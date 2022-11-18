@@ -49,14 +49,10 @@ class Logger extends AbstractLogger
 
             if (isset($_ENV['SHELL_VERBOSITY']) || isset($_SERVER['SHELL_VERBOSITY'])) {
                 switch ((int) ($_ENV['SHELL_VERBOSITY'] ?? $_SERVER['SHELL_VERBOSITY'])) {
-                    case -1: $minLevel = LogLevel::ERROR;
-                        break;
-                    case 1: $minLevel = LogLevel::NOTICE;
-                        break;
-                    case 2: $minLevel = LogLevel::INFO;
-                        break;
-                    case 3: $minLevel = LogLevel::DEBUG;
-                        break;
+                    case -1: $minLevel = LogLevel::ERROR; break;
+                    case 1: $minLevel = LogLevel::NOTICE; break;
+                    case 2: $minLevel = LogLevel::INFO; break;
+                    case 3: $minLevel = LogLevel::DEBUG; break;
                 }
             }
         }
@@ -87,7 +83,7 @@ class Logger extends AbstractLogger
 
         $formatter = $this->formatter;
         if ($this->handle) {
-            @fwrite($this->handle, $formatter($level, $message, $context).\PHP_EOL);
+            @fwrite($this->handle, $formatter($level, $message, $context));
         } else {
             error_log($formatter($level, $message, $context, false));
         }
@@ -112,7 +108,7 @@ class Logger extends AbstractLogger
             $message = strtr($message, $replacements);
         }
 
-        $log = sprintf('[%s] %s', $level, $message);
+        $log = sprintf('[%s] %s', $level, $message).\PHP_EOL;
         if ($prefixDate) {
             $log = date(\DateTime::RFC3339).' '.$log;
         }

@@ -3,15 +3,23 @@
 namespace Doctrine\DBAL\Driver\PDO\SQLite;
 
 use Doctrine\DBAL\Driver\AbstractSQLiteDriver;
-use Doctrine\DBAL\Driver\API\SQLite\UserDefinedFunctions;
 use Doctrine\DBAL\Driver\PDO\Connection;
 use Doctrine\DBAL\Driver\PDO\Exception;
-use Doctrine\Deprecations\Deprecation;
+use Doctrine\DBAL\Platforms\SqlitePlatform;
 use PDO;
 use PDOException;
 
+use function array_merge;
+
 final class Driver extends AbstractSQLiteDriver
 {
+    /** @var mixed[] */
+    private array $userDefinedFunctions = [
+        'sqrt' => ['callback' => [SqlitePlatform::class, 'udfSqrt'], 'numArgs' => 1],
+        'mod'  => ['callback' => [SqlitePlatform::class, 'udfMod'], 'numArgs' => 2],
+        'locate'  => ['callback' => [SqlitePlatform::class, 'udfLocate'], 'numArgs' => -1],
+    ];
+
     /**
      * {@inheritdoc}
      *
@@ -19,18 +27,13 @@ final class Driver extends AbstractSQLiteDriver
      */
     public function connect(array $params)
     {
-        $driverOptions        = $params['driverOptions'] ?? [];
-        $userDefinedFunctions = [];
+        $driverOptions = $params['driverOptions'] ?? [];
 
         if (isset($driverOptions['userDefinedFunctions'])) {
-            Deprecation::trigger(
-                'doctrine/dbal',
-                'https://github.com/doctrine/dbal/pull/5742',
-                'The SQLite-specific driver option "userDefinedFunctions" is deprecated.'
-                    . ' Register function directly on the native connection instead.',
+            $this->userDefinedFunctions = array_merge(
+                $this->userDefinedFunctions,
+                $driverOptions['userDefinedFunctions'],
             );
-
-            $userDefinedFunctions = $driverOptions['userDefinedFunctions'];
             unset($driverOptions['userDefinedFunctions']);
         }
 
@@ -45,10 +48,9 @@ final class Driver extends AbstractSQLiteDriver
             throw Exception::new($exception);
         }
 
-        UserDefinedFunctions::register(
-            [$pdo, 'sqliteCreateFunction'],
-            $userDefinedFunctions,
-        );
+        foreach ($this->userDefinedFunctions as $fn => $data) {
+            $pdo->sqliteCreateFunction($fn, $data['callback'], $data['numArgs']);
+        }
 
         return new Connection($pdo);
     }

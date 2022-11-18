@@ -186,21 +186,11 @@ class Index extends AbstractAsset implements Constraint
     }
 
     /**
-     * Keeping misspelled function name for backwards compatibility
-     *
-     * @deprecated Use {@see isFulfilledBy()} instead.
+     * Checks if the other index already fulfills all the indexing and constraint needs of the current one.
      *
      * @return bool
      */
     public function isFullfilledBy(Index $other)
-    {
-        return $this->isFulfilledBy($other);
-    }
-
-    /**
-     * Checks if the other index already fulfills all the indexing and constraint needs of the current one.
-     */
-    public function isFulfilledBy(Index $other): bool
     {
         // allow the other index to be equally large only. It being larger is an option
         // but it creates a problem with scenarios of the kind PRIMARY KEY(foo,bar) UNIQUE(foo)

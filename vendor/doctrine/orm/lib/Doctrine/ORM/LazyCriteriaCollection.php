@@ -76,11 +76,12 @@ class LazyCriteriaCollection extends AbstractLazyCollection implements Selectabl
     }
 
     /**
-     * {@inheritDoc}
-     *
      * Do an optimized search of an element
      *
-     * @template TMaybeContained
+     * @param object $element
+     * @psalm-param TValue $element
+     *
+     * @return bool
      */
     public function contains($element)
     {

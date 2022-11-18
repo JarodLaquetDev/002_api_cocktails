@@ -8,11 +8,7 @@
             "name": "3.4",
             "branchName": "3.4.x",
             "slug": "3.4",
-            "current": true,
-            "aliases": [
-                "current",
-                "stable"
-            ]
+            "current": true
         },
         {
             "name": "3.3",

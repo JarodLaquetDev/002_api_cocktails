@@ -249,7 +249,9 @@ abstract class AbstractManagerRegistry implements ManagerRegistry
         return $this->getManager($name);
     }
 
-    /** @psalm-param class-string $persistentObject */
+    /**
+     * @psalm-param class-string $persistentObject
+     */
     private function selectManager(
         string $persistentObject,
         ?string $persistentManagerName = null

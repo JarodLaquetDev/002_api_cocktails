@@ -527,12 +527,11 @@ public function __construct(<params>)
      * Sets the class fields visibility for the entity (can either be private or protected).
      *
      * @param string $visibility
+     * @psalm-param self::FIELD_VISIBLE_*
      *
      * @return void
      *
      * @throws InvalidArgumentException
-     *
-     * @psalm-assert self::FIELD_VISIBLE_* $visibility
      */
     public function setFieldVisibility($visibility)
     {

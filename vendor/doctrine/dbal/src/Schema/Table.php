@@ -349,8 +349,6 @@ class Table extends AbstractAsset
     /**
      * Change Column Details.
      *
-     * @deprecated Use {@link modifyColumn()} instead.
-     *
      * @param string  $name
      * @param mixed[] $options
      *
@@ -359,26 +357,6 @@ class Table extends AbstractAsset
      * @throws SchemaException
      */
     public function changeColumn($name, array $options)
-    {
-        Deprecation::trigger(
-            'doctrine/dbal',
-            'https://github.com/doctrine/dbal/pull/5747',
-            '%s is deprecated. Use modifyColumn() instead.',
-            __METHOD__,
-        );
-
-        return $this->modifyColumn($name, $options);
-    }
-
-    /**
-     * @param string  $name
-     * @param mixed[] $options
-     *
-     * @return self
-     *
-     * @throws SchemaException
-     */
-    public function modifyColumn($name, array $options)
     {
         $column = $this->getColumn($name);
         $column->setOptions($options);
@@ -499,7 +477,7 @@ class Table extends AbstractAsset
         $replacedImplicitIndexes = [];
 
         foreach ($this->implicitIndexes as $name => $implicitIndex) {
-            if (! $implicitIndex->isFulfilledBy($indexCandidate) || ! isset($this->_indexes[$name])) {
+            if (! $implicitIndex->isFullfilledBy($indexCandidate) || ! isset($this->_indexes[$name])) {
                 continue;
             }
 
@@ -546,7 +524,7 @@ class Table extends AbstractAsset
         $indexCandidate = $this->_createIndex($constraint->getColumns(), $indexName, true, false);
 
         foreach ($this->_indexes as $existingIndex) {
-            if ($indexCandidate->isFulfilledBy($existingIndex)) {
+            if ($indexCandidate->isFullfilledBy($existingIndex)) {
                 return $this;
             }
         }
@@ -591,7 +569,7 @@ class Table extends AbstractAsset
         $indexCandidate = $this->_createIndex($constraint->getColumns(), $indexName, false, false);
 
         foreach ($this->_indexes as $existingIndex) {
-            if ($indexCandidate->isFulfilledBy($existingIndex)) {
+            if ($indexCandidate->isFullfilledBy($existingIndex)) {
                 return $this;
             }
         }
@@ -705,7 +683,7 @@ class Table extends AbstractAsset
      */
     public function getColumns()
     {
-        $primaryKeyColumns = $this->getPrimaryKey() !== null ? $this->getPrimaryKeyColumns() : [];
+        $primaryKeyColumns = $this->hasPrimaryKey() ? $this->getPrimaryKeyColumns() : [];
         $foreignKeyColumns = $this->getForeignKeyColumns();
         $remainderColumns  = $this->filterColumns(
             array_merge(array_keys($primaryKeyColumns), array_keys($foreignKeyColumns)),
@@ -718,19 +696,10 @@ class Table extends AbstractAsset
     /**
      * Returns the foreign key columns
      *
-     * @deprecated Use {@see getForeignKey()} and {@see ForeignKeyConstraint::getLocalColumns()} instead.
-     *
      * @return Column[]
      */
     public function getForeignKeyColumns()
     {
-        Deprecation::trigger(
-            'doctrine/dbal',
-            'https://github.com/doctrine/dbal/pull/5731',
-            '%s is deprecated. Use getForeignKey() and ForeignKeyConstraint::getLocalColumns() instead.',
-            __METHOD__,
-        );
-
         $foreignKeyColumns = [];
 
         foreach ($this->getForeignKeys() as $foreignKey) {
@@ -805,21 +774,12 @@ class Table extends AbstractAsset
     /**
      * Returns the primary key columns.
      *
-     * @deprecated Use {@see getPrimaryKey()} and {@see Index::getColumns()} instead.
-     *
      * @return Column[]
      *
      * @throws Exception
      */
     public function getPrimaryKeyColumns()
     {
-        Deprecation::trigger(
-            'doctrine/dbal',
-            'https://github.com/doctrine/dbal/pull/5731',
-            '%s is deprecated. Use getPrimaryKey() and Index::getColumns() instead.',
-            __METHOD__,
-        );
-
         $primaryKey = $this->getPrimaryKey();
 
         if ($primaryKey === null) {
@@ -832,19 +792,10 @@ class Table extends AbstractAsset
     /**
      * Returns whether this table has a primary key.
      *
-     * @deprecated Use {@see getPrimaryKey()} instead.
-     *
      * @return bool
      */
     public function hasPrimaryKey()
     {
-        Deprecation::trigger(
-            'doctrine/dbal',
-            'https://github.com/doctrine/dbal/pull/5731',
-            '%s is deprecated. Use getPrimaryKey() instead.',
-            __METHOD__,
-        );
-
         return $this->_primaryKeyName !== null && $this->hasIndex($this->_primaryKeyName);
     }
 

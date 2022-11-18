@@ -24,7 +24,9 @@ class LifecycleEventArgs extends EventArgs
     /** @var object */
     private $object;
 
-    /** @psalm-param TObjectManager $objectManager */
+    /**
+     * @psalm-param TObjectManager $objectManager
+     */
     public function __construct(object $object, ObjectManager $objectManager)
     {
         $this->object        = $object;

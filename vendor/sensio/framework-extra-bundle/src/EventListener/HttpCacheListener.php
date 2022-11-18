@@ -11,7 +11,6 @@
 
 namespace Sensio\Bundle\FrameworkExtraBundle\EventListener;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,8 +42,7 @@ class HttpCacheListener implements EventSubscriberInterface
     public function onKernelController(KernelEvent $event)
     {
         $request = $event->getRequest();
-        $configuration = $request->attributes->get('_cache');
-        if (!$configuration instanceof Cache) {
+        if (!$configuration = $request->attributes->get('_cache')) {
             return;
         }
 
@@ -83,9 +81,8 @@ class HttpCacheListener implements EventSubscriberInterface
     public function onKernelResponse(KernelEvent $event)
     {
         $request = $event->getRequest();
-        $configuration = $request->attributes->get('_cache');
 
-        if (!$configuration instanceof Cache) {
+        if (!$configuration = $request->attributes->get('_cache')) {
             return;
         }
 

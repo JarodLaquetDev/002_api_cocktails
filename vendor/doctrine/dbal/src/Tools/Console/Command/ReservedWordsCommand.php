@@ -181,7 +181,7 @@ EOT);
             true,
         );
 
-        $schema  = $conn->getSchemaManager()->introspectSchema();
+        $schema  = $conn->getSchemaManager()->createSchema();
         $visitor = new ReservedKeywordsValidator($keywords);
         $schema->visit($visitor);
 

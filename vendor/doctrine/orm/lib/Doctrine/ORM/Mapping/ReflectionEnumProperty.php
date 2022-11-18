@@ -63,8 +63,8 @@ class ReflectionEnumProperty extends ReflectionProperty
     }
 
     /**
-     * @param object                                                 $object
-     * @param int|string|int[]|string[]|BackedEnum|BackedEnum[]|null $value
+     * @param object                         $object
+     * @param int|string|int[]|string[]|null $value
      */
     public function setValue($object, $value = null): void
     {
@@ -82,15 +82,11 @@ class ReflectionEnumProperty extends ReflectionProperty
     }
 
     /**
-     * @param object                $object
-     * @param int|string|BackedEnum $value
+     * @param object     $object
+     * @param int|string $value
      */
     private function initializeEnumValue($object, $value): BackedEnum
     {
-        if ($value instanceof BackedEnum) {
-            return $value;
-        }
-
         $enumType = $this->enumType;
 
         try {

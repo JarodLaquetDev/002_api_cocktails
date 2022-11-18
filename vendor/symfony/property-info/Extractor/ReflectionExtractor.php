@@ -218,7 +218,7 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
      */
     public function isWritable(string $class, string $property, array $context = []): ?bool
     {
-        if ($this->isAllowedProperty($class, $property, true)) {
+        if ($this->isAllowedProperty($class, $property)) {
             return true;
         }
 
@@ -588,14 +588,10 @@ class ReflectionExtractor implements PropertyListExtractorInterface, PropertyTyp
         return false;
     }
 
-    private function isAllowedProperty(string $class, string $property, bool $writeAccessRequired = false): bool
+    private function isAllowedProperty(string $class, string $property): bool
     {
         try {
             $reflectionProperty = new \ReflectionProperty($class, $property);
-
-            if (\PHP_VERSION_ID >= 80100 && $writeAccessRequired && $reflectionProperty->isReadOnly()) {
-                return false;
-            }
 
             return (bool) ($reflectionProperty->getModifiers() & $this->propertyReflectionFlags);
         } catch (\ReflectionException) {

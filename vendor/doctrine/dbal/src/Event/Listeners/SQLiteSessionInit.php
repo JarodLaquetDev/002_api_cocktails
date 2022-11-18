@@ -7,7 +7,6 @@ use Doctrine\DBAL\Event\ConnectionEventArgs;
 use Doctrine\DBAL\Events;
 use Doctrine\DBAL\Exception;
 
-/** @deprecated Use {@see \Doctrine\DBAL\Driver\AbstractSQLiteDriver\Middleware\EnableForeignKeys} instead. */
 class SQLiteSessionInit implements EventSubscriber
 {
     /**

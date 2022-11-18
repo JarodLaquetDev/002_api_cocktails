@@ -20,7 +20,9 @@ class ManagerEventArgs extends EventArgs
      */
     private $objectManager;
 
-    /** @psalm-param TObjectManager $objectManager */
+    /**
+     * @psalm-param TObjectManager $objectManager
+     */
     public function __construct(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;

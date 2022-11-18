@@ -294,16 +294,10 @@ abstract class AbstractDoctrineExtension extends Extension
         foreach ($glob as $file) {
             $content = file_get_contents($file);
 
-            if (
-                preg_match('/^#\[.*'.$quotedMappingObjectName.'\b/m', $content) ||
-                preg_match('/^#\[.*Embeddable\b/m', $content)
-            ) {
+            if (preg_match('/^#\[.*'.$quotedMappingObjectName.'\b/m', $content)) {
                 break;
             }
-            if (
-                preg_match('/^ \* @.*'.$quotedMappingObjectName.'\b/m', $content) ||
-                preg_match('/^ \* @.*Embeddable\b/m', $content)
-            ) {
+            if (preg_match('/^ \* @.*'.$quotedMappingObjectName.'\b/m', $content)) {
                 $type = 'annotation';
                 break;
             }
