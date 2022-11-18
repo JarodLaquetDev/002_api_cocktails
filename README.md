@@ -66,6 +66,7 @@ git clone https://github.com/JarodLaquetDev/002_api_cocktails/edit/develop/READM
 *Installer composer :
 ```bash
 composer install
+```
 *Créer un JWT TOKEN :
 ```bash
 php bin/console lexik:jwt:generator-keypair
