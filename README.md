@@ -63,9 +63,9 @@ Cloner le projet :
 ```bash
 git clone https://github.com/JarodLaquetDev/002_api_cocktails/edit/develop/README.md
 ```
-Supprimer le dossier vendor
-Créer un .env.local
-Installer composer :
+Supprimer le dossier vendor  
+Créer un .env.local  
+Installer composer :  
 ```bash
 composer install
 ```
