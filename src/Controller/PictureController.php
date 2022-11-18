@@ -139,8 +139,7 @@ class PictureController extends AbstractController
     {
         $cache->invalidateTags(["pictureCache"]);
         $picture = $repository->find($idPicture);
-        $picture->setStatus("off");
-        $entityManager->persist($picture);
+        $entityManager->remove($picture);
         $entityManager->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
