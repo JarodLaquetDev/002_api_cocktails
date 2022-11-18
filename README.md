@@ -63,6 +63,8 @@ Cette API Cocktails, comme son nom l'indique, permet à ses utilisateurs de cons
 ```bash
 git clone https://github.com/JarodLaquetDev/002_api_cocktails/edit/develop/README.md
 ```
+*Supprimer le dossier vendor
+*Créer un .env.local
 *Installer composer :
 ```bash
 composer install
