@@ -16,6 +16,6 @@ if (!\class_exists(App_KernelDevDebugContainer::class, false)) {
 
 return new \ContainerPLaylWZ\App_KernelDevDebugContainer([
     'container.build_hash' => 'PLaylWZ',
-    'container.build_id' => 'b383c4f8',
-    'container.build_time' => 1668723646,
+    'container.build_id' => 'e868c51f',
+    'container.build_time' => 1668760467,
 ], __DIR__.\DIRECTORY_SEPARATOR.'ContainerPLaylWZ');

@@ -78,7 +78,7 @@ class UserController extends AbstractController
         return new JsonResponse($jsonUsers, 200, [], true);
     }
 
-    #[Route('/api/user/{idUser}', name: 'users.get', methods: ['GET'])]
+    #[Route('/api/user/{idUser}', name: 'user.get', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN', message: 'Absence de droits')]
     #[ParamConverter("user", options: ["id" => "idUser"])]
     /**
