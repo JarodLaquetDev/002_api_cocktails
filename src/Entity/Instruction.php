@@ -34,7 +34,7 @@ class Instruction
     // Phrase associée à une instruction
     // Ex : presser la menthe
     #[ORM\Column(length: 255)]
-    #[Groups(["getAllInstructions","getInstruction"])]
+    #[Groups(["getAllInstructions","getInstruction", "getRecette"])]
     private ?string $phrase = null;
 
     // Statut de l'instruction
