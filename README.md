@@ -71,7 +71,7 @@ composer install
 ```
 Créer un JWT TOKEN :
 ```bash
-php bin/console lexik:jwt:generator-keypair
+php bin/console lexik:jwt:generate-keypair
 ```
 Créer la base de données :
 ```bash
