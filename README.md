@@ -58,8 +58,30 @@ Cette API Cocktails, comme son nom l'indique, permet à ses utilisateurs de cons
 ##### Fonctionnalités :
 * Obtenir toutes les recettes associées à un ingrédient entré par l'utilisateur
 
+# Installation
+*Cloner le projet :
+```bash
+git clone https://github.com/JarodLaquetDev/002_api_cocktails/edit/develop/README.md
+```
+*Installer composer :
+```bash
+composer install
+*Créer un JWT TOKEN :
+```bash
+php bin/console lexik:jwt:generator-keypair
+```
+*Créer la base de données :
+```bash
+php bin/console d:d:c
+php bin/console d:s:u --force
+php bin/console d:f:l
+```
+*Démarrer le serveur symfony
+```bash
+symfony serve
+```
 
-## Contact
+# Contact
 Jarod LAQUET -email: jarod.laquet@ynov.com
 Alexis JEANJEAN -email : alexis.jeanjean@ynov.com
 
